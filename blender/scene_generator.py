@@ -57,13 +57,15 @@ def generate(plan, workspace):
         color = plan["appearance"]["background_color"]
         linear = [v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4 for v in color]
         scene.world.node_tree.nodes["Background"].inputs["Color"].default_value = (*linear, 1)
-        scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 1
+        clay_world = plan["appearance"].get("texture_mode") == "clay_primitive"
+        scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.55 if clay_world else 1
     collections = {}
     for name in ["Static", "Dynamic", "UnknownMotion", "Cameras", "Reference", "Lighting", "Hierarchy"]:
         c = bpy.data.collections.new(name)
         scene.collection.children.link(c)
         collections[name] = c
-    mats = {category: material(category) for category in sorted({o["category"] for o in plan["objects"]})}
+    clay = (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive"
+    mats = {category: material(category, clay=clay) for category in sorted({o["category"] for o in plan["objects"]})}
     objects = {}
     for item in plan["objects"]:
         c = collections["Static" if item["is_static"] is True else "Dynamic" if item["is_static"] is False else "UnknownMotion"]
@@ -85,14 +87,19 @@ def generate(plan, workspace):
     collections["Reference"].objects.link(reference)
     reference.hide_render, reference.display_type = True, "WIRE"
     reference["evidence"] = plan.get("reference_evidence", "Measured point reference; NOT complete geometry; may include temporal object samples")
-    for name, kind, energy, location in [("Sun", "SUN", 2., (0, 0, 10)), ("Fill", "AREA", 700., (4, -4, 10))]:
+    clay = (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive"
+    if clay:
+        lights = [("Sun", "SUN", 4.5, (0.85, 0.2, 0.45)), ("Fill", "SUN", 2.6, (-0.55, -0.8, 0.2))]
+    else:
+        lights = [("Sun", "SUN", 2., (0.4, -0.5, -0.3)), ("Fill", "AREA", 700., (0.4, -0.5, -0.3))]
+    for name, kind, energy, rotation in lights:
         data = bpy.data.lights.new(name, kind)
         data.energy = energy
         obj = bpy.data.objects.new(name, data)
         collections["Lighting"].objects.link(obj)
-        obj.location = location
-        obj.rotation_euler = (.4, -.5, -.3)
+        obj.rotation_euler = rotation
         if kind == "AREA":
+            obj.location = (4, -4, 10)
             data.size = 8
     cameras = {c["camera_id"]: create_camera(c, collections["Cameras"], scene) for c in plan["cameras"]}
     scene.camera = cameras[plan["active_camera"]]

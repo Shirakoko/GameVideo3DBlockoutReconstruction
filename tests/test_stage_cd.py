@@ -9,9 +9,8 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 
 import numpy as np
-from PIL import Image
 
-from agents.object_detection import (AnnotationProvider, Detection, SyntheticColorProvider, confidence, mask_bbox, mask_iou)
+from agents.object_detection import (AnnotationProvider, Detection, SyntheticColorProvider, confidence, mask_iou)
 from agents.scene_builder import build_scene, json_write
 from agents.synthetic_scene import make_scene_fixture
 from agents.tracking import Observation, PersistentTracker, appearance, classify_motion
@@ -238,44 +237,36 @@ class SchemaTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.temp.cleanup()
 
-    def invalid(self, change):
-        scene = deepcopy(self.scene)
-        change(scene)
-        with self.assertRaises(SceneValidationError):
-            validate_scene(scene)
-
-    def test_version_unknown_fields_nan_and_invalid_date(self):
-        self.invalid(lambda s: s.update(schema_version="2.0.0"))
-        self.invalid(lambda s: s.update(unrecognized=True))
-        self.invalid(lambda s: s.update(unit_scale=float("nan")))
-        self.invalid(lambda s: s.update(created_at="yesterday"))
-
-    def test_duplicate_ids_dangling_parents_and_cycles(self):
-        self.invalid(lambda s: s["objects"][1].update(object_id=s["objects"][0]["object_id"]))
-        self.invalid(lambda s: s["objects"][0].update(parent_id="missing"))
-        self.invalid(lambda s: s["objects"][0].update(parent_id=s["objects"][0]["object_id"]))
-
-    def test_quaternion_negative_dimensions_and_camera_reflection(self):
-        self.invalid(lambda s: s["objects"][0]["transform"].update(rotation=[0, 0, 0, 2]))
-        self.invalid(lambda s: s["objects"][0].update(dimensions=[1, -1, 1]))
-        self.invalid(lambda s: s["cameras"][0]["track"][0].update(world_from_camera=np.diag([-1., 1., 1., 1.]).tolist()))
-
-    def test_time_order_source_references_and_unknown_cameras(self):
-        self.invalid(lambda s: s["timeline"].update(end_seconds=-1))
-        self.invalid(lambda s: s["cameras"][0]["track"].reverse())
-        self.invalid(lambda s: s["objects"][0]["observations"][0].update(timestamp_seconds=0.1))
-        self.invalid(lambda s: s["objects"][0]["visibility"][0].update(camera_id="missing"))
-        self.invalid(lambda s: s["objects"][0].update(source_frames=[99999]))
-
-    def test_geometry_provenance_and_static_motion_consistency(self):
-        self.invalid(lambda s: s["reconstruction_metadata"].update(geometry_contract_verified=False))
-        self.invalid(lambda s: s["objects"][0]["geometry_source"]["confidence"].update(provenance="unobserved"))
+    def test_invalid_scene_contracts(self):
         person_index = next(i for i, o in enumerate(self.scene["objects"]) if o["category"] == "person")
-        self.invalid(lambda s: s["objects"][person_index].update(is_static=True))
-        self.invalid(lambda s: s["objects"][person_index].update(motion_track=[]))
-
-    def test_bbox_proxy_cannot_claim_geometric_truth(self):
-        self.invalid(lambda s: s["objects"][0]["observations"][0]["mask"].update(kind="bbox_proxy"))
+        cases = [
+            ("version", lambda s: s.update(schema_version="2.0.0")),
+            ("unknown field", lambda s: s.update(unrecognized=True)),
+            ("nonfinite units", lambda s: s.update(unit_scale=float("nan"))),
+            ("invalid date", lambda s: s.update(created_at="yesterday")),
+            ("duplicate id", lambda s: s["objects"][1].update(object_id=s["objects"][0]["object_id"])),
+            ("dangling parent", lambda s: s["objects"][0].update(parent_id="missing")),
+            ("parent cycle", lambda s: s["objects"][0].update(parent_id=s["objects"][0]["object_id"])),
+            ("nonunit quaternion", lambda s: s["objects"][0]["transform"].update(rotation=[0, 0, 0, 2])),
+            ("negative dimension", lambda s: s["objects"][0].update(dimensions=[1, -1, 1])),
+            ("camera reflection", lambda s: s["cameras"][0]["track"][0].update(world_from_camera=np.diag([-1., 1., 1., 1.]).tolist())),
+            ("invalid timeline", lambda s: s["timeline"].update(end_seconds=-1)),
+            ("reversed camera track", lambda s: s["cameras"][0]["track"].reverse()),
+            ("observation time", lambda s: s["objects"][0]["observations"][0].update(timestamp_seconds=0.1)),
+            ("unknown camera", lambda s: s["objects"][0]["visibility"][0].update(camera_id="missing")),
+            ("unknown source frame", lambda s: s["objects"][0].update(source_frames=[99999])),
+            ("unverified geometry", lambda s: s["reconstruction_metadata"].update(geometry_contract_verified=False)),
+            ("unobserved geometry", lambda s: s["objects"][0]["geometry_source"]["confidence"].update(provenance="unobserved")),
+            ("moving static object", lambda s: s["objects"][person_index].update(is_static=True)),
+            ("missing motion", lambda s: s["objects"][person_index].update(motion_track=[])),
+            ("bbox proxy", lambda s: s["objects"][0]["observations"][0]["mask"].update(kind="bbox_proxy")),
+        ]
+        for name, change in cases:
+            with self.subTest(case=name):
+                scene = deepcopy(self.scene)
+                change(scene)
+                with self.assertRaises(SceneValidationError):
+                    validate_scene(scene)
 
     def test_multiple_camera_tracks_supported(self):
         scene = deepcopy(self.scene)

@@ -18,7 +18,6 @@ import numpy as np
 
 from blender.pipeline import ROOT, blender_path, json_write, run_pipeline, sha256
 from blender.media import probe_video
-from reconstruction.coordinate_transform import transform_points, inverse_rigid
 from reconstruction.refined_calibration import HOLDOUT, pose_track, project, triangulate
 from reconstruction.refined_segmentation import CATEGORIES
 from reconstruction.refined_voxels import VoxelFusion
@@ -68,7 +67,7 @@ def static_tracks(training, feature_loader, poses, k):
         a, b = max(((a, b) for j, a in enumerate(nodes) for b in nodes[j+1:]),
             key=lambda pair: np.linalg.norm(poses[pair[0][0]][:3,3]-poses[pair[1][0]][:3,3]))
         ua, ub = feature_loader(a[0])[0][a[1]], feature_loader(b[0])[0][b[1]]
-        points, keep = triangulate(ua[None], ub[None], poses[a[0]], poses[b[0]], k)
+        points, _ = triangulate(ua[None], ub[None], poses[a[0]], poses[b[0]], k)
         if not len(points):
             continue
         point = points[0]
@@ -292,7 +291,7 @@ def run(args):
         video=probe_video(prepared/"original_video.mp4")
         if (video["width"],video["height"],video["frame_count"],video["fps"])!=(1920,1080,720,"60"):
             raise ValueError("Native original video timeline/raster changed")
-        scene=make_scene(bundle,meshes,training,frame_loader,poses,{},calibration,rows,k,video,
+        scene=make_scene(bundle,meshes,training,frame_loader,poses,calibration,rows,k,video,
             dict(poses=prepared/"camera/poses.json"),style="voxel",voxel_size=args.voxel_size)
         scene["reconstruction_metadata"]["provider"]="local_grounding_dino_sam+RGB_three_view+voxel"
         scene["reconstruction_metadata"]["limitations"].append("Native depth inverse failed calibration and was not used; geometry triangulated from RGB.")

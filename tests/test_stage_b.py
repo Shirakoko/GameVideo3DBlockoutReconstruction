@@ -1,5 +1,4 @@
 """Known geometry tests; never certify real dataset units from a test fixture."""
-import json
 import io
 import tempfile
 import unittest

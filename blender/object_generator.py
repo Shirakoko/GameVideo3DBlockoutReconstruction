@@ -9,15 +9,17 @@ COLORS = {"ground": (0.42, 0.45, 0.43, 1), "person": (0.72, 0.69, 0.64, 1),
           "tree": (0.42, 0.52, 0.44, 1), "rock": (0.55, 0.56, 0.59, 1), "barrier": (0.65, 0.59, 0.49, 1),
           "road": (0.30, 0.32, 0.34, 1), "wall": (0.61, 0.61, 0.59, 1), "building": (0.49, 0.51, 0.54, 1)}
 COLORS.update(grass=(.36, .44, .32, 1), shrub=(.38, .43, .33, 1), environment=(.5, .5, .5, 1))
+CLAY = (0.78, 0.78, 0.76, 1)
 
 
-def material(category):
+def material(category, *, clay=False):
+    color = CLAY if clay else COLORS[category]
     mat = bpy.data.materials.new("Blockout_"+category)
-    mat.diffuse_color = COLORS[category]
+    mat.diffuse_color = color
     mat.use_nodes = True
     shader = mat.node_tree.nodes.get("Principled BSDF")
-    shader.inputs["Base Color"].default_value = COLORS[category]
-    shader.inputs["Roughness"].default_value = 0.85
+    shader.inputs["Base Color"].default_value = color
+    shader.inputs["Roughness"].default_value = 0.92 if clay else 0.85
     shader.inputs["Metallic"].default_value = 0
     return mat
 
@@ -32,21 +34,51 @@ def primitive_mesh(kind, name):
         faces = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
     else:
         segments = 16
-        if kind == "cylinder":
-            rings = [(-.5, .5), (.5, .5)]
-        elif kind == "capsule":
-            # Normalized capsule with ellipsoidal endcaps after XYZ scaling.
-            rings = [(-.25+.25*math.sin(-math.pi/2+i*math.pi/12), .5*math.cos(-math.pi/2+i*math.pi/12)) for i in range(7)]
-            rings += [(.25+.25*math.sin(i*math.pi/12), .5*math.cos(i*math.pi/12)) for i in range(7)]
+        if kind == "sphere":
+            rings = 8
+            vertices = [(0.0, 0.0, -0.5)]
+            for i in range(1, rings):
+                z = -0.5 * math.cos(math.pi * i / rings)
+                radius = 0.5 * math.sin(math.pi * i / rings)
+                if abs(z) < 1e-8:
+                    z = 0.0
+                if abs(radius - 0.5) < 1e-8:
+                    radius = 0.5
+                for j in range(segments):
+                    angle = 2 * math.pi * j / segments
+                    x = max(-0.5, min(0.5, radius * math.cos(angle)))
+                    y = max(-0.5, min(0.5, radius * math.sin(angle)))
+                    if abs(abs(x) - 0.5) < 1e-8:
+                        x = math.copysign(0.5, x)
+                    if abs(abs(y) - 0.5) < 1e-8:
+                        y = math.copysign(0.5, y)
+                    vertices.append((x, y, z))
+            vertices.append((0.0, 0.0, 0.5))
+            pole = len(vertices) - 1
+            faces = [(0, 1+(j+1) % segments, 1+j) for j in range(segments)]
+            for i in range(rings-2):
+                for j in range(segments):
+                    n = (j+1) % segments
+                    a = 1+i*segments+j
+                    faces.append((a, a-j+n, a+segments+n-j, a+segments))
+            base = 1+(rings-2)*segments
+            faces += [(base+j, base+(j+1) % segments, pole) for j in range(segments)]
+        elif kind == "cylinder" or kind == "capsule":
+            if kind == "cylinder":
+                rings = [(-.5, .5), (.5, .5)]
+            else:
+                # Normalized capsule with ellipsoidal endcaps after XYZ scaling.
+                rings = [(-.25+.25*math.sin(-math.pi/2+i*math.pi/12), .5*math.cos(-math.pi/2+i*math.pi/12)) for i in range(7)]
+                rings += [(.25+.25*math.sin(i*math.pi/12), .5*math.cos(i*math.pi/12)) for i in range(7)]
+            vertices = [(radius*math.cos(2*math.pi*j/segments), radius*math.sin(2*math.pi*j/segments), z)
+                        for z, radius in rings for j in range(segments)]
+            faces = [tuple(reversed(range(segments))), tuple((len(rings)-1)*segments+j for j in range(segments))]
+            for i in range(len(rings)-1):
+                for j in range(segments):
+                    n = (j+1) % segments
+                    faces.append((i*segments+j, i*segments+n, (i+1)*segments+n, (i+1)*segments+j))
         else:
             raise ValueError("Unsupported primitive: "+kind)
-        vertices = [(radius*math.cos(2*math.pi*j/segments), radius*math.sin(2*math.pi*j/segments), z)
-                    for z, radius in rings for j in range(segments)]
-        faces = [tuple(reversed(range(segments))), tuple((len(rings)-1)*segments+j for j in range(segments))]
-        for i in range(len(rings)-1):
-            for j in range(segments):
-                n = (j+1) % segments
-                faces.append((i*segments+j, i*segments+n, (i+1)*segments+n, (i+1)*segments+j))
     mesh = bpy.data.meshes.new(name)
     mesh.from_pydata(vertices, [], faces)
     mesh.update()

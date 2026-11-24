@@ -11,7 +11,7 @@ import open3d as o3d
 from PIL import Image
 
 from reconstruction.coordinate_transform import inverse_rigid, transform_points
-from reconstruction.refined_calibration import project, unproject_inferred
+from reconstruction.refined_calibration import project
 from reconstruction.refined_segmentation import CATEGORIES
 
 THIN = {"tree", "barrier", "grass", "shrub"}
@@ -57,14 +57,13 @@ def deduplicate_faces(mesh, voxel=.04):
 
 
 class SurfaceFusion:
-    def __init__(self, k, width, height, voxel=.04, truncation=.12):
-        self.k, self.width, self.height = np.asarray(k), width, height
+    def __init__(self, k, voxel=.04, truncation=.12):
+        self.k = np.asarray(k)
         self.voxel = voxel
         self.volumes, self.thin = {}, {}
         self.truncation = truncation
 
     def integrate(self, rgb, depth, valid, labels, pose):
-        import cv2
         for category in CATEGORIES[:-1]:
             category_mask = valid & (labels == CATEGORIES.index(category))
             if category_mask.sum() < 48:
@@ -131,7 +130,7 @@ def split_chunks(mesh, size=8., max_faces=50000, *, preserve_voxels=False, voxel
         yield tuple(map(int, key)), part
 
 
-def bake_texture(mesh, category, frames, frame_loader, poses, k, *, max_views=4):
+def bake_texture(mesh, frames, frame_loader, poses, k, *, max_views=4):
     """Select jointly visible source views per face, rejecting dynamic masks.
 
     No holdout view is supplied by the caller. Texture and geometry remain
@@ -143,7 +142,7 @@ def bake_texture(mesh, category, frames, frame_loader, poses, k, *, max_views=4)
     normal /= np.maximum(np.linalg.norm(normal, axis=1, keepdims=True), 1e-12)
     scores, views = [], []
     for index in frames:
-        rgb, depth, valid, labels = frame_loader(index)
+        _, depth, valid, labels = frame_loader(index)
         uv, z = project(centers, poses[index], k)
         h, w = depth.shape
         finite = np.isfinite(uv).all(1) & (z > 0)
@@ -173,7 +172,6 @@ def bake_texture(mesh, category, frames, frame_loader, poses, k, *, max_views=4)
             break
         selected.append(choice)
         best = np.maximum(best, scores[choice])
-        scores[choice] = np.maximum(scores[choice], 0)
     if not selected:
         raise ValueError("Texture coverage unavailable")
     # Recompute selected scores because greedy best is only the coverage state.

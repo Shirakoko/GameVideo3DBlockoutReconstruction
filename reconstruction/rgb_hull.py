@@ -12,11 +12,10 @@ import tempfile
 import cv2
 import numpy as np
 import open3d as o3d
-from scipy.spatial import ConvexHull, Delaunay
+from scipy.spatial import Delaunay
 
 from blender.pipeline import ROOT, blender_path, json_write, run_pipeline, sha256
 from blender.media import probe_video
-from reconstruction.coordinate_transform import transform_points
 from reconstruction.refined_calibration import HOLDOUT, project
 from reconstruction.refined_voxels import voxel_shell
 from reconstruction.refined_segmentation import CATEGORIES
@@ -226,7 +225,7 @@ def run(args):
         video=probe_video(ROOT/"outputs/stage_a/sample_66ad/original_video.mp4")
         source_rows=[dict(timestamp_seconds=row["timestamp_seconds"],original_tick=row["original_tick"])
             for row in source_scene["timeline"]["frames"]]
-        scene=make_scene(bundle,meshes,training,loader,poses,{},calibration,source_rows,k,video,
+        scene=make_scene(bundle,meshes,training,loader,poses,calibration,source_rows,k,video,
             dict(poses=ROOT/"outputs/stage_a/sample_66ad/camera/poses.json"),style="voxel",voxel_size=size)
         scene["appearance"]=source_scene["appearance"]
         meta=scene["reconstruction_metadata"]

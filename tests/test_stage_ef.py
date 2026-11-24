@@ -4,7 +4,6 @@ from contextlib import redirect_stdout
 from fractions import Fraction
 import io
 import json
-import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -115,15 +114,20 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             prepare_plan(self.scene_file(scene), video_spec())
 
-    def test_skew_and_raster_and_odd_output_rejected(self):
+    def test_invalid_camera_and_render_parameters(self):
         scene = deepcopy(self.scene)
         scene["cameras"][0]["track"][0]["intrinsics"][0][1] = .2
-        with self.assertRaisesRegex(ValueError, "skew"):
+        with self.subTest(case="skew"), self.assertRaisesRegex(ValueError, "skew"):
             prepare_plan(self.scene_file(scene), video_spec())
-        with self.assertRaisesRegex(ValueError, "native raster"):
+        with self.subTest(case="native raster"), self.assertRaisesRegex(ValueError, "native raster"):
             prepare_plan(self.scene_path, video_spec(size=(120, 70)))
-        with self.assertRaisesRegex(ValueError, "even"):
-            prepare_plan(self.scene_path, video_spec(), resolution=(121, 70))
+        for value in (True, 1.5, 0, "16"):
+            with self.subTest(samples=value), self.assertRaisesRegex(ValueError, "Positive integer"):
+                prepare_plan(self.scene_path, video_spec(), samples=value)
+        for value, error in (([], "exactly"), ([96], "exactly"), ([96, 56, 8], "exactly"),
+                             ("96x56", "exactly"), ({}, "exactly"), ((121, 70), "even")):
+            with self.subTest(resolution=value), self.assertRaisesRegex(ValueError, error):
+                prepare_plan(self.scene_path, video_spec(), resolution=value)
 
     def test_raw_telemetry_manifest_is_not_pose_contract(self):
         raw = self.scene_file(dict(coordinate_system="lh_z_up", frames=[]), "raw.json")
@@ -194,10 +198,6 @@ class ContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Invalid reviewed Camera Pose"):
             load_camera_poses(path)
 
-    def test_invalid_batch_returns_failure(self):
-        path = self.scene_file(dict(schema="wrong", jobs=[]), "batch.json")
-        self.assertEqual(main(["--batch", str(path)]), 1)
-
     def test_architectural_category_contract(self):
         scene = deepcopy(self.scene)
         replacements = {"ground": "road", "barrier": "wall", "rock": "building"}
@@ -221,19 +221,14 @@ class ContractTests(unittest.TestCase):
                 self.assertTrue(Path(obj["geometry_source"]["point_cloud_path"]).is_file())
                 self.assertTrue(Path(obj["observations"][0]["mask"]["path"]).is_file())
 
-    def test_invalid_render_budget_and_resolution_are_actionable(self):
-        for value in (True, 1.5, 0, "16"):
-            with self.subTest(samples=value), self.assertRaisesRegex(ValueError, "Positive integer"):
-                prepare_plan(self.scene_path, video_spec(), samples=value)
-        for value in ([], [96], [96, 56, 8], "96x56", {}):
-            with self.subTest(resolution=value), self.assertRaisesRegex(ValueError, "exactly"):
-                prepare_plan(self.scene_path, video_spec(), resolution=value)
-
     def test_incomplete_or_unsafe_receipt_never_reuses(self):
         self.assertFalse(cached_outputs_match(self.folder, {"artifact_hashes": {}}, generate_only=False))
         self.assertFalse(cached_outputs_match(self.folder, {"artifact_hashes": {"../unrelated": "0"*64}}, generate_only=True))
 
-    def test_malformed_batch_jobs_do_not_abort_following_jobs(self):
+    def test_invalid_batch_and_malformed_jobs_return_failure(self):
+        path = self.scene_file(dict(schema="wrong", jobs=[]), "batch.json")
+        with self.subTest(case="invalid batch schema"), redirect_stdout(io.StringIO()):
+            self.assertEqual(main(["--batch", str(path)]), 1)
         path = self.scene_file(dict(schema="stage_ef.batch/1", jobs=[
             [], dict(scene_json=True, original_video="in.mp4", output="bad"),
             dict(scene_json="in.json", original_video="in.mp4", output="bad", generate_only="false"),

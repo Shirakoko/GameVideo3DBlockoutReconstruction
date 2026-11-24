@@ -1,6 +1,5 @@
 """Download only the explicitly selected public models, never session media."""
 import argparse
-import json
 from pathlib import Path
 import sys
 

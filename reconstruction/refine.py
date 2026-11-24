@@ -104,7 +104,7 @@ def prepare_frames(video, depth_source, indices, cache, segmenter):
     return record
 
 
-def make_scene(bundle, meshes, training, frame_loader, poses, curve, calibration, source_rows, k, video, source_paths, *, style="textured", voxel_size=.2):
+def make_scene(bundle, meshes, training, frame_loader, poses, calibration, source_rows, k, video, source_paths, *, style="textured", voxel_size=.2):
     assets = bundle/"assets"
     assets.mkdir()
     c = confidence(.65, "inferred", "empirical_static_mesh", "Held-out reprojection passed; not a verified physical Session contract")
@@ -117,7 +117,7 @@ def make_scene(bundle, meshes, training, frame_loader, poses, curve, calibration
                     source_frames, voxel_masks = observation_views(points, category, training, frame_loader, poses, k)
                     texture_report = dict(source_frames=source_frames, texture_mode="quantized_voxel_color")
                 else:
-                    points, faces, uv, texture, texture_report = bake_texture(chunk, category, training, frame_loader, poses, k)
+                    points, faces, uv, texture, texture_report = bake_texture(chunk, training, frame_loader, poses, k)
             except ValueError:
                 continue  # Unobserved/untexturable chunks are omitted and counted.
             low, high = points.min(0), points.max(0)
@@ -350,7 +350,7 @@ def run(args):
             valid &= labels != CATEGORIES.index("person")
             return rgb, depth, valid, labels
         training = [i for i in indices if i not in HOLDOUT]
-        fusion = VoxelFusion(k, args.voxel_size) if args.style == "voxel" else SurfaceFusion(k, video["width"], video["height"], args.voxel_size, args.voxel_size*3)
+        fusion = VoxelFusion(k, args.voxel_size) if args.style == "voxel" else SurfaceFusion(k, voxel=args.voxel_size, truncation=args.voxel_size*3)
         for index in training:
             rgb, depth, valid, labels = frame_loader(index)
             if args.style == "voxel":
@@ -362,7 +362,7 @@ def run(args):
         if args.style == "voxel":
             report["voxel_geometry"] = fusion.report
         bundle = Path(tempfile.mkdtemp(prefix="source_bundle_", dir=output))
-        scene = make_scene(bundle, meshes, training, frame_loader, poses, curve, calibration, rows, k, video, paths, style=args.style, voxel_size=args.voxel_size)
+        scene = make_scene(bundle, meshes, training, frame_loader, poses, calibration, rows, k, video, paths, style=args.style, voxel_size=args.voxel_size)
         executable = blender_path(args.blender)
         run_pipeline(bundle/"scene_schema.json", paths["video"], output, blender=executable,
                      engine="BLENDER_EEVEE", samples=32, allow_inferred=True, generate_only=True)

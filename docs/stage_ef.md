@@ -150,4 +150,6 @@ blender --background --factory-startup --threads 4 <run-dir>/scene.blend
 
 静态网格先检查无动画/驱动、约束、变形或变换父级，证明其矩阵与帧无关，再检查其恒定矩阵；若有意外动画/变形则拒绝，不静默跳过。所有相机和有源动画的物体仍逐帧验证。这避免大场景反复验证同一静态矩阵，新增 Blender 后台驱动注入测试覆盖拒绝行为。
 
+测试精简后（2026-11-24）：Stage E/F现为24项，相机/输出参数和批量无效输入改为子测试，原断言与全部后台集成保留；全项目145/145通过，无失败或跳过，最新记录在 `outputs/stage_ef/cleanup_tests/`。上文26/115项为初次阶段验收的历史记录。
+
 这是 Stage E/F 的工程可运行验收，不是 Stage G 的真实游戏几何/语义精度验收。真实几何还原仍需要解决 Stage A/B 合同缺口。用户另外明确允许的 RGB 布局补齐代理走独立 `--allow-inferred --allow-heuristic` 分支，绑定不同的代理安全/覆盖回执，绝不将其标为真实几何验收；详见 [heuristic_proxy.md](heuristic_proxy.md)。

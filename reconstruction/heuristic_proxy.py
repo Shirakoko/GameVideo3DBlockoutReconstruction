@@ -24,7 +24,6 @@ from scipy.optimize import isotonic_regression
 from scipy.spatial import cKDTree
 
 from agents.object_detection import confidence
-from blender.media import probe_video
 from blender.pipeline import ROOT, blender_path, json_write, run_pipeline, sha256
 from reconstruction.refine import HOLDOUT, masked_ssim, refinement_lock, render_previews, verified_frame_cache
 from reconstruction.refined_calibration import project

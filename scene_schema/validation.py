@@ -174,10 +174,15 @@ def validate_scene(scene: dict) -> dict:
             check(obj["geometry_source"]["confidence"]["provenance"] == "inferred", "Empirical geometry must be labelled inferred")
         for camera in cameras:
             check(all(r["confidence"]["provenance"] == "inferred" for r in camera["track"]), "Empirical Camera Pose must be labelled inferred")
-        heuristic = any(o["geometry_source"]["kind"] == "heuristic_voxel" for o in objects)
-        check(heuristic == ("heuristic_proxy" in meta), "Heuristic geometry requires its distinct proxy receipt")
-        if heuristic:
+        voxel = any(o["geometry_source"]["kind"] == "heuristic_voxel" for o in objects)
+        primitive = any(o["geometry_source"]["kind"] == "heuristic_primitive" for o in objects)
+        check((voxel or primitive) == ("heuristic_proxy" in meta), "Heuristic geometry requires its distinct proxy receipt")
+        check(not (voxel and primitive), "Voxel and primitive blockouts must stay on separate outputs")
+        if voxel:
             check(all(o["geometry_source"]["kind"] == "heuristic_voxel" and o["geometry_source"]["bounds_type"] == "inferred_proxy_aabb" for o in objects), "Proxy geometry must not masquerade as observed bounds")
+        if primitive:
+            check(all(o["geometry_source"]["kind"] == "heuristic_primitive" and o["geometry_source"]["bounds_type"] == "inferred_proxy_aabb" for o in objects), "Proxy geometry must not masquerade as observed bounds")
+            check("primitive_fit" in meta, "Primitive blockout requires its fit receipt")
     if not meta["geometry_contract_verified"] and not inferred:
         check(not any(o["transform"] is not None for o in objects), "Unverified geometry contract cannot emit world transforms")
         check(not any(r["world_from_camera"] is not None for c in cameras for r in c["track"]), "Unverified geometry contract cannot emit camera transforms")

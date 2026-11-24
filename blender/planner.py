@@ -136,6 +136,20 @@ def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, activ
             if proxy.get("camera_sha256") != camera_hash:
                 raise ValueError("Proxy camera changed since clearance validation")
             extra_sources.append(str(path))
+            if any(o["geometry_source"]["kind"] == "heuristic_primitive" for o in scene["objects"]):
+                if "primitive_fit" not in meta:
+                    raise ValueError("Primitive blockout requires its fit receipt")
+                receipt = meta["primitive_fit"]
+                path = (scene_path.parent/receipt["path"]).resolve()
+                if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != receipt["sha256"]:
+                    raise ValueError("Missing/tampered primitive fit receipt")
+                fit = read_json(path)
+                if (fit.get("schema") != "heuristic.primitive/1" or fit.get("status") != "passed"
+                        or fit.get("geometry_accuracy_validated") is not False
+                        or fit.get("camera_inside_frame_count") != 0
+                        or fit.get("camera_sha256") != camera_hash):
+                    raise ValueError("Primitive fit safety check did not pass")
+                extra_sources.append(str(path))
     if not meta["geometry_contract_verified"] and not inferred:
         raise ValueError("Stage E blocked: Scene geometry/Camera Pose contract unverified; no fabricated transforms")
     if any(o["transform"] is None for o in scene["objects"]):
@@ -153,7 +167,9 @@ def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, activ
         raise ValueError("H.264 yuv420p output needs positive even width/height")
     # K lives in the observed native RGB raster, not an arbitrary target size.
     rasters = {tuple(r["raster_size"]) for o in scene["objects"] for r in o["observations"]}
-    if rasters != {(video["width"], video["height"])}:
+    if rasters and rasters != {(video["width"], video["height"])}:
+        raise ValueError("Scene native raster differs from original video; explicit upstream K/raster conversion required")
+    if not rasters and "heuristic_proxy" not in meta:
         raise ValueError("Scene native raster differs from original video; explicit upstream K/raster conversion required")
     camera_ids = {c["camera_id"] for c in scene["cameras"]}
     active = active_camera or scene["timeline"]["frames"][0]["camera_id"]
@@ -244,7 +260,7 @@ def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, activ
                 pixel_aspect=[1., aspect] if aspect >= 1 else [1/aspect, 1.], cameras=cameras, objects=objects, reference_points=points.tolist(),
                 reference_sources=reference_sources+extra_sources, engine=engine, samples=samples,
                 reconstruction_mode="inferred" if inferred else "verified", appearance=scene.get("appearance"),
-                reference_evidence="Heuristic RGB-layout proxy vertices; NOT measured geometry" if "heuristic_proxy" in meta else "Measured point reference; NOT complete geometry; may include temporal object samples",
+                reference_evidence=("Heuristic clay primitives fit to the voxel layout; NOT measured geometry" if any(o["geometry_source"]["kind"] == "heuristic_primitive" for o in scene["objects"]) else "Heuristic RGB-layout proxy vertices; NOT measured geometry" if "heuristic_proxy" in meta else "Measured point reference; NOT complete geometry; may include temporal object samples"),
                 conventions=dict(positions="metres, Blender RH Z up", object_dimensions="unscaled primitive dimensions; scale applied once",
                     parents="organizational world-space grouping", camera="optical +X right +Y down +Z forward -> Blender +X right +Y up -Z forward",
                     interpolation="per-render-frame linear translation/K/scale + shortest-arc quaternion SLERP",

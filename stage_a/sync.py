@@ -29,21 +29,6 @@ def read_jsonl(path: Path, *, max_records=100000, max_line_bytes=1024*1024):
             yield record
 
 
-def read_frame_table(path: Path, *, columns: list[str], max_rows=100000):
-    """Optional PyArrow, explicit columns, metadata row cap before allocating."""
-    try:
-        import pyarrow.parquet as pq
-    except ImportError as error:
-        raise SyncError("Install pyarrow to inspect an authorized frames.parquet") from error
-    table = pq.ParquetFile(path)
-    if table.metadata.num_rows > max_rows:
-        raise SyncError("Frame table exceeds row budget; use a reviewed row-group adapter")
-    if any(name not in table.schema.names for name in columns):
-        raise SyncError("Requested frame-table fields are absent")
-    for batch in table.iter_batches(batch_size=1024, columns=columns):
-        yield from batch.to_pylist()
-
-
 def frame_index(value):
     if isinstance(value, bool) or not isinstance(value, int) or value < 0:
         raise SyncError("Frame Index must be a nonnegative integer, not a row number or rounded timestamp")

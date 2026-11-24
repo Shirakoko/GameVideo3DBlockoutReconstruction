@@ -1,7 +1,6 @@
 """Independent numerical, asset, provenance and background mesh tests."""
 from copy import deepcopy
 from io import BytesIO
-import json
 from pathlib import Path
 import tempfile
 import unittest

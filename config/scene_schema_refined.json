@@ -113,6 +113,9 @@
         "heuristic_proxy": {
           "$ref": "#/properties/reconstruction_metadata/properties/empirical_validation"
         },
+        "primitive_fit": {
+          "$ref": "#/properties/reconstruction_metadata/properties/empirical_validation"
+        },
         "empirical_validation": {
           "type": "object",
           "additionalProperties": false,
@@ -142,7 +145,10 @@
       ],
       "properties": {
         "texture_mode": {
-          "const": "baked_rgb"
+          "enum": [
+            "baked_rgb",
+            "clay_primitive"
+          ]
         },
         "background_color": {
           "type": "array",
@@ -473,7 +479,8 @@
             "unobserved",
             "surface_mesh",
             "tsdf_mesh",
-            "heuristic_voxel"
+            "heuristic_voxel",
+            "heuristic_primitive"
           ]
         },
         "point_cloud_path": {
@@ -569,6 +576,7 @@
             "capsule",
             "cylinder",
             "plane",
+            "sphere",
             "mesh"
           ]
         },
@@ -674,7 +682,7 @@
           "if": {
             "properties": {
               "geometry_source": {
-                "properties": { "kind": { "const": "heuristic_voxel" } }
+                "properties": { "kind": { "enum": ["heuristic_voxel", "heuristic_primitive"] } }
               }
             }
           },

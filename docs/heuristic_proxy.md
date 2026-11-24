@@ -48,7 +48,7 @@
 
 覆盖代理 LUT 的单调性/非物理标签、全段相机自由空间、岩石与树冠不同填充规则、独立授权、回执/相机哈希绑定、补齐部分不能伪装成已观测表面。原 Stage E/F 后台、重复运行及严格合同测试继续执行。
 
-最新全项目回归 **159/159 通过，无失败、无跳过**，回执 `outputs/stage_ef/heuristic_proxy_verified_tests/test_results.json`。新增后台测试确认静态网格若有驱动/变形不会被优化后的验证跳过；相机仍逐帧验证。这些测试结果不代表真实几何精度通过。
+代理交付时全项目回归 **159/159 通过，无失败、无跳过**，历史回执 `outputs/stage_ef/heuristic_proxy_verified_tests/test_results.json`。后台测试确认静态网格若有驱动/变形不会被优化后的验证跳过；相机仍逐帧验证。这些测试结果不代表真实几何精度通过。
 
 当前实际代理：180,289 个占用体素（含44,946个补齐地面单元），1401个外表面区块；全720帧相机中心均不在占用体素内。九个实际预览的源环境区域覆盖约96.2%–100%，SSIM仅供参考。已观察首/中/末画面有连续地面和环境体积，无先前的相机包围/近距离墙面封堵；仍有细柱、局部悬浮块和物体合并/位置偏差，符合启发式代理而非真实几何还原的证据边界。
 
@@ -65,3 +65,24 @@
 源视频回读同为1920×1080、60 FPS、720帧、12秒；三个视频的全部PTS均已检查。相机与时间轴和冻结的 `real_voxel_rgb/scene_schema.json` 一致，保留原先的 `depth_referenced_camera_raw` 关联、tick偏移+1及inferred焦距缩放0.915；这不证明SDK物理相机合同或真实几何精度。
 
 完整渲染结束后实际执行 `--allow-heuristic --render-only --reuse`，退出码为0，返回 `verified matching input/code/output hashes; reusing`。它核验输入、代码及完成产物后复用本目录，没有再次渲染。权威最终回执为 `proxy_run.json`、`pipeline_report.json`、`saved_scene_verification.json` 和 `frame_mapping.json`；历史中断/失败回执保留，不作为当前代理状态。
+
+## 灰模基本体（并行输出）
+
+体素壳保留轮廓，基本体才是可单独移动的导演粗模。`reconstruction.primitive_blockout` 只读取上面已经通过穿模和覆盖检查的 `proxy_voxels.npz`，不重跑深度，也不改写 `heuristic_voxel_proxy/`。
+
+地面用一块薄板，树用圆柱树干加球体树冠，草/灌木用圆柱，岩石、建筑和其余实体用实心方块。材质是统一灰模。相机、源 tick 和 60 FPS 从体素场景原样复制。几何来源是 `heuristic_primitive`，和体素不能写进同一个 Scene。
+
+```powershell
+.\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic --preview-only
+.\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic
+```
+
+默认输出 `outputs/stage_ef/heuristic_primitive_proxy/`。通过后才有 `scene.blend`、`blockout_video.mp4`、`original_vs_blockout.mp4`。这仍是启发式代理，不是测量几何。
+
+## 测试与死代码清理（2026-11-24）
+
+测试方法由159个精简至145个：Stage A的端点检查已被1024值往返测试覆盖，重复同步诊断及其固定目录图片/报告生成已删除；Scene Schema和渲染/批量参数的负例合并为带名称的子测试，原负例断言保留。全部Blender后台集成、穿模、静态驱动拒绝、相机/时间轴和哈希复用测试继续执行。
+
+删除未被入口、模块或文档引用的 `read_frame_table`、未使用的导入、`make_scene` 的curve参数、`bake_texture` 的category参数、TSDF构造器的width/height参数及字段，以及纹理选帧中的无效重复运算。实际Parquet适配仍在样本准备入口使用，PyArrow依赖保留；旧重建路线有真实引用，不作为死代码删除。
+
+清理后全项目 **145/145通过，无失败、无错误、无跳过**，记录在 `outputs/stage_ef/cleanup_tests/test_results.json`。另对精简后的贴图烘焙及TSDF接口执行内存合成检查通过。清理不修改Blender生成/渲染代码、Scene JSON或已交付的场景/视频文件，也不改写历史验收结果。

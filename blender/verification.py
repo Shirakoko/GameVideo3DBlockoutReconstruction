@@ -6,7 +6,7 @@ import bpy
 from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Matrix, Quaternion, Vector
 
-from blender.object_generator import COLORS
+from blender.object_generator import CLAY, COLORS
 
 
 def verify_scene(plan):
@@ -65,8 +65,9 @@ def verify_scene(plan):
         if len(obj.data.materials) != 1:
             raise ValueError("Missing/extra primitive category material")
         mat = obj.data.materials[0]
+        expected = CLAY if (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive" else COLORS[item["category"]]
         if mat.name != "Blockout_"+item["category"] or any(
-                abs(v-e) > 1e-6 for v, e in zip(mat.diffuse_color, COLORS[item["category"]])):
+                abs(v-e) > 1e-6 for v, e in zip(mat.diffuse_color, expected)):
             raise ValueError("Saved category material mismatch")
     max_projection = max_pose = max_object = 0.
     projection_cases = 0

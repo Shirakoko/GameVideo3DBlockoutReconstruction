@@ -1,5 +1,4 @@
 """Synthetic tests only. No HF payload and no claim of real-session validation."""
-import json
 import subprocess
 import tempfile
 import unittest
@@ -7,7 +6,6 @@ from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
-from PIL import Image, ImageDraw
 
 from stage_a.access import Client, InspectionError, REQUIRED, rank_samples
 from stage_a.depth import (UnverifiedContractError, metric_depth, relative_log_depth,
@@ -18,26 +16,19 @@ from stage_a.sync import SyncError, compare_timestamps, join_frames, read_jsonl
 
 
 class DepthTests(unittest.TestCase):
-    def test_relative_endpoints(self):
-        np.testing.assert_allclose(relative_log_depth(np.array([0, 1]), log_constant=4000), [0, 1])
-
-    def test_relative_roundtrip(self):
+    def test_relative_roundtrip_including_endpoints(self):
         values = np.linspace(0, 1, 1024)
         q = np.log1p(4000*values) / np.log1p(4000)
         np.testing.assert_allclose(relative_log_depth(q, log_constant=4000), values, atol=1e-12)
 
-    def test_invalid_q(self):
-        for q in (-1, 1.1, np.nan, np.inf):
-            with self.assertRaises(ValueError):
-                relative_log_depth(np.array([q]), log_constant=4000)
-
-    def test_no_default_constant(self):
-        with self.assertRaises(TypeError):
+    def test_relative_requires_explicit_valid_parameters(self):
+        with self.subTest(parameter="missing constant"), self.assertRaises(TypeError):
             relative_log_depth(np.array([0.5]))
-
-    def test_bad_constant(self):
+        for q in (-1, 1.1, np.nan, np.inf):
+            with self.subTest(q=q), self.assertRaises(ValueError):
+                relative_log_depth(np.array([q]), log_constant=4000)
         for value in (0, -1, np.nan):
-            with self.assertRaises(ValueError):
+            with self.subTest(log_constant=value), self.assertRaises(ValueError):
                 relative_log_depth(np.array([0.5]), log_constant=value)
 
     def test_metric_is_blocked(self):
@@ -85,21 +76,18 @@ class MP4Tests(unittest.TestCase):
         handler = box(b"hdlr", b"\0"*8+b"vide"+b"\0"*12)
         return box(b"moov", box(b"trak", box(b"mdia", handler+box(b"minf", stbl))))
 
-    def test_sample_chunk_prefix(self):
-        end, info = video_prefix_end(self.fixture(), 3)
+    def test_sample_chunk_prefix_and_relocated_offsets(self):
+        fixture = self.fixture()
+        end, info = video_prefix_end(fixture, 3)
         self.assertEqual(end, 2070)
         self.assertEqual(info["prefix_video_samples_including_preroll"], 4)
-
-    def test_relocate_all_offsets(self):
-        end, _ = video_prefix_end(relocate_chunks(self.fixture(), 100), 3)
+        end, _ = video_prefix_end(relocate_chunks(fixture, 100), 3)
         self.assertEqual(end, 2170)
 
-    def test_truncated_box_rejected(self):
-        with self.assertRaises(InspectionError):
+    def test_invalid_box_and_sample_bounds_rejected(self):
+        with self.subTest(case="truncated box"), self.assertRaises(InspectionError):
             list(boxes(b"\0\0\0\x10moov"))
-
-    def test_sample_out_of_bounds(self):
-        with self.assertRaises(InspectionError):
+        with self.subTest(case="sample outside table"), self.assertRaises(InspectionError):
             video_prefix_end(self.fixture(), 5)
 
 
@@ -135,13 +123,12 @@ class SyncTests(unittest.TestCase):
         with self.assertRaises(SyncError):
             join_frames([0], [0], [{"qpc": 123}], camera_frame_key="frame")
 
-    def test_timestamp_tolerance(self):
+    def test_timestamp_tolerance_and_invalid_sequences(self):
         self.assertTrue(compare_timestamps([0, 1/60], [0.0001, 1/60+0.0001], tolerance_seconds=0.001)["within_tolerance"])
         self.assertFalse(compare_timestamps([0, 1/60], [0.01, 1/60+0.01], tolerance_seconds=0.001)["within_tolerance"])
 
-    def test_bad_timestamps(self):
         for timestamps in ([0, 0], [1, 0], [0, float("nan")]):
-            with self.assertRaises(SyncError):
+            with self.subTest(timestamps=timestamps), self.assertRaises(SyncError):
                 compare_timestamps(timestamps, [0, 1], tolerance_seconds=0.001)
 
     def test_jsonl_strict_and_bounded(self):
@@ -252,33 +239,6 @@ class MediaIntegrationTests(unittest.TestCase):
         # Supplying a regular RGB video as depth must fail, not silently convert it.
         with self.assertRaises(DecodeError):
             list(iter_frames(self.rgb_path, start=0, count=1, depth=True))
-
-    def test_synthetic_sync_fixture_and_diagnostic(self):
-        original_indices = list(range(1000, 1000+self.count))
-        cameras = [{"frame": index, "qpc": 10_000_000+ordinal*166667,
-                    "position": [ordinal*0.01, 0, 0], "rotation": [0, 0, 0]}
-                   for ordinal, index in enumerate(original_indices)]
-        rows, report = join_frames(original_indices, original_indices, cameras, camera_frame_key="frame")
-        self.assertTrue(report["index_join_complete"])
-        self.assertEqual(len(rows), 720)
-        output = Path("outputs/stage_a/tests")
-        output.mkdir(parents=True, exist_ok=True)
-        details = {"data_source": "SYNTHETIC ONLY — NOT HUGGING FACE", "duration_seconds": 12,
-                   "fps": 60, "raster": [32, 32], "frames": 720,
-                   "native_10bit_codes": "lossless all-code comparison; no luma range scaling",
-                   "expected_adjacent_depth_duplicates": 360, "index_join": report,
-                   "session_metric_depth_validated": False, "ffmpeg": ffmpeg_path()}
-        (output / "synthetic_fixture_report.json").write_text(json.dumps(details, ensure_ascii=False, indent=2), encoding="utf-8")
-        picture = Image.new("RGB", (720, 220), "white")
-        draw = ImageDraw.Draw(picture)
-        draw.text((15, 10), "SYNTHETIC TEST ONLY / NOT A DATASET SAMPLE", fill="black")
-        for column, ordinal in enumerate((0, 120, 360, 719)):
-            code = self.expected[ordinal]
-            gray = (code/1023*255).astype(np.uint8)
-            tile = Image.fromarray(gray).resize((140, 140), Image.Resampling.NEAREST).convert("RGB")
-            picture.paste(tile, (15+column*180, 40))
-            draw.text((15+column*180, 190), f"index={1000+ordinal} t={ordinal/60:.2f}s", fill="black")
-        picture.save(output / "synthetic_code_diagnostic.png")
 
 
 if __name__ == "__main__":

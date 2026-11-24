@@ -1,5 +1,4 @@
 """Low-poly geometry, alignment, cache and inference guard regressions."""
-from copy import deepcopy
 import json
 from pathlib import Path
 import tempfile
@@ -13,7 +12,7 @@ from blender.pipeline import json_write, sha256, blender_path, run_pipeline
 from blender.media import command
 from reconstruction.refine import refinement_lock, verified_frame_cache, make_scene, render_previews
 from reconstruction.refined_calibration import align_depth, decode_empirical, fit_smooth_curve, sample_depth_curve, calibrate, project
-from reconstruction.refined_geometry import split_chunks, inspect_glb, write_glb, SurfaceFusion
+from reconstruction.refined_geometry import split_chunks, inspect_glb, write_glb
 from reconstruction.refined_voxels import VoxelFusion, palette_mesh, voxel_shell
 from scene_schema import validate_scene
 from stage_a.media import ffmpeg_path
@@ -83,7 +82,7 @@ class VoxelTests(unittest.TestCase):
             k=np.array([[50.,0,32],[0,50,32],[0,0,1.]])
             video=dict(width=64,height=64,fps="60")
             scene=make_scene(folder,{"ground":mesh},[0,1,2],lambda i:(rgb,depth,valid,labels),
-                [np.eye(4)]*3,{},dict(schema="refined.calibration/1",status="passed",physical_contract_verified=False),
+                [np.eye(4)]*3,dict(schema="refined.calibration/1",status="passed",physical_contract_verified=False),
                 rows,k,video,dict(poses=folder/"synthetic-poses.json"),style="voxel",voxel_size=.5)
             validate_scene(scene)
             self.assertEqual(len(scene["objects"]),1)
