@@ -22,7 +22,7 @@ def animate_objects(items, objects):
     for item in items:
         obj = objects[item["object_id"]]
         for sample in item["samples"]:
-            apply_transform(obj, sample["transform"], item["dimensions"])
+            apply_transform(obj, sample["transform"], item["dimensions"], mesh=item["primitive_type"] == "mesh")
             for path in ["location", "rotation_quaternion", "scale"]:
                 obj.keyframe_insert(data_path=path, frame=sample["blender_frame"], group="Source Motion")
         linear_curves(obj)

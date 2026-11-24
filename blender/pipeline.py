@@ -14,10 +14,10 @@ import tempfile
 from zoneinfo import ZoneInfo
 
 from blender.media import encode_outputs, probe_video
-from blender.planner import prepare_plan, read_json
+from blender.planner import prepare_plan, read_json, source_scene_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTIFACTS = ["scene.blend", "blockout_video.mp4", "original_video.mp4", "original_vs_blockout.mp4",
+ARTIFACTS = ["scene.blend", "scene_schema.json", "blockout_video.mp4", "original_video.mp4", "original_vs_blockout.mp4",
              "build_plan.json", "frame_mapping.json", "build_report.json", "saved_scene_verification.json",
              "pipeline_report.json", "build.log", "render.log", "source_video.probe.log",
              "encode_blockout.log", "encode_original.log", "encode_comparison.log",
@@ -34,6 +34,21 @@ def sha256(path):
         for chunk in iter(lambda: source.read(1024*1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def cached_outputs_match(output, receipt, *, generate_only):
+    """An empty/incomplete receipt must not turn all([]) into a cache hit."""
+    hashes = receipt.get("artifact_hashes")
+    required = {"scene.blend", "scene_schema.json", "build_plan.json", "frame_mapping.json",
+                "build_report.json", "saved_scene_verification.json", "build.log", "render.log"}
+    if not generate_only:
+        required |= {"blockout_video.mp4", "original_video.mp4", "original_vs_blockout.mp4"}
+    if not isinstance(hashes, dict) or not required <= set(hashes) or set(hashes)-set(ARTIFACTS):
+        return False
+    if not set(hashes) <= set(receipt.get("owned_files", [])):
+        return False
+    return all(isinstance(digest, str) and len(digest) == 64 and (output/name).is_file()
+               and sha256(output/name) == digest for name, digest in hashes.items())
 
 
 def blender_path(configured=None):
@@ -75,8 +90,11 @@ def background(executable, script, workspace, *, blend=None, verify_only=False, 
     args += ["--python-exit-code", "1", "--python", str(script), "--", str(workspace/"build_plan.json"), str(workspace)]
     if verify_only:
         args.append("--verify-only")
-    with (workspace/(name+".log")).open("w", encoding="utf-8") as log:
-        result = subprocess.run(args, stdout=log, stderr=subprocess.STDOUT, timeout=timeout)
+    try:
+        with (workspace/(name+".log")).open("w", encoding="utf-8") as log:
+            result = subprocess.run(args, stdout=log, stderr=subprocess.STDOUT, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError(f"Blender {name} timed out after {timeout}s; see {workspace/(name+'.log')}") from error
     if result.returncode:
         tail = (workspace/(name+".log")).read_text(encoding="utf-8", errors="replace")[-2000:]
         raise RuntimeError(f"Blender {name} exited {result.returncode}; see {workspace/(name+'.log')}\n{tail}")
@@ -84,7 +102,8 @@ def background(executable, script, workspace, *, blend=None, verify_only=False, 
 
 def run_pipeline(scene_json, original_video, output, *, blender=None, camera_poses=None, point_cloud=None,
                  active_camera=None, resolution=None, engine="BLENDER_WORKBENCH", samples=16,
-                 video_start_frame=0, video_frame_count=None, generate_only=False, reuse=False, timeout=3600):
+                 video_start_frame=0, video_frame_count=None, generate_only=False, reuse=False, timeout=3600,
+                 allow_inferred=False, allow_heuristic=False):
     output = Path(output).resolve()
     if isinstance(timeout, bool) or not isinstance(timeout, int) or timeout <= 0:
         raise ValueError("Positive integer process timeout required")
@@ -96,19 +115,24 @@ def run_pipeline(scene_json, original_video, output, *, blender=None, camera_pos
     with output_lock(output):
         receipt_path = output/"pipeline_report.json"
         previous = read_json(receipt_path) if receipt_path.is_file() else {}
-        if previous and previous.get("schema") != "stage_ef.receipt/1":
+        if not isinstance(previous, dict) or (previous and previous.get("schema") != "stage_ef.receipt/1"):
             raise ValueError("Existing pipeline_report.json is not owned by Stage E/F")
+        if not isinstance(previous.get("owned_files", []), list) or any(
+                not isinstance(name, str) or name not in ARTIFACTS for name in previous.get("owned_files", [])):
+            raise ValueError("Invalid Stage E/F owned_files receipt; refusing to overwrite outputs")
         owned = set(previous.get("owned_files", []))
         for name in ARTIFACTS:
             if (output/name).exists() and name not in owned:
                 raise ValueError(f"Refusing to overwrite unmanaged file: {output/name}")
         workspace = Path(tempfile.mkdtemp(prefix=".stage_ef_run_", dir=output)).resolve()
+        published = []
         try:
             print("Stage E/F: inspecting every original video PTS", flush=True)
             video = probe_video(original_video, start_frame=video_start_frame, frame_count=video_frame_count,
-                                log_path=workspace/"source_video.probe.log")
+                                log_path=workspace/"source_video.probe.log", timeout=timeout)
             plan = prepare_plan(scene_json, video, resolution=resolution, camera_poses=camera_poses,
-                                active_camera=active_camera, engine=engine, samples=samples, point_cloud=point_cloud)
+                                active_camera=active_camera, engine=engine, samples=samples, point_cloud=point_cloud,
+                                allow_inferred=allow_inferred, allow_heuristic=allow_heuristic)
             source_files = [scene_json, original_video, *map(Path, plan["reference_sources"])]
             if camera_poses:
                 source_files.append(Path(camera_poses).resolve())
@@ -118,17 +142,21 @@ def run_pipeline(scene_json, original_video, output, *, blender=None, camera_pos
             # old binary merely because source inputs happen to be unchanged.
             source_files += sorted((ROOT/"blender").glob("*.py"))
             source_files += [ROOT/"config/scene_schema.json", ROOT/"config/camera_pose_schema.json", ROOT/"scene_schema/validation.py", ROOT/"reconstruction/coordinate_transform.py",
-                             ROOT/"stage_a/media.py"]
+                             ROOT/"stage_a/media.py", ROOT/"config/scene_schema_refined.json"]
             inputs = {str(p.resolve()): sha256(p) for p in source_files}
             parameters = dict(resolution=plan["resolution"], engine=engine, samples=samples, active_camera=plan["active_camera"],
                               video_start_frame=video_start_frame, video_frame_count=video["frame_count"], generate_only=generate_only,
-                              blender_path=executable, blender_version=subprocess.check_output([executable, "--version"], text=True).splitlines()[0])
+                              allow_inferred=allow_inferred,
+                              allow_heuristic=allow_heuristic,
+                              blender_path=executable, blender_version=subprocess.check_output(
+                                  [executable, "--version"], text=True, timeout=min(timeout, 30)).splitlines()[0])
             fingerprint = hashlib.sha256(json.dumps(dict(inputs=inputs, parameters=parameters), sort_keys=True).encode()).hexdigest()
             if reuse and previous.get("status") == "passed" and previous.get("fingerprint") == fingerprint:
-                if all((output/name).is_file() and sha256(output/name) == digest for name, digest in previous["artifact_hashes"].items()):
+                if cached_outputs_match(output, previous, generate_only=generate_only):
                     print(f"Stage E/F: verified matching input/code/output hashes; reusing {output}", flush=True)
                     return previous
             json_write(workspace/"build_plan.json", plan)
+            json_write(workspace/"scene_schema.json", source_scene_snapshot(plan["source_scene_json"], scene_json))
             json_write(workspace/"frame_mapping.json", dict(fps=plan["fps"], duration_seconds=video["duration_seconds"],
                 start_seconds=plan["frame_mapping"][0]["timestamp_seconds"], frames=plan["frame_mapping"],
                 tick_policy="Original ticks only where supplied. Interpolated/render-only frames have null, never fabricated."))
@@ -149,7 +177,7 @@ def run_pipeline(scene_json, original_video, output, *, blender=None, camera_pos
             media = {}
             if not generate_only:
                 print("Stage F: encoding and checking original / blockout / split-screen MP4", flush=True)
-                media = encode_outputs(workspace, video, plan["resolution"])
+                media = encode_outputs(workspace, video, plan["resolution"], timeout=timeout)
             generated = [name for name in ARTIFACTS if name != "pipeline_report.json" and (workspace/name).is_file()]
             hashes = {name: sha256(workspace/name) for name in generated}
             # Receipt paths refer to committed files, not the disposable run.
@@ -161,22 +189,27 @@ def run_pipeline(scene_json, original_video, output, *, blender=None, camera_pos
                 scene_verification=read_json(workspace/"saved_scene_verification.json"), artifact_hashes=hashes,
                 owned_files=sorted(owned | set(generated) | {"pipeline_report.json"}), output_directory=str(output),
                 data_source=plan["data_source"], real_session_accuracy_validated=False,
+                reconstruction_mode=plan["reconstruction_mode"],
                 limitations=["Sparse camera/object samples are interpolated, not newly measured poses.",
                     "Observed-surface primitive bounds do not recover hidden volume or articulated motion.",
                     "not_detected does not hide objects; no inferred occlusion.",
                     "Reference vertices are saved in .blend but excluded from render.",
+                    "Exported Scene JSON keeps source observations and absolute source-file references; dense overrides remain in build_plan.json.",
                     "Videos are silent; audio reconstruction is not part of Stage E/F."])
             json_write(workspace/"pipeline_report.json", report)
             # Publish receipt last. Existing owned outputs are recoverable by
             # regenerating the exact same input/code; unrelated files stay put.
             for name in [*generated, "pipeline_report.json"]:
                 os.replace(workspace/name, output/name)
+                published.append(name)
             print(f"Stage E/F passed: {output}", flush=True)
             return report
         except Exception as error:
-            json_write(workspace/"failure.json", dict(status="failed", error=str(error), outputs_published=False))
+            json_write(workspace/"failure.json", dict(status="failed", error=str(error), outputs_published=bool(published),
+                                                     published_files=published))
             # Preserve the isolated failed run and its complete logs for diagnosis.
-            print(f"Stage E/F failed; prior outputs unchanged; logs: {workspace}", flush=True)
+            state = "publication interrupted; inspect published_files" if published else "prior outputs unchanged"
+            print(f"Stage E/F failed; {state}; logs: {workspace}", flush=True)
             raise
         finally:
             # Exact resolved mkdtemp child, never an input, workspace root or
@@ -205,7 +238,9 @@ def parser():
     p.add_argument("--video-frame-count", type=int)
     p.add_argument("--generate-only", action="store_true")
     p.add_argument("--reuse", action="store_true", help="Reuse only when all input/code/output hashes match")
-    p.add_argument("--timeout", type=int, default=3600, help="Per Blender process timeout in seconds")
+    p.add_argument("--allow-inferred", action="store_true", help="Explicitly accept empirically validated 1.1.0 estimates, never relabelled as verified")
+    p.add_argument("--allow-heuristic", action="store_true", help="Explicitly accept user-approved RGB-layout proxy completion, not geometry recovery")
+    p.add_argument("--timeout", type=int, default=3600, help="Per Blender / FFmpeg full-decode or encode process timeout in seconds")
     return p
 
 
@@ -219,22 +254,39 @@ def main(argv=None, *, generate_only_default=False):
         engine=args.engine, samples=args.samples, video_start_frame=args.video_start_frame,
         video_frame_count=args.video_frame_count, generate_only=args.generate_only or generate_only_default,
         reuse=args.reuse, timeout=args.timeout)
+    options["allow_inferred"] = args.allow_inferred
+    options["allow_heuristic"] = args.allow_heuristic
     try:
         if args.batch:
             if args.scene_json or args.original_video or args.output:
                 p.error("--batch cannot be combined with single-job input/output")
             document = read_json(args.batch)
-            if document.get("schema") != "stage_ef.batch/1" or not document.get("jobs"):
+            if (not isinstance(document, dict) or document.get("schema") != "stage_ef.batch/1"
+                    or not isinstance(document.get("jobs"), list) or not document["jobs"]):
                 raise ValueError("Nonempty stage_ef.batch/1 manifest required")
             base, results, used = args.batch.resolve().parent, [], set()
             for index, job in enumerate(document["jobs"]):
                 try:
+                    if not isinstance(job, dict):
+                        raise ValueError("Each batch job must be a JSON object")
+                    for key in {"scene_json", "original_video", "output"}:
+                        if not isinstance(job.get(key), str) or not job[key].strip():
+                            raise ValueError(f"Batch job requires a nonempty {key} path")
+                    for key in {"camera_poses", "point_cloud"} & set(job):
+                        if job[key] is not None and (not isinstance(job[key], str) or not job[key].strip()):
+                            raise ValueError(f"Batch {key} must be a nonempty path or null")
+                    for key in {"engine", "active_camera"} & set(job):
+                        if not isinstance(job[key], str) or not job[key].strip():
+                            raise ValueError(f"Batch {key} must be a nonempty string")
+                    for key in {"generate_only", "allow_inferred", "allow_heuristic"} & set(job):
+                        if not isinstance(job[key], bool):
+                            raise ValueError(f"Batch {key} must be boolean")
                     destination = (base/job["output"]).resolve()
                     if destination in used:
                         raise ValueError("Batch jobs must have distinct output directories")
                     used.add(destination)
                     config = dict(options)
-                    allowed = {"camera_poses", "point_cloud", "active_camera", "resolution", "engine", "samples", "video_start_frame", "video_frame_count", "generate_only"}
+                    allowed = {"camera_poses", "point_cloud", "active_camera", "resolution", "engine", "samples", "video_start_frame", "video_frame_count", "generate_only", "allow_inferred"}
                     if set(job)-allowed-{"scene_json", "original_video", "output"}:
                         raise ValueError("Unknown batch job option")
                     for key in allowed & set(job):

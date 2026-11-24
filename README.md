@@ -1,6 +1,8 @@
 # Game Video Reconstruction — Stage A / B / C / D / E / F
 
-Stage E/F 已实现：读取已验证 Scene JSON，通过 Blender Background Mode 自动创建粗模、分类材质、Collections、摄像机和逐帧动画，保存后重开校验并渲染 MP4。支持原始密集 Camera Pose、精确 FPS/源 Frame Index 映射、批量任务、受保护的重复运行和哈希校验复用，不依赖人工 Blender UI。详情见 [docs/stage_ef.md](docs/stage_ef.md)。
+新增可选真实视频彩色体素粗模路径，保留环境轮廓/粗颜色，不追求精细贴图。模型识别已在本地 GPU 跑完 61 帧；原深度路径仍失败，独立 RGB 三视图留出重投影通过（627 点，中位数 1.99 px、P90 7.05 px），但不能据此证明全部稠密几何有效。已后台生成表面/实体体素试验 `.blend` 和九帧预览；最新实体候选有 261/720 帧相机落入体素，质量拒绝，未生成新版真实 MP4。原严格路径不变。流程、命令和实际证据见 [docs/refined_blockout.md](docs/refined_blockout.md)。
+
+Stage E/F 已实现并补齐 Roadmap：读取已验证 Scene JSON，通过 Blender Background Mode 自动创建地面/道路/墙壁/建筑等粗模、分类材质、Collections、摄像机和逐帧动画，保存后重开校验并渲染 MP4。支持原始密集 Camera Pose、精确 FPS/源 Frame Index 映射、源 Scene JSON 快照、批量任务、受保护的重复运行和完整产物哈希复用，不依赖人工 Blender UI。Stage E/F 26 项、全项目 115 项测试通过（无跳过）。详情见 [docs/stage_ef.md](docs/stage_ef.md)。
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/prepare_stage_ef_demo.py
@@ -19,7 +21,7 @@ Stage C/D 已增加：五类主要物体（角色、树、岩石、地面、栏�
 .\.venv\Scripts\python.exe scripts/run_tests.py --output outputs/stage_cd/tests
 ```
 
-真实产物：`outputs/stage_cd/sample_66ad/scene_schema.json`（辅助识别五类、10 条观测，未知几何为 null，预期 exit 2）。合成产物：`outputs/stage_cd/synthetic_demo/`（五类持久 ID、4 静态+1 动态、30 条观测、带来源的对象点云与逐帧 Mask/debug）。可选本地 Grounding DINO/SAM 适配器已提供，但本机未安装模型依赖/权重，未实机验收；不声称真实自动检测精度已经可靠。
+真实产物：`outputs/stage_cd/sample_66ad/scene_schema.json`（辅助识别五类、10 条观测，未知几何为 null，预期 exit 2）。合成产物：`outputs/stage_cd/synthetic_demo/`（五类持久 ID、4 静态+1 动态、30 条观测、带来源的对象点云与逐帧 Mask/debug）。本地 Grounding DINO/SAM 依赖和固定版本权重已安装，新增 refinement 路径已完成 61 帧 GPU 推理；识别和几何仍是 predicted/inferred，不声称真实自动检测精度已获真值验证。
 
 当前状态：**Stage B 反投影与融合内核、单元测试和合成演示已实现；真实样本米制 Depth / render-pose 仍未确认，真实 Stage A/B 尚未验收**。不扩大数据下载；Stage E/F 只对已验证合同输入生成场景，独立 Stage B 后台数学验证不属于真实样本验收。
 

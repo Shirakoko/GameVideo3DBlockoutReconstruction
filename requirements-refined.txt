@@ -1,0 +1,7 @@
+# Optional refined reconstruction; existing core requirements remain unchanged.
+opencv-python-headless==4.11.0.86
+huggingface-hub==0.36.0
+transformers==4.57.3
+torch==2.9.1
+torchvision==0.24.1
+# Windows CUDA wheels: --extra-index-url https://download.pytorch.org/whl/cu128

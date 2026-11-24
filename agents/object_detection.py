@@ -12,8 +12,9 @@ import json
 import numpy as np
 from PIL import Image, ImageDraw
 
-CATEGORIES = ("person", "tree", "rock", "ground", "barrier")
-PRIMITIVES = dict(person="capsule", tree="cylinder", rock="box", ground="plane", barrier="box")
+CATEGORIES = ("person", "tree", "rock", "ground", "barrier", "road", "wall", "building")
+PRIMITIVES = dict(person="capsule", tree="cylinder", rock="box", ground="plane", barrier="box",
+                  road="plane", wall="box", building="box")
 
 
 def confidence(score, provenance, method, evidence):

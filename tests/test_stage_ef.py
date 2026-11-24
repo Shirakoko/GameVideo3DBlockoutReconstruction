@@ -1,21 +1,24 @@
 """Stage E/F contracts plus real Blender background integration (synthetic)."""
 from copy import deepcopy
+from contextlib import redirect_stdout
 from fractions import Fraction
+import io
 import json
 import os
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
-from agents.object_detection import SyntheticColorProvider
+from agents.object_detection import PRIMITIVES, SyntheticColorProvider
 from agents.scene_builder import build_scene
 from agents.synthetic_scene import make_scene_fixture
 from blender.media import command, probe_video
-from blender.pipeline import blender_path, json_write, main, run_pipeline
-from blender.planner import load_camera_poses, prepare_plan
+from blender.pipeline import blender_path, cached_outputs_match, json_write, main, run_pipeline
+from blender.planner import load_camera_poses, prepare_plan, source_scene_snapshot
 from blender.timeline import frame_mapping, matrix_quaternion, sample_camera, slerp
 from reconstruction.coordinate_transform import ue_rotator_matrix
 from scripts.understand_scene import rgb_records
@@ -195,8 +198,68 @@ class ContractTests(unittest.TestCase):
         path = self.scene_file(dict(schema="wrong", jobs=[]), "batch.json")
         self.assertEqual(main(["--batch", str(path)]), 1)
 
+    def test_architectural_category_contract(self):
+        scene = deepcopy(self.scene)
+        replacements = {"ground": "road", "barrier": "wall", "rock": "building"}
+        for obj in scene["objects"]:
+            if obj["category"] in replacements:
+                obj["category"] = replacements[obj["category"]]
+                obj["primitive_type"] = PRIMITIVES[obj["category"]]
+        plan = prepare_plan(self.scene_file(scene, "architecture.json"), video_spec())
+        types = {o["category"]: o["primitive_type"] for o in plan["objects"]}
+        self.assertEqual({k: types[k] for k in replacements.values()}, dict(road="plane", wall="box", building="box"))
+
+    def test_source_snapshot_can_be_read_from_another_directory(self):
+        snapshot = source_scene_snapshot(self.scene, self.scene_path)
+        self.assertFalse(Path(self.scene["objects"][0]["geometry_source"]["point_cloud_path"]).is_absolute())
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"scene_schema.json"
+            json_write(path, snapshot)
+            plan = prepare_plan(path, video_spec())
+            self.assertEqual(plan["frame_end"], 241)
+            for obj in snapshot["objects"]:
+                self.assertTrue(Path(obj["geometry_source"]["point_cloud_path"]).is_file())
+                self.assertTrue(Path(obj["observations"][0]["mask"]["path"]).is_file())
+
+    def test_invalid_render_budget_and_resolution_are_actionable(self):
+        for value in (True, 1.5, 0, "16"):
+            with self.subTest(samples=value), self.assertRaisesRegex(ValueError, "Positive integer"):
+                prepare_plan(self.scene_path, video_spec(), samples=value)
+        for value in ([], [96], [96, 56, 8], "96x56", {}):
+            with self.subTest(resolution=value), self.assertRaisesRegex(ValueError, "exactly"):
+                prepare_plan(self.scene_path, video_spec(), resolution=value)
+
+    def test_incomplete_or_unsafe_receipt_never_reuses(self):
+        self.assertFalse(cached_outputs_match(self.folder, {"artifact_hashes": {}}, generate_only=False))
+        self.assertFalse(cached_outputs_match(self.folder, {"artifact_hashes": {"../unrelated": "0"*64}}, generate_only=True))
+
+    def test_malformed_batch_jobs_do_not_abort_following_jobs(self):
+        path = self.scene_file(dict(schema="stage_ef.batch/1", jobs=[
+            [], dict(scene_json=True, original_video="in.mp4", output="bad"),
+            dict(scene_json="in.json", original_video="in.mp4", output="bad", generate_only="false"),
+            dict(scene_json="in.json", original_video="in.mp4", output="good", generate_only=True)]), "malformed_batch.json")
+        output = io.StringIO()
+        with patch("blender.pipeline.run_pipeline", return_value={}) as run, redirect_stdout(output):
+            self.assertEqual(main(["--batch", str(path)]), 1)
+        self.assertEqual(run.call_count, 1)
+        self.assertEqual([r["status"] for r in json.loads(output.getvalue())], ["failed"]*3+["passed"])
+
 
 class MediaTests(unittest.TestCase):
+    def test_invalid_window_is_rejected_before_decode(self):
+        for start, count in ((True, 1), (.5, 1), (0, False), (0, 2.5), (-1, 1)):
+            with self.subTest(start=start, count=count), self.assertRaisesRegex(ValueError, "frame window"):
+                probe_video("unused.mp4", start_frame=start, frame_count=count)
+
+    def test_command_timeout_preserves_partial_diagnostics(self):
+        with tempfile.TemporaryDirectory() as folder:
+            log = Path(folder)/"timeout.log"
+            with patch("blender.media.subprocess.run", side_effect=subprocess.TimeoutExpired("ffmpeg", 2, output=b"partial decoder log")):
+                with self.assertRaisesRegex(RuntimeError, "timed out"):
+                    command(["ffmpeg"], log, timeout=2)
+            self.assertIn("partial decoder log", log.read_text())
+            self.assertIn("2 seconds", log.read_text())
+
     def test_rational_fps_frame_count_pts_window(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder)/"fractional.mp4"
@@ -266,6 +329,9 @@ class BackgroundIntegrationTests(unittest.TestCase):
             self.assertTrue(first["scene_verification"]["reopened_saved_blend"])
             for name in ["scene.blend", "blockout_video.mp4", "original_vs_blockout.mp4"]:
                 self.assertTrue((output/name).is_file())
+            snapshot = json.loads((output/"scene_schema.json").read_text(encoding="utf-8"))
+            self.assertEqual(prepare_plan(output/"scene_schema.json", video_spec(count=8))["frame_end"], 8)
+            self.assertEqual(snapshot["scene_id"], scene["scene_id"])
             for report in first["media"].values():
                 self.assertEqual(report["frame_count"], 8)
                 self.assertEqual(report["fps"], "60")
@@ -279,6 +345,22 @@ class BackgroundIntegrationTests(unittest.TestCase):
             (output/"blockout_video.mp4").write_bytes(b"tampered")
             restored = run_pipeline(scene_path, video_path, output, blender=executable, resolution=(96, 56), reuse=True)
             self.assertEqual(restored["media"]["blockout_video.mp4"]["frame_count"], 8)
+            # Empty hashes previously satisfied all([]) and skipped generation.
+            broken_receipt = deepcopy(restored)
+            broken_receipt["artifact_hashes"] = {}
+            json_write(output/"pipeline_report.json", broken_receipt)
+            repaired = run_pipeline(scene_path, video_path, output, blender=executable, resolution=(96, 56), reuse=True)
+            self.assertIn("scene_schema.json", repaired["artifact_hashes"])
+            # Blender also saves/reopens/renders the architectural materials.
+            architecture = deepcopy(scene)
+            for obj in architecture["objects"]:
+                category = {"ground": "road", "barrier": "wall", "rock": "building"}.get(obj["category"])
+                if category:
+                    obj.update(category=category, primitive_type=PRIMITIVES[category])
+            architecture_path = base/"architecture.json"
+            json_write(architecture_path, architecture)
+            architectural_report = run_pipeline(architecture_path, video_path, base/"architecture_output", blender=executable, resolution=(96, 56))
+            self.assertEqual(architectural_report["stage_f"], "passed")
             # End-to-end fractional FPS, not just a media probe: Blender's
             # fps_base, animation timestamps and H.264 outputs must agree.
             fractional = deepcopy(scene)

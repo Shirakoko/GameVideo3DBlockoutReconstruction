@@ -6,6 +6,8 @@
 
 当前支持 `person / tree / rock / ground / barrier`。角色使用 capsule，树用 cylinder，岩石/栏杆用 box，地面用 plane。Stage C 输出位置与尺寸来自 Mask 内的世界点，不来自语言模型编造的位置。
 
+Stage E/F 补齐 Roadmap 后，Scene Schema 和辅助标注入口另接受 `road / wall / building`，分别使用 plane / box / box 和分类灰模材质。原有五类合成识别及本地 DINO 的五类提示保持不变；新增 JSON 类别支持不代表道路/墙壁/建筑的自动识别精度已经验收。
+
 默认入口先读取已提取的 6 张真实 RGB 关键帧：0、120、240、360、600、719。`config/sample_66ad_annotations.json` 保存 Codex 对本地 RGB 的辅助视觉审查、粗略 polygon mask、置信度、角色身份提示及静动态提示。五类主要物体在首帧有示例，角色在六帧中保持一个 ID；首帧之外的树/石/地面/栏杆没有被强行认作首帧实例。240 帧角色只有框代理，不能用于几何。此样例是人工辅助流程接口的示范，**不是精确分割真值、完整场景标注、已基准评测的 VLM 结果或人工认证**；所有这些推断为 `inferred`。静态首帧实例只凭审查提示标记，非测量结果。
 
 默认真实分支输出五物体、10 条观测、6 条相机时间记录，未知世界位置、尺寸及外参为 `null`，几何 Confidence 为 `unobserved / 0`；无虚假 Motion Track 或世界空间关系。原始 720 帧遥测路径保留在 camera `raw_source`，不将未验证旋转转换为可用 Camera Track。原样本及派生产物仍限本地内部评估，沿用 2026-12-24（Asia/Shanghai）删除期限。

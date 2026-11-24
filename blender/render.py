@@ -22,9 +22,19 @@ def main():
         scene = bpy.context.scene
         # Blend stores //frames; absolute render path avoids any cwd dependence.
         scene.render.filepath = str((workspace/"frames/frame_######").resolve())
-        bpy.ops.render.render(animation=True)
+        if "--preview-frames" in args:
+            selected = [int(f) for f in args[args.index("--preview-frames")+1].split(",")]
+            if any(f < 1 or f > plan["frame_end"] for f in selected):
+                raise ValueError("Preview frame outside original timeline")
+            for frame in selected:
+                scene.frame_set(frame)
+                scene.render.filepath = str(workspace/f"frames/frame_{frame:06d}.png")
+                bpy.ops.render.render(write_still=True)
+        else:
+            selected = list(range(1, plan["frame_end"]+1))
+            bpy.ops.render.render(animation=True)
         actual = {p.name for p in (workspace/"frames").glob("*.png")}
-        expected = {f"frame_{i:06d}.png" for i in range(1, plan["frame_end"]+1)}
+        expected = {f"frame_{i:06d}.png" for i in selected}
         if actual != expected:
             raise ValueError("Background render produced missing/extra frames")
 

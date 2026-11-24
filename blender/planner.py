@@ -4,6 +4,7 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 import json
+import hashlib
 
 import numpy as np
 from jsonschema import Draft202012Validator
@@ -15,6 +16,36 @@ from scene_schema import validate_scene
 
 def read_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
+
+
+def source_scene_snapshot(scene, source_path):
+    """Rebase file references when exporting JSON beside the generated blend.
+
+    This preserves measured geometry and the input's sparse tracks, rather
+    than relabelling interpolated poses as original observations. Referenced
+    PLY/mask bytes stay at the source; .blend embeds its own geometry.
+    """
+    snapshot = deepcopy(scene)
+    base = Path(source_path).resolve().parent
+    def absolute(value):
+        return str((base/value).resolve()) if value is not None else None
+    for obj in snapshot["objects"]:
+        if "mesh_asset" in obj:
+            obj["mesh_asset"]["path"] = absolute(obj["mesh_asset"]["path"])
+        obj["geometry_source"]["point_cloud_path"] = absolute(obj["geometry_source"]["point_cloud_path"])
+        for row in obj["observations"]:
+            row["mask"]["path"] = absolute(row["mask"]["path"])
+    for camera in snapshot["cameras"]:
+        camera["raw_source"] = absolute(camera["raw_source"])
+    meta = snapshot["reconstruction_metadata"]
+    if "input_manifest" in meta:
+        meta["input_manifest"] = absolute(meta["input_manifest"])
+    if "empirical_validation" in meta:
+        meta["empirical_validation"]["path"] = absolute(meta["empirical_validation"]["path"])
+    if "heuristic_proxy" in meta:
+        meta["heuristic_proxy"]["path"] = absolute(meta["heuristic_proxy"]["path"])
+    validate_scene(snapshot)
+    return snapshot
 
 
 def load_camera_poses(path):
@@ -68,21 +99,56 @@ def validate_intrinsics(k):
 
 
 def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, active_camera=None,
-                 engine="BLENDER_WORKBENCH", samples=16, point_cloud=None, max_reference_points=50000):
+                 engine="BLENDER_WORKBENCH", samples=16, point_cloud=None, max_reference_points=50000,
+                 allow_inferred=False, allow_heuristic=False):
     scene_path = Path(scene_path).resolve()
     scene = read_json(scene_path)
     validate_scene(scene)
-    if not scene["reconstruction_metadata"]["geometry_contract_verified"]:
+    meta = scene["reconstruction_metadata"]
+    inferred = scene["schema_version"] == "1.1.0" and meta["reconstruction_mode"] == "inferred"
+    extra_sources = []
+    if inferred:
+        if not allow_inferred:
+            raise ValueError("Empirical scene requires explicit --allow-inferred; it is not verified ground truth")
+        receipt = meta["empirical_validation"]
+        path = (scene_path.parent/receipt["path"]).resolve()
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != receipt["sha256"]:
+            raise ValueError("Missing/tampered empirical calibration receipt")
+        report = read_json(path)
+        if report.get("schema") != "refined.calibration/1" or report.get("status") != "passed" or report.get("physical_contract_verified") is not False:
+            raise ValueError("Empirical calibration did not pass; rendering rejected")
+        extra_sources.append(str(path))
+        if "heuristic_proxy" in meta:
+            if not allow_heuristic:
+                raise ValueError("RGB-layout proxy requires explicit --allow-heuristic in addition to --allow-inferred")
+            receipt = meta["heuristic_proxy"]
+            path = (scene_path.parent/receipt["path"]).resolve()
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != receipt["sha256"]:
+                raise ValueError("Missing/tampered heuristic proxy receipt")
+            proxy = read_json(path)
+            if (proxy.get("schema") != "heuristic.proxy/1" or proxy.get("status") != "passed"
+                    or proxy.get("geometry_accuracy_validated") is not False
+                    or proxy.get("camera_inside_frame_count") != 0
+                    or proxy.get("coverage_status") != "passed"
+                    or proxy.get("authorization") != "user-approved RGB-layout completion"):
+                raise ValueError("Heuristic proxy safety/coverage checks did not pass")
+            camera_hash = hashlib.sha256(json.dumps(scene["cameras"],sort_keys=True).encode()).hexdigest()
+            if proxy.get("camera_sha256") != camera_hash:
+                raise ValueError("Proxy camera changed since clearance validation")
+            extra_sources.append(str(path))
+    if not meta["geometry_contract_verified"] and not inferred:
         raise ValueError("Stage E blocked: Scene geometry/Camera Pose contract unverified; no fabricated transforms")
     if any(o["transform"] is None for o in scene["objects"]):
         raise ValueError("Stage E requires measured transform/dimensions for every object")
     if not scene["objects"]:
         raise ValueError("No geometry to generate")
-    if samples < 1 or max_reference_points < 1:
-        raise ValueError("Positive samples/reference point budget required")
+    if any(isinstance(v, bool) or not isinstance(v, int) or v < 1 for v in (samples, max_reference_points)):
+        raise ValueError("Positive integer samples/reference point budget required")
     if engine not in {"BLENDER_WORKBENCH", "BLENDER_EEVEE", "CYCLES"}:
         raise ValueError("Unsupported render engine")
-    w, h = resolution or (video["width"], video["height"])
+    if resolution is not None and (not isinstance(resolution, (list, tuple)) or len(resolution) != 2):
+        raise ValueError("Resolution must contain exactly [width, height]")
+    w, h = (video["width"], video["height"]) if resolution is None else resolution
     if any(isinstance(v, bool) or not isinstance(v, int) for v in (w, h)) or min(w, h) <= 0 or w % 2 or h % 2:
         raise ValueError("H.264 yuv420p output needs positive even width/height")
     # K lives in the observed native RGB raster, not an arbitrary target size.
@@ -138,6 +204,16 @@ def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, activ
     objects = []
     for obj in scene["objects"]:
         item = {k: deepcopy(obj[k]) for k in ["object_id", "category", "primitive_type", "transform", "dimensions", "parent_id", "is_static"]}
+        if obj["primitive_type"] == "mesh":
+            if engine == "BLENDER_WORKBENCH":
+                raise ValueError("Textured Mesh requires EEVEE or Cycles, not Workbench")
+            asset = deepcopy(obj["mesh_asset"])
+            path = (scene_path.parent/asset["path"]).resolve()
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != asset["sha256"]:
+                raise ValueError("Missing/tampered mesh asset")
+            asset["path"] = str(path)
+            item["mesh_asset"] = asset
+            extra_sources.append(str(path))
         item["samples"] = [dict(blender_frame=f["blender_frame"], transform=sample_transform(obj["motion_track"], f["timestamp_seconds"]))
                            for f in mapping] if obj["motion_track"] else []
         objects.append(item)
@@ -158,13 +234,17 @@ def prepare_plan(scene_path, video, *, resolution=None, camera_poses=None, activ
     points = points[::max(1, int(np.ceil(len(points)/max_reference_points)))]
     fps = fps_fraction(scene["timeline"]["fps"])
     # Blender stores integer fps and float fps_base; actual rational retained.
-    fps_integer = round(float(fps))
+    fps_integer = max(1, round(float(fps)))
+    if fps_integer > 32767 or not 1e-5 <= fps_integer/float(fps) <= 1e6:
+        raise ValueError("FPS exceeds Blender's fps/fps_base storage range")
     return dict(schema="stage_e.build_plan/1", scene_id=scene["scene_id"], source_scene=str(scene_path), source_scene_json=scene,
                 data_source=scene["reconstruction_metadata"]["data_source"], resolution=[w, h],
                 fps=str(fps), fps_integer=fps_integer, fps_base=fps_integer/float(fps),
                 frame_start=1, frame_end=len(mapping), frame_mapping=mapping, active_camera=active,
                 pixel_aspect=[1., aspect] if aspect >= 1 else [1/aspect, 1.], cameras=cameras, objects=objects, reference_points=points.tolist(),
-                reference_sources=reference_sources, engine=engine, samples=samples,
+                reference_sources=reference_sources+extra_sources, engine=engine, samples=samples,
+                reconstruction_mode="inferred" if inferred else "verified", appearance=scene.get("appearance"),
+                reference_evidence="Heuristic RGB-layout proxy vertices; NOT measured geometry" if "heuristic_proxy" in meta else "Measured point reference; NOT complete geometry; may include temporal object samples",
                 conventions=dict(positions="metres, Blender RH Z up", object_dimensions="unscaled primitive dimensions; scale applied once",
                     parents="organizational world-space grouping", camera="optical +X right +Y down +Z forward -> Blender +X right +Y up -Z forward",
                     interpolation="per-render-frame linear translation/K/scale + shortest-arc quaternion SLERP",

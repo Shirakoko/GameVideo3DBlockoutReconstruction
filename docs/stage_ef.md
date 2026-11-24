@@ -1,10 +1,10 @@
 # Stage E/F：后台粗模生成与视频渲染
 
-已实现：Scene JSON `1.0.0` → 可编辑 `scene.blend` → `blockout_video.mp4` → 左原始/右粗模 `original_vs_blockout.mp4`。只运行命令行 Blender Background Mode，不连接或操作人工 Blender UI，不下载新数据、不调用付费生成服务。
+已实现：Scene JSON `1.0.0` → 可编辑 `scene.blend` + 源 `scene_schema.json` 快照 → `blockout_video.mp4` → 左原始/右粗模 `original_vs_blockout.mp4`。只运行命令行 Blender Background Mode，不连接或操作人工 Blender UI，不下载新数据、不调用付费生成服务。
 
 2026-11-24 本机验收：Blender **5.2.1 LTS**，独立合成输入 **12 秒、60 FPS、720 帧、240×140**，五类物体、四静态一动态、逐帧原始相机 Pose。真实样本的上游深度/朝向/render-pose 合同仍未验证；Stage E 明确拒绝该 partial JSON，未制造真实重建结果。
 
-验证结果：新增 Stage E/F **19/19** 测试通过，全项目 **108/108** 测试通过、无跳过；保存后重开的 720 帧产生 2,160 个独立投影检查，最大归一化投影误差 `2.72137778090098e-7`。所有最终文件 SHA-256 核验通过；源索引为 `7000..7719`，720 个原始 Tick 全部保留。首/中/末对比画面已检查。双分辨率批量配置的两项完整 12 秒渲染均通过，产物在 `outputs/stage_ef/batch/full_resolution/` 与 `half_resolution/`。
+验证结果：Stage E/F **26/26** 测试通过，全项目 **115/115** 测试通过、无跳过；本次回归记录在 `outputs/stage_ef/revalidation/all_tests/`。保存后重开的 720 帧产生 2,160 个独立投影检查，最大归一化投影误差 `2.72137778090098e-7`。所有最终文件 SHA-256 核验通过；源索引为 `7000..7719`，720 个原始 Tick 全部保留。首/中/末对比画面在 `outputs/stage_ef/revalidation/comparison_preview.png`，已检查。双分辨率批量配置的两项完整 12 秒渲染均重跑通过，产物在 `outputs/stage_ef/batch/full_resolution/` 与 `half_resolution/`。
 
 ## 一条命令运行
 
@@ -79,12 +79,13 @@
 
 - `blender/planner.py`：读 Scene、合同校验、参考点云来源、密集原 Pose 覆盖、逐帧 Build Plan。
 - `blender/timeline.py`：保留源帧格点、线性位置/尺度/内参插值、最短弧四元数 SLERP；拒绝相机外推。物体 Motion Track 边界之外保持首/末观测 Pose，并记录这一限制。
-- `blender/object_generator.py`：单位 box、capsule、cylinder、plane slab；`dimensions × transform.scale` 只乘一次。plane 使用声明的正厚度，capsule 允许 XYZ 非均匀缩放。无纹理，按类别使用五种灰色/低饱和材质；不为不可见体积随意加厚物体。
+- `blender/object_generator.py`：单位 box、capsule、cylinder、plane slab；`dimensions × transform.scale` 只乘一次。plane 使用声明的正厚度，capsule 允许 XYZ 非均匀缩放。无纹理，按 `ground / road / wall / building / person / tree / rock / barrier` 使用灰色/低饱和分类材质；不为不可见体积随意加厚物体。道路可用有厚度的 plane，墙壁/建筑用 box，均按 JSON Transform/Dimensions 摆放，不在缺少几何时任意添加建筑。
 - `blender/camera_generator.py`：`T_world_blenderCamera = T_world_optical × diag(1,-1,-1,1)`。`lens=fx×sensor_width/W`，支持偏心主点和非等 fx/fy；设置匹配的 pixel aspect、shift_x、shift_y。并非 look-at 近似，也不丢弃 roll。
 - `blender/animation_generator.py`：在**每一渲染帧**烘焙 Camera/Object 动画，规避默认 Bezier 的超调，兼容新版分层 Action。相机透视内参也动画化。
 - `blender/scene_generator.py`：factory-empty 创建 Scene；Static、Dynamic、UnknownMotion、Cameras、Lighting、Reference、Hierarchy Collections。`parent_id` 通过嵌套 Collection 组织，所有 Transform 仍为世界坐标，不让父物体位移重复作用到子物体。场景含 World/Sun/Fill、灰模 Mesh、相机、动画。
 - 融合参考点云可用 `--point-cloud PATH.ply`；否则读每个物体的几何来源 PLY。经 Open3D 验证有限坐标后，确定性采样最多 50,000 点，嵌入 .blend 顶点，**不参与渲染、不当作完整可编辑重建**。不依赖外部纹理/模型文件。
 - 源 Scene JSON、Frame Mapping、坐标/插值约定也嵌入 .blend Text datablocks。`.blend` 可移到其他目录编辑或重新渲染，无需源点云。
+- 另输出通过 Validation 的 `scene_schema.json` 源快照；PLY、Mask、原始遥测及输入 manifest 的路径改为绝对源路径，避免输出目录变化导致相对路径指错。它保留原始观测/稀疏 Track，不把烘焙插值升级为 Ground Truth；密集 `--camera-poses` 覆盖保存在 Build Plan 中，重新从该 JSON 生成时仍应传同一份密集 Pose。源 PLY/Mask 未复制，JSON 再次生成需要源文件仍在；`.blend` 重渲染不需要这些源文件。
 - `visibility: not_detected` 是未检测，不是隐藏/遮挡真值；本阶段不会据此关闭物体可见性。
 
 ## Stage F、批量与可重复运行
@@ -101,6 +102,8 @@ blender --background --factory-startup --threads 4 <run-dir>/scene.blend
 渲染编号固定为六位 PNG，检查无缺帧/多帧；FFmpeg 精确有理数 FPS 编码 H.264，关闭音频。原视频按源帧窗口另存 `original_video.mp4`，不覆盖输入。Split-screen 左原视频/右粗模，同步 PTS 后 hstack；不把同一粗模渲染同时当作原视频。编码后再次解码三段视频，检查零 PTS 起点、尺寸、完整帧数与 FPS。
 
 批量 manifest 的路径相对 manifest 所在目录，每个任务必须有独立输出；失败继续处理后续任务，总退出码非零。
+
+批量入口检查 job 对象、非空路径、布尔开关；采样数和参考点预算必须为正整数，分辨率必须恰好两个正偶数。错误参数产生可读的任务失败记录，不因列表/布尔值误作路径而终止整个批次。`--timeout` 同时约束 Blender 和 FFmpeg 全帧检查/编码进程；FFmpeg 超时仍保留已捕获的诊断日志（Stage A 的首帧 raster probe 自有 30 秒上限）。
 
 ```json
 {
@@ -122,13 +125,14 @@ blender --background --factory-startup --threads 4 <run-dir>/scene.blend
 
 正常重复运行会重新生成 factory-empty 场景，不累积物体/材质/关键帧。仅覆盖 receipt 标记为本流程所有的固定产物，拒绝覆盖无回执的同名用户文件；其他笔记/文件保留。排他 `.stage_ef.lock` 阻止两个运行共用目录。异常退出留下锁时，应先确认旧进程已终止，再移除该明确锁文件；不自动解除活跃锁。
 
-构建/渲染/编码都在输出下的唯一 staging 子目录进行，验证通过才发布固定产物，最后写 receipt。渲染或校验失败保留 staging 和完整日志，既有成功产物不被提前覆盖。发布阶段的磁盘/权限错误不是多文件事务，需修复后重跑；receipt 最后发布，旧 receipt 的哈希会识别不完整产物。`--reuse` 校验源视频/JSON/PLY/Pose、实现和 schema 的哈希及所有已发布文件哈希，任何不一致重建。生成后的临时 PNG 自动移除，完整日志保留；`.blend` 中保存 `//frames/frame_######`，可后续无 UI 重新渲染。
+构建/渲染/编码都在输出下的唯一 staging 子目录进行，验证通过才发布固定产物，最后写 receipt。渲染或校验失败保留 staging 和完整日志，既有成功产物不被提前覆盖。发布阶段的磁盘/权限错误不是多文件事务，需修复后重跑；failure.json 会列出实际已发布的文件，不错误声称全部未变。receipt 最后发布，旧 receipt 的哈希会识别不完整产物。`--reuse` 校验源视频/JSON/PLY/Pose、实现和 schema 的哈希及已发布文件哈希，同时要求必需产物齐全；空/损坏的哈希表不能误判为缓存命中，任何不一致重建。生成后的临时 PNG 自动移除，完整日志保留；`.blend` 中保存 `//frames/frame_######`，可后续无 UI 重新渲染。
 
 ## 产物与验证证据
 
 `outputs/stage_ef/synthetic_demo/`：
 
 - `scene.blend`：保存后**另一个 Blender 后台进程重开**验证。
+- `scene_schema.json`：通过 Validation、引用源绝对文件路径的 Scene 快照。
 - `blockout_video.mp4`：240×140，720 帧，60 FPS，12 秒。
 - `original_vs_blockout.mp4`：480×140，同样的帧数、FPS、时长。
 - `original_video.mp4`：独立 ray/AABB 输入视频的同步副本，不是受限游戏数据。
@@ -142,6 +146,6 @@ blender --background --factory-startup --threads 4 <run-dir>/scene.blend
 .\.venv\Scripts\python.exe scripts/run_tests.py --output outputs/stage_ef/all_tests
 ```
 
-新增测试包含真实 Blender 背景生成/重开/渲染/重复执行、变换与父组织、偏心 K / 非等焦距、240×140→96×56 内参缩放、媒体 60000/1001 FPS、非零源索引、末帧 off-by-one、VFR 拒绝、未知合同与缺失点云拒绝、输出篡改后的缓存失效、批量成功/失败隔离及用户文件保护。没有 Blender 时集成测试显式 skipped；纯合同/媒体测试不依赖 UI。
+测试包含真实 Blender 背景生成/重开/渲染/重复执行、变换与父组织、偏心 K / 非等焦距、240×140→96×56 内参缩放、媒体 60000/1001 FPS、非零源索引、末帧 off-by-one、VFR 拒绝、未知合同与缺失点云拒绝、输出篡改及空 receipt 哈希后的缓存失效、批量成功/失败隔离及用户文件保护。另有道路/墙壁/建筑的 JSON→材质→重开→渲染检查、源 JSON 输出目录转换、严格类型与 FFmpeg 超时日志测试；保存重开同时检查分辨率、像素宽高比、米制单位、嵌入的完整帧/tick 映射和分类材质。没有 Blender 时集成测试显式 skipped；纯合同/媒体测试不依赖 UI。
 
 这是 Stage E/F 的工程可运行验收，不是 Stage G 的真实游戏几何/语义精度验收。真实数据需要先解决 Stage A/B 的合同缺口并重新生成有依据的 Scene JSON。

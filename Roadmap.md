@@ -4,7 +4,9 @@
 
 Stage C/D 进展（2026-11-24）：五类辅助 RGB/Mask 理解、米制深度/逐像素点云的对象几何、持久 ID、静动态/空间关系、带版本 Scene Schema 与 Validation 已实现并通过五类合成端到端测试；真实 RGB-only 示例保留 inferred/unobserved，未标记真实自动识别精度或真实几何验收。可选本地 Grounding DINO/SAM 接口尚未实机验证。详见 `docs/stage_cd.md`；不扩大下载。
 
-Stage E/F 进展（2026-11-24）：Blender Python API / Background Mode 粗模场景、材质、Collections、原始/稀疏相机 Pose、物体动画、准确 FPS/源帧映射、保存后重开验证、MP4/左右对比、可重复执行与批量任务已实现。Blender 5.2.1 LTS 合成 12 秒/60 FPS/720 帧端到端验收产物在 `outputs/stage_ef/synthetic_demo/`；真实 partial 输入因未验证几何/Pose 合同明确拒绝，未声称真实 Stage A-F 全流程验收。详见 `docs/stage_ef.md`。
+Stage E/F 进展（2026-11-24）：Blender Python API / Background Mode 粗模场景、材质、Collections、原始/稀疏相机 Pose、物体动画、准确 FPS/源帧映射、保存后重开验证、MP4/左右对比、可重复执行与批量任务已实现。已补齐道路/墙壁/建筑类别与材质、源 Scene JSON 快照、损坏缓存/批量参数防护及 FFmpeg 超时日志；Stage E/F 26 项、原全项目 115 项测试通过、无跳过。Blender 5.2.1 LTS 合成 12 秒/60 FPS/720 帧及双分辨率批量渲染重新验收，产物在 `outputs/stage_ef/synthetic_demo/`；真实 partial 输入因未验证几何/Pose 合同明确拒绝，未声称真实 Stage A-F 全流程验收。详见 `docs/stage_ef.md`。
+
+低精度优化路线（2026-11-24）：按用户最新选择采用彩色体素环境粗模，不追求高精度贴图/人物动画。已实现 Scene 1.1.0 显式 inferred 分支、本地模型锁和 61 帧推理、经验相机/深度关联校准、TSDF 可选路线、独立观测体素壳/内部面剔除/颜色调色板、后台网格导入打包/预览及哈希缓存。原深度验证仍失败；独立 RGB 三视图在 627 个留出点上通过（中位数 1.99 px、P90 7.05 px），原始焦距/快照关联的调整仍标为 inferred。已生成 125 区块表面版、25 区块实体版及修复完整表面可见性后的 65 区块实体 `.blend`/九帧预览；前两版图像质量失败，最后一版虽 SSIM 较高但 261/720 帧相机位于候选实体内，新增穿模检查拒绝完整 MP4。不能把保存重开或 SSIM 通过等同于可用真实粗模。原物理合同路径保持严格。详见 `docs/refined_blockout.md`。
 
 ## 1. 项目目标
 
@@ -268,7 +270,7 @@ Schema 必须具备版本号，并实现 JSON Schema Validation。
 
 - original_video.mp4
 - blockout_video.mp4
-- comparison_video.mp4
+- original_vs_blockout.mp4
 
 ### Stage G：Quality Evaluation
 

@@ -53,6 +53,11 @@ def generate(plan, workspace):
     scene.world.use_nodes = True
     scene.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0.12, 0.14, 0.17, 1)
     scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = .7
+    if plan.get("appearance"):
+        color = plan["appearance"]["background_color"]
+        linear = [v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4 for v in color]
+        scene.world.node_tree.nodes["Background"].inputs["Color"].default_value = (*linear, 1)
+        scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 1
     collections = {}
     for name in ["Static", "Dynamic", "UnknownMotion", "Cameras", "Reference", "Lighting", "Hierarchy"]:
         c = bpy.data.collections.new(name)
@@ -79,7 +84,7 @@ def generate(plan, workspace):
     reference = bpy.data.objects.new("PointCloudReference", reference_mesh)
     collections["Reference"].objects.link(reference)
     reference.hide_render, reference.display_type = True, "WIRE"
-    reference["evidence"] = "Measured point reference; NOT complete geometry; may include temporal object samples"
+    reference["evidence"] = plan.get("reference_evidence", "Measured point reference; NOT complete geometry; may include temporal object samples")
     for name, kind, energy, location in [("Sun", "SUN", 2., (0, 0, 10)), ("Fill", "AREA", 700., (4, -4, 10))]:
         data = bpy.data.lights.new(name, kind)
         data.energy = energy

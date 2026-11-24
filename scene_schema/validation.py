@@ -11,6 +11,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 from reconstruction.coordinate_transform import validate_rigid
 
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "config/scene_schema.json"
+REFINED_SCHEMA_PATH = SCHEMA_PATH.with_name("scene_schema_refined.json")
 
 
 class SceneValidationError(ValueError):
@@ -28,7 +29,8 @@ def validate_scene(scene: dict) -> dict:
         json.dumps(scene, allow_nan=False)
     except (ValueError, TypeError) as error:
         raise SceneValidationError(f"Non-JSON/nonfinite value: {error}") from error
-    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    refined = scene.get("schema_version") == "1.1.0"
+    schema = json.loads((REFINED_SCHEMA_PATH if refined else SCHEMA_PATH).read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = sorted(validator.iter_errors(scene), key=lambda e: str(list(e.absolute_path)))
@@ -163,7 +165,20 @@ def validate_scene(scene: dict) -> dict:
             if oid in by_id:
                 check(any(o["frame_index"] == r["frame_index"] and abs(o["timestamp_seconds"]-r["timestamp_seconds"]) < 1e-9 and o["position"] is not None for o in by_id[oid]["observations"]), "Relationship requires simultaneous geometric observations")
     meta = scene["reconstruction_metadata"]
-    if not meta["geometry_contract_verified"]:
+    inferred = refined and meta["reconstruction_mode"] == "inferred"
+    if inferred:
+        check(meta["geometry_contract_verified"] is False, "Inferred reconstruction must not claim a verified physical contract")
+        check(meta["status"] == "complete_inferred", "Inferred scene requires complete_inferred status")
+        check(bool(objects) and all(o["transform"] is not None for o in objects), "Inferred scene requires nonempty known estimates")
+        for obj in objects:
+            check(obj["geometry_source"]["confidence"]["provenance"] == "inferred", "Empirical geometry must be labelled inferred")
+        for camera in cameras:
+            check(all(r["confidence"]["provenance"] == "inferred" for r in camera["track"]), "Empirical Camera Pose must be labelled inferred")
+        heuristic = any(o["geometry_source"]["kind"] == "heuristic_voxel" for o in objects)
+        check(heuristic == ("heuristic_proxy" in meta), "Heuristic geometry requires its distinct proxy receipt")
+        if heuristic:
+            check(all(o["geometry_source"]["kind"] == "heuristic_voxel" and o["geometry_source"]["bounds_type"] == "inferred_proxy_aabb" for o in objects), "Proxy geometry must not masquerade as observed bounds")
+    if not meta["geometry_contract_verified"] and not inferred:
         check(not any(o["transform"] is not None for o in objects), "Unverified geometry contract cannot emit world transforms")
         check(not any(r["world_from_camera"] is not None for c in cameras for r in c["track"]), "Unverified geometry contract cannot emit camera transforms")
     if meta["status"] == "complete":
