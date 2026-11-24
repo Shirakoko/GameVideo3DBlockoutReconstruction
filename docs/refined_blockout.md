@@ -50,12 +50,14 @@
 实际执行结果：
 
 - `outputs/stage_ef/real_voxel_rgb/`：125 个网格区块，后台生成/保存重开和九帧预览完成；表面太稀疏，图像质量失败。
-- `outputs/stage_ef/real_voxel_solid/`：40 cm 的训练语义轮廓约束实体试验；25 个导出区块，图像质量失败，旧产物保留。
+- `outputs/stage_ef/real_voxel_solid/`：40 cm 的训练语义轮廓约束实体试验；25 个导出区块，图像质量失败，历史产物已于 2026-11-24 清理。
 - `outputs/stage_ef/real_voxel_solid_v2/`：修复体素中心投射遗漏，使用完整网格表面射线可见性；65 个网格、`scene.blend`、九帧预览已生成并重开验证。SSIM 平均优于同源同相机同包围盒方块基线，但真实画面仍有大面积缺失和近距离墙面。261/720 帧相机中心在候选实体中，新增 `volume_camera_check` 明确拒绝完整渲染，最终 `quality_rejected`。
+
+`real_voxel_solid_v2/` 的历史产物也已于 2026-11-24 清理；上述记录保留历史验收结论，不表示实验文件仍在本地。`real_refined/` 的共享帧缓存、`real_voxel_rgb/` 的相机和源数据继续保留，供当前 Voxel / Primitive 工作流使用。
 
 三次实验均 **没有新版 `blockout_video.mp4` / `original_vs_blockout.mp4`**。SSIM 单独通过不是可用性证明，不能为输出视频而放宽质量门槛。所有体素内体积、拟合地面和网格可见性深度都是推断；完整表面射线深度仅用于生成网格自身的可见性，绝非源测量深度。
 
-可复现命令（权重和 61 帧缓存已经本地存在，无需再次下载/分割）：
+重建实验命令（权重和 61 帧缓存已经本地存在，无需再次下载/分割；实体试验须先重建，不能直接复用已清理的产物）：
 
 ```powershell
 # RGB 留出验证及表面候选；失败候选不会自动渲染整段视频
@@ -63,7 +65,7 @@
 # 独立实体试验；每次复跑保留先前 source_bundle，仍受相机穿模和图像质量约束
 .\.venv\Scripts\python.exe -m reconstruction.rgb_hull --allow-inferred --output outputs/stage_ef/real_voxel_solid_v2
 # 仅接受两项质量检查均通过的候选，重验源/资产/代码/实体缓存哈希后后台渲染
-# 当前 v2 被相机穿模检查拒绝，返回 1，不生成 MP4
+# 历史 v2 被相机穿模检查拒绝；重建后的候选仍须通过相同质量门槛
 .\.venv\Scripts\python.exe scripts/render_rgb_blockout.py --output outputs/stage_ef/real_voxel_solid_v2
 # 已通过候选才可用 --reuse 复用经哈希验证的完整输出
 ```

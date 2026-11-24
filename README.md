@@ -1,21 +1,21 @@
-# 游戏录屏的三维粗模重建：Voxel 与 Primitive
+# 游戏影像驱动的三维粗模重建
 
-面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流，输出时间轴一致的导演台视频和可编辑 Blender 工程。本项目比较两种互补表达：**Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性。**
+面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流。本项目提供三条路线：**Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性；ComfyUI + H3 侧重原视频的生成式灰模风格化。**
 
-当前交付为 12 秒环境/镜头粗模。两路均采用启发式几何与推断相机，不包含角色动作代理。
+当前三路均交付 12 秒视频。前两路输出可编辑 Blender 工程，采用启发式几何与推断相机，不包含角色动作代理；第三路直接生成灰模风格视频，包含人物的生成式近似，但**不重建三维场景，也不输出 `.blend`、角色轨迹或可验证的几何**。
 
 ## 1. 实验设置与交付
 
 数据来自 [Origin Lab Game Recordings v4](https://huggingface.co/datasets/originlab/game-recordings-v4)，Session `66ad9535-583f-4a25-b655-6b1697c83a40` 的 `[0, 12)` 秒：1920×1080、60 FPS、720 帧。元数据记录 UE5、地图 `Island`，未提供明确游戏名称。数据准备采用有界前缀下载，不下载完整 Session 或整库。
 
-两路共享原始 RGB/深度码、61 帧 Grounding DINO + SAM 分割缓存、相机校准与 720 帧轨迹；渲染均采用 Blender 5.2.1 LTS / EEVEE。几何补齐、形状先验与材质设置不同，因此属于**同源方案比较，而非单变量消融实验**。
+三路使用同一原片。Voxel / Primitive 共享 RGB/深度码、61 帧 Grounding DINO + SAM 分割缓存、相机校准与 720 帧轨迹，渲染均采用 Blender 5.2.1 LTS / EEVEE；H3 只从原片 RGB 提取轮廓控制，不读取前两路的几何、遮罩或相机结果，在本地 ComfyUI 0.46.0 中生成视频。因此属于**同源方案比较，而非单变量消融实验**；后文现有 SSIM / MAE 图表仍只比较前两路。
 
-| 交付物 | Voxel：彩色体素 | Primitive：分类基本体 |
-| --- | --- | --- |
-| 原片 / 粗模对比 | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4) | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4) |
-| 纯粗模视频 | [blockout_video.mp4](outputs/stage_ef/heuristic_voxel_proxy/blockout_video.mp4) | [blockout_video.mp4](outputs/stage_ef/heuristic_primitive_from_video/blockout_video.mp4) |
-| 可编辑场景 | [scene.blend](outputs/stage_ef/heuristic_voxel_proxy/scene.blend) | [scene.blend](outputs/stage_ef/heuristic_primitive_from_video/scene.blend) |
-| 原始验证记录 | [proxy_run.json](outputs/stage_ef/heuristic_voxel_proxy/proxy_run.json) | [primitive_run.json](outputs/stage_ef/heuristic_primitive_from_video/primitive_run.json) |
+| 交付物 | Voxel：彩色体素 | Primitive：分类基本体 | H3：生成式灰模视频 |
+| --- | --- | --- | --- |
+| 原片 / 粗模对比 | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4) | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4) | [comparison.mp4](outputs/h3_controlled_graybox/full_v3/comparison.mp4) |
+| 纯粗模视频 | [blockout_video.mp4](outputs/stage_ef/heuristic_voxel_proxy/blockout_video.mp4) | [blockout_video.mp4](outputs/stage_ef/heuristic_primitive_from_video/blockout_video.mp4) | [graybox.mp4](outputs/h3_controlled_graybox/full_v3/graybox.mp4) |
+| 可编辑场景 | [scene.blend](outputs/stage_ef/heuristic_voxel_proxy/scene.blend) | [scene.blend](outputs/stage_ef/heuristic_primitive_from_video/scene.blend) | 无；交付可编辑节点图，不是三维场景 |
+| 原始验证记录 | [proxy_run.json](outputs/stage_ef/heuristic_voxel_proxy/proxy_run.json) | [primitive_run.json](outputs/stage_ef/heuristic_primitive_from_video/primitive_run.json) | [report.json](outputs/h3_controlled_graybox/full_v3/report.json) |
 
 ### Voxel 对比视频
 
@@ -33,17 +33,25 @@
   <source src="outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4" type="video/mp4">
 </video>
 
+### ComfyUI + H3 对比视频
+
+左侧为原始录屏，右侧为生成式灰白粗模。纯灰模片为 1920×1080，对比片为 1536×432；两者均为 60 FPS、720 帧、12 秒。模型原生生成尺寸为 768×432，1080p 交付是空间放大，不是原生 1080p 推理。
+
+<video controls muted playsinline preload="metadata" width="100%">
+  <source src="outputs/h3_controlled_graybox/full_v3/comparison.mp4" type="video/mp4">
+</video>
+
 不支持内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。
 
 以下为相同源帧的原始 RGB、Voxel、Primitive；行时间分别为 0、6、11.983 秒。
 
 ![相同源帧的 RGB、Voxel 与 Primitive 对比](docs/figures/comparison/route_visual_comparison.jpg)
 
-Voxel 作为当前环境/镜头展示方案；Primitive 用于检查基本体表达与局部编辑。两路均存在物体合并、位置偏差和细节缺失；Primitive 近景仍有大体积遮挡。人物、斧头、木牌及雾效未重建。所有媒体链接依赖本地文件，使用权限见文末。
+当前前两路均有物体合并、位置偏差和细节缺失；Primitive 近景仍有大体积遮挡，人物、斧头、木牌及雾效未重建。H3 可能改写人物、植被与场景布局，4.3333 秒和 8.3 秒接段处有可见跳变。媒体使用权限见文末。
 
 ## 2. 工作流与分支
 
-编排器负责阶段状态、工具执行、缓存、失败记录与质量检查。视觉模型生成预测类别与遮罩；数值模块生成几何；Scene JSON 约束单位、时间、来源和对象结构；Blender 后台创建场景、保存重开并渲染。当前采用规则式编排，未实现 LLM 自主规划或几何修复循环。
+前两路由编排器负责阶段状态、工具执行、缓存、失败记录与质量检查。视觉模型生成预测类别与遮罩；数值模块生成几何；Scene JSON 约束单位、时间、来源和对象结构；Blender 后台创建场景、保存重开并渲染。第三路由独立脚本准备控制视频、提交 ComfyUI 任务、收集结果和拼接验帧。当前均采用规则式编排，未实现 LLM 自主规划或几何修复循环。
 
 ```mermaid
 flowchart LR
@@ -57,13 +65,82 @@ flowchart LR
     PQ --> E
     E --> F[保存重开 / 逐帧渲染 / MP4 验证]
     F --> Q[两路统一离线比较]
+    B --> H[连续 RGB 帧 / 模糊 Canny 轮廓]
+    H --> HC[本地 H3 / ControlNet / 分段参考]
+    HC --> HV[去重叠 / 去填充 / 精确 PTS / 视频审核]
 ```
 
 Voxel 入口为 `reconstruction.heuristic_proxy`；本次 Primitive 入口为 `reconstruction.primitive_blockout`，直接读取视频观测，**不读取 Voxel 补齐后的占用结果**。历史目录 `heuristic_primitive_proxy/` 为体素派生灰模基线，不属于本次两路比较。
 
-严格米制路径 A → B → C → D → E → F → G 已通过合成端到端验证，并提供 `reviewed` 输入接口。本次真实 Session 因深度逆公式、单位、像素采样和渲染姿态绑定未确认，在 A 返回阻塞，B–F 跳过，G 生成 partial 报告。两条启发式入口及本节离线比较尚未接入统一 A–G CLI。
+### 三条路线分别怎么做
 
-## 3. 两种表达的技术差异
+1. **Voxel**：将 RGB、深度码和预测类别反投影到共同坐标系，按独立帧投票融合体素，再启发式补齐地面与环境体积、清出相机走廊；导出分区网格和 Scene JSON，由 Blender 保存重开、预览并渲染完整时间轴。
+2. **Primitive**：直接采样原视频的语义观测点，按类别拟合方块、圆柱与球体，过滤近相机的大体积候选并生成部分树干—树冠关系；输出独立可编辑元素，通过灰度预览检查后由 Blender 渲染。
+3. **ComfyUI + H3**：连续源帧缩小到 768×432，做 Gaussian 模糊（σ=3）和 Canny（12/30），抑制植被碎细节并保留主体轮廓；用灰白无纹理基本体提示词、H3 FL2VA、Fun ControlNet Union 2.0（强度 1.0）及 8-step Turbo LoRA 生成视频，再由脚本拼接、放大并验帧。
+
+### ComfyUI + H3 工作流与三段示意
+
+实线表示本段源视频的 Canny 控制与结果流向，虚线表示上一段生成帧的参考条件；三段共享模型和灰模文本设置，按顺序生成。
+
+```mermaid
+flowchart TB
+    RGB["原片 RGB：720 帧 / 60 FPS"] --> C["缩小到 768×432<br/>Gaussian 模糊 + Canny 轮廓"]
+
+    subgraph GEN["ComfyUI 本地生成：H3 + Union 2.0 + 8-step LoRA<br/>共享灰模提示词、Qwen 编码器与视频 VAE"]
+        direction LR
+        H0["第一段：260 帧<br/>full_0_v3"]
+        H1["第二段：260 帧<br/>full_1_v3_retry"]
+        H2["第三段：260 帧<br/>full_2_v3"]
+        H0 -. "末尾 22 帧经 AddGuide" .-> H1
+        H1 -. "末尾 22 帧经 AddGuide" .-> H2
+    end
+
+    C -->|源帧 0–259| H0
+    C -->|源帧 238–497| H1
+    C -->|源帧 476–719 + 16 帧填充| H2
+    H0 --> K0["保留源帧 0–259"]
+    H1 --> K1["丢弃 22 帧重叠<br/>保留源帧 260–497"]
+    H2 --> K2["丢弃 22 帧重叠及 16 帧填充<br/>保留源帧 498–719"]
+    K0 --> JOIN["按源索引拼接：720 帧"]
+    K1 --> JOIN
+    K2 --> JOIN
+    JOIN --> OUT["精确 PTS i/60<br/>1080p 灰模片 + 原片对比片"]
+    OUT --> CHECK["回读帧数、FPS、PTS 与源索引<br/>人工审核人物、布局与接段跳变"]
+```
+
+主支路为 `LoadVideo → GetVideoComponents → MiniMaxH3FunControlNetApply → SamplerCustomAdvanced → VAEDecode → CreateVideo → SaveVideo`；`MiniMaxH3ImageToVideo` 配合 Qwen 编码器和视频 VAE 提供文本条件及视频 latent。全部使用原生节点。
+
+当时考虑到本机 12 GiB 显存和长序列推理风险，沿用了已跑通的每段 260 帧方案（满足 H3 的 `17n+5` 帧网格）；这不是模型的硬性要求，单段整片尚未实测。相邻段重叠 22 帧，两段只能覆盖 498 帧，因此采用三段覆盖 736 帧，再去掉末尾 16 个填充帧，保留完整的 720 帧。
+
+后两段将上一段末尾 22 个生成帧送入 `MiniMaxH3AddGuide`，作为开头参考；本段仍使用源视频的 Canny 控制。
+
+| 段 | 实际可导入工作流 | 控制源帧 / 填充 | 最终保留源帧 | 前段参考 |
+| --- | --- | --- | --- | --- |
+| 第一段 | [full_0_v3](workflows/minimax_h3_controlled_graybox_full_0_v3.json) | 0–259 | 0–259 | 无 |
+| 第二段（修复后成功版本） | [full_1_v3_retry](workflows/minimax_h3_controlled_graybox_full_1_v3_retry.json) | 238–497 | 260–497 | 第一段末尾 22 帧 |
+| 第三段 | [full_2_v3](workflows/minimax_h3_controlled_graybox_full_2_v3.json) | 476–719，另加 16 个尾部控制填充帧 | 498–719 | 第二段末尾 22 帧 |
+
+三份文件已保存在 ComfyUI 的 `user/default/workflows/`，可在左侧“工作流”列表打开；仓库中的 JSON 也可拖入画布。`full_1_v3` 是失败留档，不应替代第二段的 `full_1_v3_retry`。
+
+下图从左到右为第一段、第二段成功重试、第三段的实际节点截图；后两段下方是参考视频、尺寸补齐和 AddGuide 支路。节点细节以表中的 JSON 为准，结果以各段 `history.json` 和最终报告为准。
+
+![H3 三段 ComfyUI 节点概览：第一段、第二段成功重试、第三段](workflows/figures/h3_three_segments_overview.jpg)
+
+原生主 latent 会内部补齐网格，参考 latent 不会；第二段首次执行因此报尺寸错误。修复只用 `ImagePadForOutpaint` 在参考底部补 16 像素，以及 `EmptyMiniMaxH3LatentAV` 的 768×448 参考尺寸，主画布和 Canny 控制仍为 768×432，没有改 ComfyUI 核心。失败原因与修复见 [full_failures.json](outputs/h3_controlled_graybox/full_failures.json)。
+
+拼接保留前段重叠区域，丢弃后段重复帧和尾部填充帧，不混合、不插帧。
+
+严格米制路径 A → B → C → D → E → F → G 已通过合成端到端验证，并提供 `reviewed` 输入接口。本次真实 Session 因深度逆公式、单位、像素采样和渲染姿态绑定未确认，在 A 返回阻塞，B–F 跳过，G 生成 partial 报告。三条独立入口及本节离线比较尚未接入统一 A–G CLI，不绕过上述阻塞；H3 不参与三维几何验收。
+
+## 3. 表达方式与技术差异
+
+| 路线 | 核心表达 | 可编辑交付 | 适合用途 |
+| --- | --- | --- | --- |
+| Voxel | 带类别与颜色的空间占用 | Blender 分区网格 / 相机 | 环境覆盖、镜头通道、空间草稿 |
+| Primitive | 类别驱动的基本体拟合 | Blender 独立元素 / 部分父子关系 | 局部布局调整、类别到结构的检查 |
+| H3 | 轮廓和文本软引导的生成像素 | ComfyUI 节点与参数；无三维对象 | 灰模风格动态预演，不要求精确几何的视觉沟通 |
+
+以下仅比较前两路的几何表达。
 
 | 维度 | Voxel | Primitive |
 | --- | --- | --- |
@@ -92,9 +169,11 @@ Voxel 入口为 `reconstruction.heuristic_proxy`；本次 Primitive 入口为 `r
 
 后续独立验收应采用未参与拟合的实例与事件标注：类别/Mask P/R 与 IoU、对象投影位置与尺寸、部件关系、遮挡顺序、角色身份和动作时刻。最终网格的几何精度应独立于点云评价；不能将源预测遮罩或其投影回链作为真值。
 
+H3 的 Qwen 编码器仅提供生成条件，不输出实例识别、持久 ID 或 Scene JSON；人物外观和运动近似不能作为场景理解或动作识别通过的证据。
+
 ## 5. 统一视觉比较与质量门槛
 
-时间映射固定为 `源帧 i → 视频时间 i/60 秒 → Blender 帧 i+1`，`i=0..719`。每秒起始帧对应 `60s → 60s+1`，`s=0..11`；末帧 PTS 为 11.9833 秒，视频总时长为 12 秒。该映射验证输出时序一致性，不证明推断相机或角色动作准确。
+前两路统一映射为 `源帧 i → 视频时间 i/60 秒 → Blender 帧 i+1`，`i=0..719`；末帧 PTS 为 11.9833 秒，总时长 12 秒。该映射验证时序一致性，不证明推断相机或角色动作准确。
 
 本次重新计算相同九帧：`0, 60, 180, 300, 360, 420, 540, 660, 719`。两路使用同一原生 RGB 和环境遮罩 `0 < codes10 < 1020 且预测类别 ≠ person`；以下均值为九帧指标的算术平均。
 
@@ -122,7 +201,25 @@ Voxel 在本样本的图像一致性指标上较优。由于两路材质、几�
 
 合成 G 报告中 CD 0.046 m、5 cm F-score 0.977、观测覆盖 0.956 比较的是融合点云与已知深度表面，不是两路真实粗模网格。合成 SSIM 0.755 亦不与本节遮罩 SSIM 混用。完整定义见 [Stage G](docs/stage_g.md)。
 
-## 6. 资源与成本
+### H3 的交付检查与限制
+
+H3 按原生 24 FPS 理解连续控制帧，交付再按原索引编码为 60 FPS，因此模型看到的运动节奏被改变。原生保存将 PTS 舍入到毫秒，收集步骤保留 `comfy_raw.mp4`，按原帧顺序重编码为精确的 `i/60` 时间戳，不复制或插值补帧。两份成片均回读全部 720 帧，检查源索引连续、无重叠重复或 padding。
+
+| 检查 | H3 结果 | 能证明什么 |
+| --- | --- | --- |
+| 帧数 / FPS / 时长 / PTS | 720 / 60 / 12 秒 / 末帧 719/60；通过 | 输出编码与源索引赋值一致，不证明逐帧内容忠实 |
+| 空白帧 | 未检测到 | 排除明显空白输出，不代表没有局部伪影 |
+| 接段连续性 | 260、498 帧处有可见跳变；未通过严格连续性验收 | 22 帧参考仍不能保证无缝衔接 |
+| 动作与几何复现 | `strict_motion_geometry_pass=false` | ControlNet 是软引导，不是几何或动作真值 |
+| 同口径 SSIM / MAE、语义及几何精度 | N/A，尚未完成 | 不把灰模风格变化、局部观感或精确 PTS 当作还原率 |
+
+用户接受的是 `pilot_canny_v3_fixed` 的近似风格；全片报告状态为 `complete_source_indexed_approximation`，不是严格动作/几何验收通过。后续应独立检查人物姿态、斧头、遮挡、场景布局与接段突变，并单独记录视觉审核通过率。
+
+## 6. 资源与时间成本
+
+本节仅统计计算耗时、硬件需求、存储/传输体积与人工投入，不做金额换算。
+
+### Voxel / Primitive：场景生成与渲染
 
 ![两路场景生成及渲染时间、工程体积和观测回链比例](docs/figures/comparison/route_resources.png)
 
@@ -137,15 +234,33 @@ Voxel 在本样本的图像一致性指标上较优。由于两路材质、几�
 
 生成耗时来自历史近似记录；渲染耗时取日志中末帧 PNG 保存时的进程累计时间，包含场景读入和验证。以上不包含下载、61 帧识别、相机校准、代理几何生成、九帧预览、编码及人工审核，亦不是受控性能基准。回链比例衡量记录是否存在，不衡量关联正确性。
 
-Primitive 的场景生成与工程体积较低，但渲染未随元素数或生成耗时同比下降。成本应按完整任务和合格交付统计，而非仅按渲染或模型 API 计费。
+Primitive 的场景生成与工程体积较低，但渲染未随元素数或生成耗时同比下降。资源与时间成本应按完整任务和合格交付统计，而非仅看渲染耗时。
 
 ```text
-单条合格视频成本 = 总投入 / 合格交付数
-总投入 = 计算机时 × 单价 + 存储/传输 + 人工审核/修正 + 开发/模型准备摊销
-计算与人工投入包含失败尝试和重试
+单条合格视频平均计算机时 = 全部尝试的累计计算机时 / 合格交付数
+单条合格视频平均人工时间 = 人工审核/修正总时间 / 合格交付数
+存储/传输体积单独统计，开发/模型准备时间单独记录
+计算与人工投入包含失败尝试和重试；合格交付数为 0 时不计算上述平均值
 ```
 
-本次视觉识别在 RTX 4070 本地执行，无视频生成或 VLM API 调用，远程模型调用费用为 ¥0。若假设等效机器 ¥20/小时且速度一致，仅上述生成与渲染成本约为 **Voxel ¥3.12、Primitive ¥2.48**；该值为条件估算，不是云报价或全流程成本。完整冷启动成本尚未统一实测。
+前两路的视觉识别在 RTX 4070 本地执行，不调用视频生成或 VLM API；第三路的 H3、Qwen 编码器和 ControlNet 也均为本地推理，三路均无远程模型调用。上述生成与渲染耗时只是局部记录，完整冷启动及全流程耗时尚未统一实测。
+
+### ComfyUI + H3：视频生成、失败与试验耗时
+
+实际机器为 RTX 4070（12 GiB 显存），使用量化 H3 / Qwen / 视频 VAE 及 ControlNet，8 步、768×432、每段 260 帧。以下耗时由各段 `history.json` 中 `execution_start → execution_success / execution_error` 的毫秒时间戳计算，包含该任务执行期间的节点处理，不包含排队等待；与前两路的 Blender 计时范围不同，不能直接当作公平性能排名。
+
+| 已记录 H3 执行范围 | 耗时 |
+| --- | ---: |
+| 第一段 `full_0_v3` | 313.159 秒 |
+| 第二段成功重试 `full_1_v3_retry` | 343.330 秒 |
+| 第三段 `full_2_v3` | 345.306 秒 |
+| 三段成功执行合计 | 1,001.795 秒 / 16.70 分钟 |
+| 加上第二段首次失败的 31.666 秒 | 1,033.461 秒 / 17.22 分钟 |
+| 再计三次 pilot 与一次 `chunk_0_v2` 探索，全部 8 次有历史记录的执行 | 1,694.674 秒 / 28.24 分钟 |
+
+最终 `graybox.mp4` 为 30.04 MiB，`comparison.mp4` 为 14.12 MiB。五份模型文件合计约 38.16 GiB，清单与 SHA256 见 [models.json](outputs/h3_controlled_graybox/models.json)；磁盘体积不等于峰值显存需求。
+
+以上仍未包含模型下载/冷启动准备、Canny 控制预处理、重编码与放大、拼接、存储/传输、截图整理及人工审核/修正，亦未记录全流程峰值内存。17.22 分钟只是本次全片执行及已知失败的局部耗时；严格动作/几何合格交付数尚不能据此认定为 1，量产的资源与时间投入必须按目标质量下的成功率与所有失败重试统计。
 
 ## 7. 量产方案
 
@@ -154,11 +269,13 @@ Primitive 的场景生成与工程体积较低，但渲染未随元素数或生�
 生产化仍需补齐以下环节：
 
 1. Session/窗口适配：将固定样本、720 帧和已有目录改为显式任务清单，包含源帧窗口、合同、权限与预算。
-2. 分支编排：将 Voxel / Primitive、模型缓存、校准、各路门槛及统一比较接入同一任务账本。
+2. 分支编排：将 Voxel / Primitive / H3、模型缓存、校准、各路门槛及统一比较接入同一任务账本；H3 的控制生成、逐段参考、收集和拼接需保留独立 checkpoint。
 3. 质量验收：低分辨率预览后执行独立语义/事件检查；在有限次数与计算预算内修正失败阶段，合格后渲完整视频。
 4. 资源调度：按 GPU/内存约束分配识别与渲染任务；记录 P50/P95 耗时、通过率及人工修正时间。
 
 固定 Session 泛化、跨机器队列、自动几何修复和多片段通过率均未实现。按本次生成与渲染时间外推，100 条同复杂度片段约需 Voxel 15.6、Primitive 12.4 机时，尚未计其他阶段与失败；该估算不代表实际吞吐。
+
+H3 后一段依赖前一段生成结果，当前由脚本分步执行，不是三段无依赖并行；已排队运行拒绝重复提交，失败修复使用新名称保留历史，不等同于 A–G 的自动有界重试。量产应先审核短 pilot，再执行串行参考段，并设置接段、人物一致性与场景布局门槛；不合格时在预算内重生成，不能仅凭视频保存成功进入交付。
 
 ## 8. 相对引擎方案的适用价值
 
@@ -169,15 +286,29 @@ Primitive 的场景生成与工程体积较低，但渲染未随元素数或生�
 | 跨来源批量分析 | Scene JSON、后台 Blender 与统一帧映射提供标准交付格式；源数据仍需适配 | 依赖各项目版本、工程与回放接口 |
 | 环境布局或镜头调整 | Voxel 提供整体覆盖；Primitive 提供显式元素编辑 | 有源工程时修改更可信，亦可自动渲染 |
 
-核心价值是将缺少源工程的游戏成片转化为可编辑、可追溯的空间草稿，而非替代引擎的真实几何、动画与碰撞。当前未建立同任务 UE 成本/性能基准，不主张全面优于引擎。
+前两路适合从缺少源工程的成片构造可编辑空间草稿；H3 适合只需动态灰模观感的预演，不能承担三维布局编辑、碰撞检查或真实动画回放。三路均不能替代原引擎的真实几何与动画；尚无同任务 UE 成本/性能基准，不主张全面优于引擎。
 
 ## 9. 完成度与复现
 
-已交付两路真实环境视频、可编辑工程与时间映射；全项目最近回归 192 / 192 通过、无跳过。该记录验证算法和合成集成流程，不代表真实场景准确率。本次文档比较额外核对同源哈希、相机一致性、原生 raster，并将 Voxel SSIM / Primitive MAE 回算至已有记录，容差 1e-7。
+已交付两路真实环境视频与可编辑工程，以及第三路 H3 灰模风格视频、三段 ComfyUI 节点图与源帧映射。全项目既有回归记录为 192 / 192 通过、无跳过；本次另执行 H3 专项测试 7 / 7 通过，覆盖参考补齐、控制/参考支路、重叠与 padding 剔除、720 帧索引及有理数 FPS。测试验证算法，不代表真实场景准确率。既有两路文档比较额外核对同源哈希、相机一致性、原生 raster，并将 Voxel SSIM / Primitive MAE 回算至已有记录，容差 1e-7。
 
-优先未完成项：角色胶囊、朝向/轨迹与逐秒事件检查；物理深度/渲染姿态合同；Primitive 逐对象观测与独立帧支持记录；最终网格及结构关系的独立验收；通用分支入口和完整成本账本。SAM 2、VLM 或写实材质不是上述验收的前置条件。
+优先未完成项：角色胶囊、朝向/轨迹与逐秒事件检查；物理深度/渲染姿态合同；Primitive 逐对象观测与独立帧支持记录；最终网格及结构关系的独立验收；通用分支入口和完整资源与时间账本。SAM 2、VLM 或写实材质不是上述验收的前置条件。
+
+H3 的待完善项见前述交付检查与限制。
 
 基础依赖为 Python 3.11+、Blender 和 `requirements.txt`；FFmpeg 可由 `imageio-ffmpeg` 提供。真实分支另需 `requirements-refined.txt`、本地权重、已准备样本、分割缓存及通过的 RGB 校准。`data/` 和 `outputs/` 被 Git 忽略，克隆代码并不包含真实样本及全部前置产物。
+
+H3 使用相邻目录 `../ComfyUI/` 的虚拟环境和本地服务 `http://127.0.0.1:8188`，脚本依赖 PyAV、aiohttp、OpenCV、NumPy、Pillow；这些不是全部包含在基础 `requirements.txt` 中。需先准备 `outputs/stage_a/sample_66ad/original_video.mp4`，并在 ComfyUI 对应模型目录放入：
+
+| 模型目录 | 本次权重文件 |
+| --- | --- |
+| `diffusion_models/` | `minimax_h3_fl2va_pruned_w6a8.safetensors` |
+| `text_encoders/` | `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` |
+| `vae/` | `minimax_h3_video_vae_int8_convrot.safetensors`（视频 VAE，不是音频 VAE） |
+| `loras/` | `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors` |
+| `model_patches/` | `minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors` |
+
+在 ComfyUI 中查看既有节点无需重新运行；重做生成时，JSON 中的控制/参考 MP4 文件名必须对应本机 `ComfyUI/input/` 的真实文件。脚本路径和 720 帧窗口目前固定于此样本，换 Session 需显式适配，不是任意视频即拖即用。
 
 ```powershell
 # 首次环境配置
@@ -201,8 +332,37 @@ python -m venv .venv
 .\.venv\Scripts\python.exe scripts/run_tests.py
 ```
 
-图表数据及方法：[metrics.json](docs/figures/comparison/metrics.json)、[逐帧 CSV](docs/figures/comparison/metrics.csv)。关键实现：[Voxel](reconstruction/heuristic_proxy.py)、[Primitive](reconstruction/primitive_blockout.py)。前置说明：[refined_blockout.md](docs/refined_blockout.md)、[heuristic_proxy.md](docs/heuristic_proxy.md)；阶段文档：[B](docs/stage_b.md)、[C/D](docs/stage_cd.md)、[E/F](docs/stage_ef.md)、[G](docs/stage_g.md)。[Roadmap](Roadmap.md) 保留历史开发状态。
+H3 分步复现示例（每次 `queue` 后等待 ComfyUI 完成，再执行 `collect`；示例名称必须未使用）：
+
+```powershell
+$h3Python = '..\ComfyUI\venv\Scripts\python.exe'
+& $h3Python scripts/run_h3_restyle.py prepare --name demo_0 --start 0 --length 260 --mode canny --strength 1.0
+& $h3Python scripts/run_h3_restyle.py queue --name demo_0
+# 等待生成完成
+& $h3Python scripts/run_h3_restyle.py collect --name demo_0
+& $h3Python scripts/run_h3_restyle.py guide --name demo_0
+
+& $h3Python scripts/run_h3_restyle.py prepare --name demo_1 --start 238 --length 260 --mode canny --strength 1.0
+& $h3Python scripts/run_h3_restyle.py queue --name demo_1 --guide outputs/h3_controlled_graybox/demo_0/overlap_22.mp4
+# 等待生成完成
+& $h3Python scripts/run_h3_restyle.py collect --name demo_1
+& $h3Python scripts/run_h3_restyle.py guide --name demo_1
+
+& $h3Python scripts/run_h3_restyle.py prepare --name demo_2 --start 476 --length 260 --mode canny --strength 1.0
+& $h3Python scripts/run_h3_restyle.py queue --name demo_2 --guide outputs/h3_controlled_graybox/demo_1/overlap_22.mp4
+# 等待生成完成
+& $h3Python scripts/run_h3_restyle.py collect --name demo_2
+& $h3Python scripts/run_h3_restyle.py assemble --name demo_full --parts demo_0 demo_1 demo_2
+& $h3Python scripts/run_h3_restyle.py verify --name demo_full
+
+# 仅运行 H3 算法测试，不提交生成任务
+& $h3Python -m unittest discover -s tests -p test_h3_restyle.py -v
+```
+
+各段运行目录保留 `run.json`（参数、哈希及源帧映射）、`workflow_api.json`、可导入的 `workflow.json`、`history.json`、原生和精确 PTS 视频；`prepare` 不覆盖同名目录，已有 `prompt_id` 的运行不能再次排队。最终以 `full_v3/report.json` 核对交付，而非以 pilot 或失败段冒充完整结果。
+
+图表数据及方法：[metrics.json](docs/figures/comparison/metrics.json)、[逐帧 CSV](docs/figures/comparison/metrics.csv)。关键实现：[Voxel](reconstruction/heuristic_proxy.py)、[Primitive](reconstruction/primitive_blockout.py)、[H3 分段生成与验证](scripts/run_h3_restyle.py)。前置说明：[refined_blockout.md](docs/refined_blockout.md)、[heuristic_proxy.md](docs/heuristic_proxy.md)；阶段文档：[B](docs/stage_b.md)、[C/D](docs/stage_cd.md)、[E/F](docs/stage_ef.md)、[G](docs/stage_g.md)。[Roadmap](Roadmap.md) 保留历史开发状态。H3 官方资料：[ComfyUI 教程](https://docs.comfy.org/tutorials/video/minimax/minimax-h3)、[Union 2.0](https://huggingface.co/alibaba-pai/MiniMax-H3-Fun-Controlnet-Union-2.0)、[ComfyUI 打包控制权重](https://huggingface.co/Comfy-Org/MiniMax-H3/tree/main/model_patches)。
 
 ## 数据使用边界
 
-受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。正式提交或公开展示需另行确认对应许可；`docs/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。
+受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。H3 也只做本地推理，生成视频、控制/参考片及含预览的节点截图沿用相同限制。正式提交或公开展示需另行确认对应许可；`docs/figures/` 和 `workflows/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。
