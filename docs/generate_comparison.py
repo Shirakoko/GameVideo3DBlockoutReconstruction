@@ -1,0 +1,243 @@
+"""Generate README comparisons from existing local receipts and preview frames.
+
+No model inference, reconstruction, Blender execution, or network access.
+The shared image mask is predicted, not independent semantic ground truth.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from reconstruction.refine import masked_ssim
+from reconstruction.primitive_blockout import masked_luminance_mae
+from reconstruction.refined_segmentation import CATEGORIES
+
+ROUTES = {
+    "voxel": ROOT / "outputs/stage_ef/heuristic_voxel_proxy",
+    "primitive": ROOT / "outputs/stage_ef/heuristic_primitive_from_video",
+}
+COLORS = {"voxel": "#2563a6", "primitive": "#c16b24"}
+NAMES = {"voxel": "Voxel", "primitive": "Primitive"}
+
+
+def read_json(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def digest(path):
+    result = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            result.update(chunk)
+    return result.hexdigest()
+
+
+def last_render_seconds(path):
+    text = Path(path).read_text(encoding="utf-8", errors="replace")
+    match = re.search(r"(?m)^(\d+):(\d+\.\d+)\s+render\s+\| Saved: .*frame_000720\.png", text)
+    if match is None:
+        raise ValueError(f"Final-frame elapsed time missing: {path}")
+    return int(match[1]) * 60 + float(match[2])
+
+
+def collect():
+    reports = {
+        "voxel": read_json(ROUTES["voxel"] / "proxy_run.json"),
+        "primitive": read_json(ROUTES["primitive"] / "primitive_run.json"),
+    }
+    if any(r.get("status") != "passed" or not r.get("full_video_rendered") for r in reports.values()):
+        raise ValueError("Both existing routes must have complete delivery receipts")
+    if reports["voxel"]["source_hashes"] != reports["primitive"]["source_hashes"]:
+        raise ValueError("Routes do not share the same source receipt")
+    scenes = {key: read_json(folder / "scene_schema.json") for key, folder in ROUTES.items()}
+    if scenes["voxel"]["cameras"] != scenes["primitive"]["cameras"]:
+        raise ValueError("Camera tracks differ")
+    receipts = {key: read_json(folder / "pipeline_report.json") for key, folder in ROUTES.items()}
+    for receipt in receipts.values():
+        if receipt["parameters"]["engine"] != "BLENDER_EEVEE":
+            raise ValueError("Unexpected rendering engine")
+        for media in receipt["media"].values():
+            if media["frame_count"] != 720 or media["fps"] != "60" or not media["pts_verified"]:
+                raise ValueError("Media time lattice is not the reviewed 720-frame clip")
+    seed = read_json(ROOT / "outputs/stage_ef/real_refined/refinement_report.json")
+    cache = Path(seed["frame_cache"])
+    indices = [row["frame_index"] for row in reports["voxel"]["preview_frames"]]
+    if indices != [row["frame_index"] for row in reports["primitive"]["preview_frames"]]:
+        raise ValueError("Preview frame sets differ")
+    rows, hashes = [], {}
+    for index in indices:
+        source = cache / f"frame_{index:06d}.npz"
+        hashes[f"cached_frame_{index:06d}"] = digest(source)
+        with np.load(source, allow_pickle=False) as data:
+            rgb, codes, labels = data["rgb"], data["codes"], data["labels"]
+            mask = (codes > 0) & (codes < 1020) & (labels != CATEGORIES.index("person"))
+            for route, folder in ROUTES.items():
+                path = folder / f"frames/frame_{index+1:06d}.png"
+                hashes[f"{route}_preview_{index:06d}"] = digest(path)
+                with Image.open(path) as image:
+                    predicted = np.asarray(image.convert("RGB"))
+                if predicted.shape != rgb.shape:
+                    raise ValueError("Native raster comparison requires equal image shapes")
+                score = masked_ssim(rgb, predicted, mask)
+                mae = masked_luminance_mae(rgb, predicted, mask)
+                if score is None or mae is None:
+                    raise ValueError("Empty evaluation mask")
+                expected = reports[route]["preview_frames"][indices.index(index)]
+                field, value = ("masked_ssim_informational", score) if route == "voxel" else ("masked_luminance_mae", mae)
+                if abs(expected[field] - value) > 1e-7:
+                    raise ValueError("Existing preview metric and source raster disagree")
+                rows.append(dict(route=route, frame_index=index, timestamp_seconds=index / 60,
+                                 evaluated_pixels=int(mask.sum()), masked_ssim=score, rgb_mean_mae_255=mae))
+    summary = {}
+    for route, folder in ROUTES.items():
+        objects = scenes[route]["objects"]
+        with_observation = sum(bool(obj["observations"]) for obj in objects)
+        current = [row for row in rows if row["route"] == route]
+        summary[route] = dict(
+            render_elements=len(objects), elements_with_observations=with_observation,
+            observation_records=sum(len(obj["observations"]) for obj in objects),
+            observation_link_fraction=with_observation / len(objects),
+            parent_links=sum(obj["parent_id"] is not None for obj in objects),
+            categories=sorted({obj["category"] for obj in objects}),
+            blend_mib=(folder / "scene.blend").stat().st_size / 1024**2,
+            blockout_mib=(folder / "blockout_video.mp4").stat().st_size / 1024**2,
+            mean_masked_ssim=float(np.mean([row["masked_ssim"] for row in current])),
+            mean_rgb_mean_mae_255=float(np.mean([row["rgb_mean_mae_255"] for row in current])),
+            generation_seconds_approx=187 if route == "voxel" else 38,
+            render_seconds_to_last_saved_frame=last_render_seconds(folder / "render.log"),
+        )
+    return rows, summary, hashes, cache
+
+
+def style():
+    font = Path("C:/Windows/Fonts/msyh.ttc")
+    if font.is_file():
+        plt.rcParams["font.family"] = FontProperties(fname=font).get_name()
+    plt.rcParams.update({"font.size": 13, "axes.titlesize": 15, "axes.labelsize": 13,
+                         "axes.spines.top": False, "axes.spines.right": False,
+                         "axes.spines.left": False, "axes.spines.bottom": False,
+                         "axes.unicode_minus": False, "figure.facecolor": "white"})
+
+
+def save_resources(output, summary):
+    fig = plt.figure(figsize=(10.5, 7.5), layout="constrained")
+    grid = fig.add_gridspec(2, 2, height_ratios=[1, 1.15])
+    time_ax, size_ax, link_ax = fig.add_subplot(grid[0, :]), fig.add_subplot(grid[1, 0]), fig.add_subplot(grid[1, 1])
+    for y, route in enumerate(ROUTES):
+        s = summary[route]
+        build, render = s["generation_seconds_approx"] / 60, s["render_seconds_to_last_saved_frame"] / 60
+        time_ax.barh(y, build, color=COLORS[route], height=.45)
+        time_ax.barh(y, render, left=build, color=COLORS[route], alpha=.35, height=.45)
+        time_ax.text(build / 2, y, f"{build:.2f}", ha="center", va="center", color="white", fontsize=12)
+        time_ax.text(build + render / 2, y, f"{render:.2f}", ha="center", va="center")
+        time_ax.text(build + render + .15, y, f"合计 ≈ {build+render:.2f}", va="center")
+        size_ax.barh(y, s["blend_mib"], color=COLORS[route], height=.45)
+        size_ax.text(s["blend_mib"] + 3, y, f"{s['blend_mib']:.1f}", va="center")
+        fraction = s["observation_link_fraction"] * 100
+        link_ax.barh(y, 100, color="#edf0f3", height=.45)
+        if fraction:
+            link_ax.barh(y, fraction, color=COLORS[route], height=.45)
+        link_ax.text(2, y, f"{s['elements_with_observations']:,} / {s['render_elements']:,}  ({fraction:.1f}%)",
+                     va="center", color="white" if fraction else "#222222", fontsize=12)
+    for ax in (time_ax, size_ax, link_ax):
+        ax.set_yticks([0, 1], ["Voxel", "Primitive"])
+        ax.invert_yaxis()
+        ax.set_axisbelow(True)
+        ax.grid(axis="x", color="#e8ecf0", linewidth=.7)
+    time_ax.set(title="场景生成与渲染时间：深色为生成，浅色为渲染", xlabel="分钟", xlim=(0, 11.8))
+    size_ax.set(title="工程文件体积", xlabel="MiB", xlim=(0, 190))
+    link_ax.set(title="导出元素的观测回链比例", xlabel="%（非识别准确率）", xlim=(0, 102))
+    fig.suptitle("两路交付的资源与证据结构", fontsize=18)
+    fig.savefig(output / "route_resources.png", dpi=160)
+    plt.close(fig)
+
+
+def save_metrics(output, rows, summary):
+    fig, axes = plt.subplots(2, 1, figsize=(10.5, 7.5), layout="constrained", sharex=True)
+    for route in ROUTES:
+        current = [row for row in rows if row["route"] == route]
+        t = [row["timestamp_seconds"] for row in current]
+        marker = "o" if route == "voxel" else "s"
+        for ax, metric in zip(axes, ("masked_ssim", "rgb_mean_mae_255")):
+            mean = summary[route]["mean_" + metric]
+            ax.plot(t, [row[metric] for row in current], marker=marker, color=COLORS[route],
+                    linewidth=1.7, markersize=6, label=f"{NAMES[route]}  均值 {mean:.3f}")
+    axes[0].set(title="遮罩 SSIM ↑", ylabel="SSIM", ylim=(0, 1))
+    axes[1].set(title="RGB 通道均值灰度 MAE ↓", ylabel="灰度级（0–255）", xlabel="视频时间 / 秒", ylim=(0, 100))
+    for ax in axes:
+        ax.legend(loc="lower left" if ax is axes[0] else "upper right", frameon=False, fontsize=12)
+        ax.grid(color="#e8ecf0", linewidth=.7)
+        ax.set_xlim(-.25, 12.3)
+    axes[1].set_xticks([0, 1, 3, 5, 6, 7, 9, 11, 12])
+    fig.suptitle("相同九帧、原生分辨率、统一环境遮罩", fontsize=18)
+    fig.savefig(output / "route_preview_metrics.png", dpi=160)
+    plt.close(fig)
+
+
+def save_contact_sheet(output, cache):
+    width, height, left, gap, top, row_label = 600, 338, 150, 8, 54, 12
+    sheet = Image.new("RGB", (left + 3 * width + 2 * gap, top + 3 * (height + row_label)), "#f4f6f8")
+    draw = ImageDraw.Draw(sheet)
+    font_path = Path("C:/Windows/Fonts/msyh.ttc")
+    font = ImageFont.truetype(str(font_path), 30) if font_path.is_file() else ImageFont.load_default()
+    for column, name in enumerate(("原始 RGB", "Voxel", "Primitive")):
+        draw.text((left + column * (width + gap) + 12, 8), name, fill="#20262e", font=font)
+    for row, index in enumerate((0, 360, 719)):
+        y = top + row * (height + row_label)
+        with np.load(cache / f"frame_{index:06d}.npz", allow_pickle=False) as data:
+            images = [Image.fromarray(data["rgb"])]
+        for folder in ROUTES.values():
+            with Image.open(folder / f"frames/frame_{index+1:06d}.png") as image:
+                images.append(image.convert("RGB"))
+        draw.text((5, y + 135), f"{index/60:.2f}s", fill="#20262e", font=font)
+        for column, image in enumerate(images):
+            sheet.paste(image.resize((width, height), Image.Resampling.LANCZOS), (left + column * (width + gap), y))
+    sheet.save(output / "route_visual_comparison.jpg", quality=94, subsampling=0)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=ROOT / "docs/figures/comparison")
+    args = parser.parse_args()
+    output = args.output.resolve()
+    if not output.is_relative_to(ROOT / "docs/figures"):
+        raise ValueError("Use a documentation figure directory; source artifacts must remain unchanged")
+    rows, summary, hashes, cache = collect()
+    output.mkdir(parents=True, exist_ok=True)
+    document = dict(schema="readme.route_comparison/1", source="existing local delivery receipts and nine preview PNGs",
+                    semantic_ground_truth_available=False, physical_geometry_validated=False,
+                    mask="0 < codes10 < 1020 AND predicted label != person; identical for both routes",
+                    ssim="Existing preview metric: Gaussian 11x11, sigma 1.5; 11x11-eroded mask; not Stage G uniform-window SSIM",
+                    mae="Mean absolute difference of RGB-channel-mean grayscale, on mask, scale 0..255",
+                    time_scope="Generation times are historical approximations; render time is elapsed log time to last PNG, including read/verification. Not full cold start or a controlled speed benchmark.",
+                    observation_scope="Voxel associations are inferred representative projections, not verified instances; each linked mesh has one record. Primitive observations are not exported.",
+                    summary=summary, preview_metrics=rows, input_sha256=hashes,
+                    data_policy="Local internal evaluation only; derived data shares source retention policy")
+    (output / "metrics.json").write_text(json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    with (output / "metrics.csv").open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    style()
+    save_resources(output, summary)
+    save_metrics(output, rows, summary)
+    save_contact_sheet(output, cache)
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

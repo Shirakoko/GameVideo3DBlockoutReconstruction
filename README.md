@@ -1,108 +1,208 @@
-# Game Video Reconstruction — Stage A / B / C / D / E / F / G
+# 游戏录屏的三维粗模重建：Voxel 与 Primitive
 
-Stage G 已实现几何（Chamfer Distance、F-score、观测表面覆盖）、Pose / ATE / RPE / 时间同步、语义 P/R / 类别 / 静动态 / ID Switch、SSIM 和可选本地 LPIPS 评价，输出离线 HTML、CSV、JSON。A–G 现可配置一键运行，独立阶段/attempt 记录耗时、CPU/RSS、NVIDIA device-wide GPU 资源和错误，支持哈希缓存、断点续跑、超时和有界重试；完整渲染的 Pose 对比来自重开 `.blend` 的实际逐帧相机。真实样本的 Depth / render-pose 合同仍未验证，真实报告保持 partial，不伪造几何真值或 Camera 估计精度。配置、公式、GT 输入合同与资源限制见 [docs/stage_g.md](docs/stage_g.md)。
+面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流，输出时间轴一致的导演台视频和可编辑 Blender 工程。本项目比较两种互补表达：**Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性。**
 
-```powershell
-.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_synthetic.json
-.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_existing_sample.json
-.\.venv\Scripts\python.exe scripts/evaluate_scene.py
+当前交付为 12 秒环境/镜头粗模。两路均采用启发式几何与推断相机，不包含角色动作代理。
+
+## 1. 实验设置与交付
+
+数据来自 [Origin Lab Game Recordings v4](https://huggingface.co/datasets/originlab/game-recordings-v4)，Session `66ad9535-583f-4a25-b655-6b1697c83a40` 的 `[0, 12)` 秒：1920×1080、60 FPS、720 帧。元数据记录 UE5、地图 `Island`，未提供明确游戏名称。数据准备采用有界前缀下载，不下载完整 Session 或整库。
+
+两路共享原始 RGB/深度码、61 帧 Grounding DINO + SAM 分割缓存、相机校准与 720 帧轨迹；渲染均采用 Blender 5.2.1 LTS / EEVEE。几何补齐、形状先验与材质设置不同，因此属于**同源方案比较，而非单变量消融实验**。
+
+| 交付物 | Voxel：彩色体素 | Primitive：分类基本体 |
+| --- | --- | --- |
+| 原片 / 粗模对比 | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4) | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4) |
+| 纯粗模视频 | [blockout_video.mp4](outputs/stage_ef/heuristic_voxel_proxy/blockout_video.mp4) | [blockout_video.mp4](outputs/stage_ef/heuristic_primitive_from_video/blockout_video.mp4) |
+| 可编辑场景 | [scene.blend](outputs/stage_ef/heuristic_voxel_proxy/scene.blend) | [scene.blend](outputs/stage_ef/heuristic_primitive_from_video/scene.blend) |
+| 原始验证记录 | [proxy_run.json](outputs/stage_ef/heuristic_voxel_proxy/proxy_run.json) | [primitive_run.json](outputs/stage_ef/heuristic_primitive_from_video/primitive_run.json) |
+
+### Voxel 对比视频
+
+左侧为原始录屏，右侧为彩色体素粗模。
+
+<video controls muted playsinline preload="metadata" width="100%" poster="docs/figures/voxel_compare_6s.jpg">
+  <source src="outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4" type="video/mp4">
+</video>
+
+### Primitive 对比视频
+
+左侧为原始录屏，右侧为分类基本体粗模。
+
+<video controls muted playsinline preload="metadata" width="100%" poster="docs/figures/primitive_compare_6s.jpg">
+  <source src="outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4" type="video/mp4">
+</video>
+
+不支持内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。
+
+以下为相同源帧的原始 RGB、Voxel、Primitive；行时间分别为 0、6、11.983 秒。
+
+![相同源帧的 RGB、Voxel 与 Primitive 对比](docs/figures/comparison/route_visual_comparison.jpg)
+
+Voxel 作为当前环境/镜头展示方案；Primitive 用于检查基本体表达与局部编辑。两路均存在物体合并、位置偏差和细节缺失；Primitive 近景仍有大体积遮挡。人物、斧头、木牌及雾效未重建。所有媒体链接依赖本地文件，使用权限见文末。
+
+## 2. 工作流与分支
+
+编排器负责阶段状态、工具执行、缓存、失败记录与质量检查。视觉模型生成预测类别与遮罩；数值模块生成几何；Scene JSON 约束单位、时间、来源和对象结构；Blender 后台创建场景、保存重开并渲染。当前采用规则式编排，未实现 LLM 自主规划或几何修复循环。
+
+```mermaid
+flowchart LR
+    A[RGB / 深度码 / 遥测] --> B[数据准备与同步]
+    B --> C[本地分割缓存与 RGB 相机校准]
+    C --> V[体素融合与启发式补齐]
+    C --> P[采样观测点与类别基本体拟合]
+    V --> VQ[覆盖 / 穿模 / 预览检查]
+    P --> PQ[几何过滤 / 灰度误差检查]
+    VQ --> E[Scene JSON / Blender 场景]
+    PQ --> E
+    E --> F[保存重开 / 逐帧渲染 / MP4 验证]
+    F --> Q[两路统一离线比较]
 ```
 
-完整合成报告：`outputs/stage_g/synthetic_pipeline/evaluation_report.html`、`metrics.csv`、`evaluation_report.json`；真实限制/同步报告：`outputs/stage_g/dataset_pipeline/`。运行相同 Pipeline 命令可验证缓存或恢复失败 checkpoint。第二条真实命令预期 exit 2，没有新增数据下载，也不修改旧启发式粗模。
+Voxel 入口为 `reconstruction.heuristic_proxy`；本次 Primitive 入口为 `reconstruction.primitive_blockout`，直接读取视频观测，**不读取 Voxel 补齐后的占用结果**。历史目录 `heuristic_primitive_proxy/` 为体素派生灰模基线，不属于本次两路比较。
 
-最新验证：Stage G 40/40、全项目 192/192 测试通过，无跳过；完整合成 720 帧与二次 A–G 缓存复用通过。已有本地媒体前缀也通过独立 Stage A 重解码并输出真实 partial 评价；数值、来源边界与回归记录见 Stage G 文档，以下旧阶段记录保留。
+严格米制路径 A → B → C → D → E → F → G 已通过合成端到端验证，并提供 `reviewed` 输入接口。本次真实 Session 因深度逆公式、单位、像素采样和渲染姿态绑定未确认，在 A 返回阻塞，B–F 跳过，G 生成 partial 报告。两条启发式入口及本节离线比较尚未接入统一 A–G CLI。
 
-用户已明确允许按原视频布局进行启发式体素补齐，独立入口 `python -m reconstruction.heuristic_proxy --allow-heuristic`。50 cm 体素代理已生成连续地面及环境实体、1401 个可编辑区块，720 帧相机穿模检查为 0，九帧实际预览与保存重开通过。最终 `scene.blend`、`blockout_video.mp4` 和 `original_vs_blockout.mp4` 已生成于 `outputs/stage_ef/heuristic_voxel_proxy/`；两个视频均为 60 FPS / 720 帧 / 12 秒，输入/代码/输出哈希匹配的重复运行复用通过，精简后全项目 145/145 测试通过。它不是精确几何恢复，不改变以下旧重建路线的失败结论。运行与限制见 [docs/heuristic_proxy.md](docs/heuristic_proxy.md)。
+## 3. 两种表达的技术差异
 
-基本体现在从原视频观测生成，不再读体素占用：`python -m reconstruction.primitive_blockout --allow-heuristic`。输出在 `outputs/stage_ef/heuristic_primitive_from_video/`；旧的体素目录和从体素拟合的灰模目录保持不动。
+| 维度 | Voxel | Primitive |
+| --- | --- | --- |
+| 几何单元 | 0.5 场景单位体素；跨类别剔除内部面，按空间区块导出网格 | 从采样观测点拟合方块、圆柱、球体；保留独立可编辑元素 |
+| 几何先验 | 补齐连续地面、环境柱状体积，预留相机自由走廊 | 不执行全局地面补齐或柱体填充；地面分块、树干/树冠及实心区间采用类别规则 |
+| 语义表达 | 类别附着于体素及网格区块，侧重空间占用与粗轮廓 | 类别显式关联基本体类型、尺寸与部分父子关系 |
+| 观测累计 | 每帧对独立体素投票，至少两个训练帧支持后进入融合；补齐几何另行标注 | 当前 `min_votes` 按采样点数累计，不能等同于两个独立帧支持 |
+| 对象标识 | 1,401 个空间/类别区块；不代表 1,401 个真实物体 | 7,446 个拟合元素：7,310 方块、90 圆柱、46 球体；不代表真实实例数 |
+| 主要风险 | 补齐先验可能掩盖观测缺失；高覆盖不保证布局正确 | 形状先验可能替代真实轮廓；细碎元素和近景体积影响可读性 |
 
-新增可选真实视频彩色体素粗模路径，保留环境轮廓/粗颜色，不追求精细贴图。模型识别已在本地 GPU 跑完 61 帧；原深度路径仍失败，独立 RGB 三视图留出重投影通过（627 点，中位数 1.99 px、P90 7.05 px），但不能据此证明全部稠密几何有效。已后台生成表面/实体体素试验 `.blend` 和九帧预览；最新实体候选有 261/720 帧相机落入体素，质量拒绝，未生成新版真实 MP4。原严格路径不变。流程、命令和实际证据见 [docs/refined_blockout.md](docs/refined_blockout.md)。
+两路均以推断地面锚定深度码的远近关系，工程虽使用米制设置，真实尺寸尚未认证。两路 `object_id` 均为生成元素标识，不能作为跨帧真实实例身份验证。
 
-Stage E/F 已实现并补齐 Roadmap：读取已验证 Scene JSON，通过 Blender Background Mode 自动创建地面/道路/墙壁/建筑等粗模、分类材质、Collections、摄像机和逐帧动画，保存后重开校验并渲染 MP4。支持原始密集 Camera Pose、精确 FPS/源 Frame Index 映射、源 Scene JSON 快照、批量任务、受保护的重复运行和完整产物哈希复用，不依赖人工 Blender UI。Stage E/F 26 项、全项目 115 项测试通过（无跳过）。详情见 [docs/stage_ef.md](docs/stage_ef.md)。
+## 4. 场景理解能力的验证差异
 
-```powershell
-.\.venv\Scripts\python.exe scripts/prepare_stage_ef_demo.py
-.\.venv\Scripts\python.exe scripts/render_blockout.py outputs/stage_ef/demo_input/scene_schema.json --original-video outputs/stage_ef/demo_input/original_video.mp4 --camera-poses outputs/stage_ef/demo_input/camera_poses.json --output outputs/stage_ef/synthetic_demo
-.\.venv\Scripts\python.exe scripts/run_tests.py --pattern test_stage_ef.py --output outputs/stage_ef/tests
+两路共享视觉模型与预测缓存，比较结果不能用于判断 Grounding DINO / SAM 的识别能力差异。验证应区分视觉识别、语义到几何转换、证据可追溯性及空间可用性。
+
+| 验证层 | Voxel 的可检查内容 | Primitive 的可检查内容 | 当前证据边界 |
+| --- | --- | --- | --- |
+| 视觉识别 | 预测类别在空间占用中的分布 | 相同预测类别对应的拟合元素 | 模型与缓存相同；无独立实例标注，P/R、Mask IoU 未验收 |
+| 语义 → 几何 | 环境体积、粗轮廓、道路/树墙与镜头关系 | 类别—基本体映射、尺寸、树干—树冠分解及父子关系 | Primitive 的表达更显式，但规则映射本身不是识别正确性的证明 |
+| 观测回链 | 1,320 / 1,401 区块包含代表观测，共 1,320 条记录 | 0 / 7,446 元素包含逐对象观测；保留全局输入哈希 | Voxel 记录为单帧推断关联，非实例真值；Primitive 为导出回链缺失，非原始观测缺失 |
+| 结构关系 | 当前无父子关系 | 46 条树干—树冠父子关系 | 属于拟合规则输出，尚未通过独立结构标注验证 |
+| 时序理解 | 静态环境与固定时间轴 | 静态基本体与固定时间轴 | 均未验证角色轨迹、动作事件、遮挡期间身份保持 |
+
+因此，**Voxel 更适合验证空间覆盖与镜头通道，Primitive 更适合暴露语义到结构化几何的转换错误**。当前数据不足以得出任一路径“场景理解准确率更高”的结论。
+
+后续独立验收应采用未参与拟合的实例与事件标注：类别/Mask P/R 与 IoU、对象投影位置与尺寸、部件关系、遮挡顺序、角色身份和动作时刻。最终网格的几何精度应独立于点云评价；不能将源预测遮罩或其投影回链作为真值。
+
+## 5. 统一视觉比较与质量门槛
+
+时间映射固定为 `源帧 i → 视频时间 i/60 秒 → Blender 帧 i+1`，`i=0..719`。每秒起始帧对应 `60s → 60s+1`，`s=0..11`；末帧 PTS 为 11.9833 秒，视频总时长为 12 秒。该映射验证输出时序一致性，不证明推断相机或角色动作准确。
+
+本次重新计算相同九帧：`0, 60, 180, 300, 360, 420, 540, 660, 719`。两路使用同一原生 RGB 和环境遮罩 `0 < codes10 < 1020 且预测类别 ≠ person`；以下均值为九帧指标的算术平均。
+
+![两路在相同九帧和遮罩下的 SSIM 与灰度 MAE](docs/figures/comparison/route_preview_metrics.png)
+
+| 统一指标 | Voxel | Primitive | 解释 |
+| --- | ---: | ---: | --- |
+| 遮罩 SSIM ↑ | 0.804 | 0.769 | Gaussian 11×11、σ=1.5，遮罩腐蚀 11×11；不同于 Stage G 的均匀窗口实现 |
+| RGB 均值灰度 MAE ↓ | 19.725 | 32.097 | 遮罩内 RGB 通道均值灰度的绝对误差，量程 0–255；非标准加权亮度 |
+| 视频长度 / FPS / 帧数 | 12 秒 / 60 / 720 | 12 秒 / 60 / 720 | 原片、粗模与对比片均回读验证全部 PTS |
+| 保存重开相机最大矩阵差 | 5.4e-7 | 5.4e-7 | 相机写入/保留误差，非真实位姿估计精度 |
+| 真实几何 / 语义准确率 | N/A | N/A | 缺已验证物理合同及独立语义真值，不以零误差替代 |
+
+Voxel 在本样本的图像一致性指标上较优。由于两路材质、几何补齐和形状先验不同，该差异不能单独归因于表示类型，亦不构成语义或几何精度证明。曲线连线仅连接九个采样点，不代表全 720 帧已完成视觉评分。
+
+原始生产门槛并不等价：
+
+| 检查 | Voxel | Primitive |
+| --- | --- | --- |
+| 相机可用性 | 独立检查全 720 帧占用体素，相机中心入体素帧数为 0；走廊半径 2.5 场景单位 | 拟合阶段过滤近相机基本体；无同口径独立逐帧体素穿模报告 |
+| 环境覆盖 | 射线覆盖 95.9%–100%；实际渲染覆盖 96.2%–100% | 未提供同口径覆盖实测；回执中的 `coverage_status=passed` 不作为覆盖测量结果 |
+| 预览门槛 | 单帧覆盖 ≥45%、均值 ≥65%、近墙比例 ≤1%，再检查渲染覆盖 | 当前灰度 MAE 32.1 优于历史灰模基线 67.5；该基线不是 Voxel |
+
+覆盖门槛仅用于排除明显不可用候选，不能解释为还原率。历史实体候选即使 SSIM 优于基线，仍因 261 / 720 帧相机在实体内而被拒绝完整渲染。Primitive 当前算法允许缺失灰模基线时通过比较门槛，独立参考与强制验收仍需完善。
+
+合成 G 报告中 CD 0.046 m、5 cm F-score 0.977、观测覆盖 0.956 比较的是融合点云与已知深度表面，不是两路真实粗模网格。合成 SSIM 0.755 亦不与本节遮罩 SSIM 混用。完整定义见 [Stage G](docs/stage_g.md)。
+
+## 6. 资源与成本
+
+![两路场景生成及渲染时间、工程体积和观测回链比例](docs/figures/comparison/route_resources.png)
+
+| 已记录资源 | Voxel | Primitive |
+| --- | ---: | ---: |
+| 场景生成时间，约 | 187 秒 | 38 秒 |
+| 渲染进程至末帧保存 | 374.953 秒 | 407.985 秒 |
+| 生成 + 渲染，约 | 9.37 分钟 | 7.43 分钟 |
+| `.blend` 文件体积 | 151.8 MiB | 120.6 MiB |
+| 纯粗模 MP4 体积 | 4.60 MiB | 3.99 MiB |
+| 导出元素附带观测比例 | 94.2% | 0.0% |
+
+生成耗时来自历史近似记录；渲染耗时取日志中末帧 PNG 保存时的进程累计时间，包含场景读入和验证。以上不包含下载、61 帧识别、相机校准、代理几何生成、九帧预览、编码及人工审核，亦不是受控性能基准。回链比例衡量记录是否存在，不衡量关联正确性。
+
+Primitive 的场景生成与工程体积较低，但渲染未随元素数或生成耗时同比下降。成本应按完整任务和合格交付统计，而非仅按渲染或模型 API 计费。
+
+```text
+单条合格视频成本 = 总投入 / 合格交付数
+总投入 = 计算机时 × 单价 + 存储/传输 + 人工审核/修正 + 开发/模型准备摊销
+计算与人工投入包含失败尝试和重试
 ```
 
-已验收合成产物：`outputs/stage_ef/synthetic_demo/scene.blend`、`blockout_video.mp4`、`original_vs_blockout.mp4`，均为 12 秒 / 60 FPS / 720 帧（独立合成原始输入，不是受限游戏样本）。真实样本仍因几何和 Camera Pose 合同缺口被 Stage E 明确拒绝，没有假定未知坐标或尺度。
+本次视觉识别在 RTX 4070 本地执行，无视频生成或 VLM API 调用，远程模型调用费用为 ¥0。若假设等效机器 ¥20/小时且速度一致，仅上述生成与渲染成本约为 **Voxel ¥3.12、Primitive ¥2.48**；该值为条件估算，不是云报价或全流程成本。完整冷启动成本尚未统一实测。
 
-Stage C/D 已增加：五类主要物体（角色、树、岩石、地面、栏杆）的辅助 RGB 理解与遮罩接口、Depth/Point Cloud/Mask 几何估计、Persistent ID、静动态分类、空间关系、Camera/Motion Track，以及 `1.0.0` JSON Scene Schema 的结构和语义校验。真实样本先输出明确的 RGB-only partial；完整几何用五类合成 demo 验证，不绕过 Stage A/B 的真实合同缺口。入口、数据合同、证据及限制见 [docs/stage_cd.md](docs/stage_cd.md)。
+## 7. 量产方案
+
+现有统一编排器支持独立阶段/attempt、输入与产物哈希缓存、成功 checkpoint 恢复、目录锁、进程树超时和有界重试；执行错误/超时默认最多重试一次，合同阻塞不重试。E/F 支持批量场景任务，启发式入口保留独立质量记录。
+
+生产化仍需补齐以下环节：
+
+1. Session/窗口适配：将固定样本、720 帧和已有目录改为显式任务清单，包含源帧窗口、合同、权限与预算。
+2. 分支编排：将 Voxel / Primitive、模型缓存、校准、各路门槛及统一比较接入同一任务账本。
+3. 质量验收：低分辨率预览后执行独立语义/事件检查；在有限次数与计算预算内修正失败阶段，合格后渲完整视频。
+4. 资源调度：按 GPU/内存约束分配识别与渲染任务；记录 P50/P95 耗时、通过率及人工修正时间。
+
+固定 Session 泛化、跨机器队列、自动几何修复和多片段通过率均未实现。按本次生成与渲染时间外推，100 条同复杂度片段约需 Voxel 15.6、Primitive 12.4 机时，尚未计其他阶段与失败；该估算不代表实际吞吐。
+
+## 8. 相对引擎方案的适用价值
+
+| 数据条件 / 需求 | 本方案 | 原引擎灰模 / Sequencer |
+| --- | --- | --- |
+| 仅有录屏与辅助遥测 | 从观测构造可编辑空间代理，无需源地图与资产 | 缺源工程时无法直接重放原场景 |
+| 已有工程、资产及可重放镜头 | 反推几何引入额外误差，通常非首选 | 源地形、角色、碰撞与动画更完整，应优先采用 |
+| 跨来源批量分析 | Scene JSON、后台 Blender 与统一帧映射提供标准交付格式；源数据仍需适配 | 依赖各项目版本、工程与回放接口 |
+| 环境布局或镜头调整 | Voxel 提供整体覆盖；Primitive 提供显式元素编辑 | 有源工程时修改更可信，亦可自动渲染 |
+
+核心价值是将缺少源工程的游戏成片转化为可编辑、可追溯的空间草稿，而非替代引擎的真实几何、动画与碰撞。当前未建立同任务 UE 成本/性能基准，不主张全面优于引擎。
+
+## 9. 完成度与复现
+
+已交付两路真实环境视频、可编辑工程与时间映射；全项目最近回归 192 / 192 通过、无跳过。该记录验证算法和合成集成流程，不代表真实场景准确率。本次文档比较额外核对同源哈希、相机一致性、原生 raster，并将 Voxel SSIM / Primitive MAE 回算至已有记录，容差 1e-7。
+
+优先未完成项：角色胶囊、朝向/轨迹与逐秒事件检查；物理深度/渲染姿态合同；Primitive 逐对象观测与独立帧支持记录；最终网格及结构关系的独立验收；通用分支入口和完整成本账本。SAM 2、VLM 或写实材质不是上述验收的前置条件。
+
+基础依赖为 Python 3.11+、Blender 和 `requirements.txt`；FFmpeg 可由 `imageio-ffmpeg` 提供。真实分支另需 `requirements-refined.txt`、本地权重、已准备样本、分割缓存及通过的 RGB 校准。`data/` 和 `outputs/` 被 Git 忽略，克隆代码并不包含真实样本及全部前置产物。
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/understand_scene.py
-.\.venv\Scripts\python.exe scripts/understand_scene.py --synthetic
-.\.venv\Scripts\python.exe scripts/validate_scene.py outputs/stage_cd/synthetic_demo/scene_schema.json
-.\.venv\Scripts\python.exe scripts/run_tests.py --output outputs/stage_cd/tests
-```
-
-真实产物：`outputs/stage_cd/sample_66ad/scene_schema.json`（辅助识别五类、10 条观测，未知几何为 null，预期 exit 2）。合成产物：`outputs/stage_cd/synthetic_demo/`（五类持久 ID、4 静态+1 动态、30 条观测、带来源的对象点云与逐帧 Mask/debug）。本地 Grounding DINO/SAM 依赖和固定版本权重已安装，新增 refinement 路径已完成 61 帧 GPU 推理；识别和几何仍是 predicted/inferred，不声称真实自动检测精度已获真值验证。
-
-当前状态：**Stage B 反投影与融合内核、单元测试和合成演示已实现；真实样本米制 Depth / render-pose 仍未确认，真实 Stage A/B 尚未验收**。不扩大数据下载；Stage E/F 只对已验证合同输入生成场景，独立 Stage B 后台数学验证不属于真实样本验收。
-
-Stage B 入口为 `scripts/reconstruct_scene.py`，完整坐标定义、证据边界、输入合同及复现命令见 [docs/stage_b.md](docs/stage_b.md)。默认只复核真实样本并返回阻塞状态；`--synthetic` 显式生成已知尺度的演示，不会自动用合成结果代替真实重建。
-
-- 合成单帧 / 融合 PLY、可视化与元数据：`outputs/stage_b/synthetic_demo/`。
-- 真实样本验证报告、仅相机位置的轨迹 PLY / 方向假设图：`outputs/stage_b/sample_66ad/`，**不是场景点云**。
-- 坐标单测、重复权重、无效深度、体素来源与 PLY 回读测试：`tests/test_stage_b.py`。
-- 独立 Blender 数值回执：`outputs/stage_b/validation/blender_coordinate_probe.json`。
-
-```powershell
-.\.venv\Scripts\python.exe scripts/run_tests.py --output outputs/stage_b/tests
-.\.venv\Scripts\python.exe scripts/reconstruct_scene.py
-.\.venv\Scripts\python.exe scripts/reconstruct_scene.py --synthetic
-```
-
-最新产物位于 `outputs/stage_a/sample_66ad/`：12 秒 / 60 FPS RGB、720 帧相机记录、6 张原分辨率 RGB PNG 和 6 个原生 Depth code/mask NPZ。实际 RGB 与 Depth 均解码 720 帧；RGB PTS / Depth Metadata 时间误差为 0，相机逐帧与 Parquet 对照通过。具体限制见该目录的 `validation_report.md`。
-
-本次累计接收约 76.13 MB（含两个候选的 JSONL 前缀、小型合同和一个选定 Session 的媒体前缀）。没有下载任何完整视频、完整 HEVC 或完整 Session。最早受限下载删除期限为 **2026-12-24，Asia/Shanghai**。
-
-## 运行
-
-```powershell
+# 首次环境配置
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe scripts/inspect_dataset.py
+
+# 合成 A–G；不依赖受限样本
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_synthetic.json
+# 已准备真实样本的严格审计；预期 exit 2，生成 partial 报告
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_existing_sample.json
+
+# 已有真实前置产物：分别生成预览，再渲完整视频
+.\.venv\Scripts\python.exe -m reconstruction.heuristic_proxy --allow-heuristic --preview-only
+.\.venv\Scripts\python.exe -m reconstruction.heuristic_proxy --allow-heuristic --render-only
+.\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic --preview-only
+.\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic --render-only
+
+# 重建本 README 图表与统一比较数据；不调用模型、Blender 或网络
+.\.venv\Scripts\python.exe docs/generate_comparison.py
+# 算法与后台集成回归
 .\.venv\Scripts\python.exe scripts/run_tests.py
-# 本地前缀已存在时无需联网，即可重新生成小样本：
-.\.venv\Scripts\python.exe scripts/prepare_sample.py
 ```
 
-测试维护：同类输入校验使用带名称的 `subTest`，移除重复端点检查和写入固定目录的合成诊断测试，保留全部 Blender 后台、相机/时间轴、穿模、缓存及输出保护测试。全项目共145项，回归记录在 `outputs/stage_ef/cleanup_tests/`；可执行 `.\.venv\Scripts\python.exe scripts/run_tests.py --output outputs/stage_ef/cleanup_tests`。历史验收记录保留。
+图表数据及方法：[metrics.json](docs/figures/comparison/metrics.json)、[逐帧 CSV](docs/figures/comparison/metrics.csv)。关键实现：[Voxel](reconstruction/heuristic_proxy.py)、[Primitive](reconstruction/primitive_blockout.py)。前置说明：[refined_blockout.md](docs/refined_blockout.md)、[heuristic_proxy.md](docs/heuristic_proxy.md)；阶段文档：[B](docs/stage_b.md)、[C/D](docs/stage_cd.md)、[E/F](docs/stage_ef.md)、[G](docs/stage_g.md)。[Roadmap](Roadmap.md) 保留历史开发状态。
 
-访问检查是只读的：公开 API/README 展示页、固定 commit 下的 `samples/` 文件树，以及受限文件的 HEAD 请求。默认总响应上限 8 MiB，不下载视频、HEVC、JSONL 或 Parquet；返回码 2 代表需要获批登录，1 代表检查本身失败。认证从 HF_TOKEN / HUGGING_FACE_HUB_TOKEN 或标准本机 HF token 文件读取，不打印、不写入报告。
+## 数据使用边界
 
-## 已实现
-
-- `stage_a/access.py`：受限访问检查、字节预算、固定版本、sample 成本排序、JSON / Markdown 报告。
-- `stage_a/media.py`：本地 RGB 读取；原生 `yuv420p10le` HEVC 读取，以 `uint16` 保存原始 **0–1023** luma codes；不调用 `gray16le` 范围转换。逐帧生成器带索引、解码字节上限和缺帧错误。当前只支持这一个原生 Depth 像素布局，其他格式明确拒绝。
-- `stage_a/depth.py`：公开 README 相对 log-depth 数学函数、near plane 和 pinhole K 数值检查，以及原生 v3 code / reserved-code mask 输出。**实际为 log_sentinel_v3，缺少明确逆公式；米制转换故意拒绝执行**。
-- `stage_a/sync.py`：流式 JSONL、可选 PyArrow 帧表读取、显式 Frame Index 关联、多 Camera QPC 记录保留、缺帧/重复索引/时间差检查。保留原始位置和旋转字段，不转换坐标系，不把原始 QPC 当秒。
-- `tests/`：纯合成 12 秒 / 60 FPS / 32×32 HEVC + RGB 集成测试，覆盖所有 1024 luma codes、重复帧、非零起始索引、缺帧及拒绝未验证米制公式。
-
-`pyarrow` 已加入依赖，用于真实帧表的有限列/首批数据读取。`stage_a/mp4.py` 检查 ISO-BMFF 的 moov/chunk/sample table，仅下载早期媒体范围；中间 partial.mp4 的完整索引仅用于有限早期解码，不能当完整 Session 使用。
-
-`scripts/inspect_metadata.py` 的总接收上限为 8 MiB；`scripts/fetch_sample.py` 固定到当前 sample、总接收上限 128 MiB，HTTP Range 不被严格兑现时在读取 payload 前停止。前者读取三个 sample 的小型合同和一个候选的 JSONL 前缀，后者读取选定 Session 的 JSONL 前缀、MP4 索引/前15秒媒体范围、24 MiB HEVC 前缀和5.2 MiB帧表。它们需要获批的本机 HF 凭据，不会存储 token。普通重跑只需 `prepare_sample.py`，不要重复下载。
-
-## 重要边界
-
-公开 README 示例为 `D_rel = expm1(q * log1p(K)) / K`，并示范从 FFmpeg gray16le 归一化到 q。这里不把该示例当作每个 Session 的完整物理解码合同：原生 10-bit codes 如何归一化、full/limited range、sky/far-clip/invalid masks、depth_transform、near_plane_cm 和最终单位，均需对照实际 Session 确认。代码输出的 raw codes **不是米制 Depth Frames**。
-
-decoded ordinal / delivery Frame Index / original capture tick / clip ordinal 是不同概念。`join_frames` 要求调用者提供已审查的源帧映射，不使用 JSONL 行号或 QPC 时间戳猜测 Frame Index；索引关联成功也不代表 timestamp、映射来源和相机单采样规则已经验证。相机帧表 binning 应复用实际 `tables/conversion_manifest.json`，并交叉检查 `camera.jsonl`。
-
-重复帧统计定义为解码后相邻像素完全一致，不等于合同中的 `dup_count`，也不能据此判定源相机重复；静止场景可能相同，有损重编码的源重复帧也可能不同。真实剪辑需要读取前一帧以验证首帧的重复状态。
-
-真实样本与合成测试分开：真实样本在 `outputs/stage_a/sample_66ad/`，合成测试在 `outputs/stage_a/tests/`。当前真实样本的 near_plane_cm=10、fx=fy=960、cx=960、cy=540；RGB / Depth 同为 1920×1080。所有相机字段仍处于原始 UE5 / lh_z_up 坐标，不转换到 Blender。
-
-已发现并保留：旧 loader 使用 transform=2 / 旧目录 / 30 FPS 描述，与实际 v4 Session 不兼容；实际 depth_transform=3，sentinel=1023、max_valid=1020、far_plane_encode=100000；Depth Metadata.camera_frame 比 depth_frame 滞后0–13帧，不可当作RGB索引；两项 manifest size/hash 与实际固定版本文件不符；全局 RGB 与 Depth/帧表数量相差1，但0–719窗口无缺帧。解码后精确相邻重复为 RGB 2 / Depth 0，不代表源编码端重复数为0。
-
-## 仍未完成的验证（仅 Stage A）
-
-1. 需要数据提供方明确 v3 逆公式、code 归一化分母、far_plane_encode 单位、near_plane 的作用以及零码意义；不能用旧示例或假设值生成米制 Depth。
-2. 需要进一步解释 Depth Metadata 的相机快照引用时刻和源 dup_count。当前保留 RGB 帧相机和 Depth 引用相机两份原始记录，不声称几何对应时刻已完全验证。
-3. 不扩大下载、不开启未经验证的真实几何重建。Stage B 内核可在已知尺度/外参的合成输入上运行；真实样本必须确认以上合同及坐标/像素采样定义后才准备几何重建输入。
-
-受限样本仅供内部评估，不再分发，不上传第三方，不公开发布；首次授权下载需记录 30 天删除期限并以完整 LICENSE.md 为准。
-
-本次公开 `LICENSE.md` 顶部标有 DRAFT / pending legal review。程序不会自动申请访问或接受条款；内部评估之外的使用需单独明确授权。
+受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。正式提交或公开展示需另行确认对应许可；`docs/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。

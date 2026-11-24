@@ -1,0 +1,235 @@
+{
+  "schema": "readme.route_comparison/1",
+  "source": "existing local delivery receipts and nine preview PNGs",
+  "semantic_ground_truth_available": false,
+  "physical_geometry_validated": false,
+  "mask": "0 < codes10 < 1020 AND predicted label != person; identical for both routes",
+  "ssim": "Existing preview metric: Gaussian 11x11, sigma 1.5; 11x11-eroded mask; not Stage G uniform-window SSIM",
+  "mae": "Mean absolute difference of RGB-channel-mean grayscale, on mask, scale 0..255",
+  "time_scope": "Generation times are historical approximations; render time is elapsed log time to last PNG, including read/verification. Not full cold start or a controlled speed benchmark.",
+  "observation_scope": "Voxel associations are inferred representative projections, not verified instances; each linked mesh has one record. Primitive observations are not exported.",
+  "summary": {
+    "voxel": {
+      "render_elements": 1401,
+      "elements_with_observations": 1320,
+      "observation_records": 1320,
+      "observation_link_fraction": 0.9421841541755889,
+      "parent_links": 0,
+      "categories": [
+        "barrier",
+        "building",
+        "environment",
+        "grass",
+        "ground",
+        "rock",
+        "shrub",
+        "tree"
+      ],
+      "blend_mib": 151.7982177734375,
+      "blockout_mib": 4.604166030883789,
+      "mean_masked_ssim": 0.8043707792885592,
+      "mean_rgb_mean_mae_255": 19.724802652994793,
+      "generation_seconds_approx": 187,
+      "render_seconds_to_last_saved_frame": 374.953
+    },
+    "primitive": {
+      "render_elements": 7446,
+      "elements_with_observations": 0,
+      "observation_records": 0,
+      "observation_link_fraction": 0.0,
+      "parent_links": 46,
+      "categories": [
+        "barrier",
+        "building",
+        "environment",
+        "grass",
+        "ground",
+        "rock",
+        "shrub",
+        "tree"
+      ],
+      "blend_mib": 120.58452701568604,
+      "blockout_mib": 3.987447738647461,
+      "mean_masked_ssim": 0.769250241222516,
+      "mean_rgb_mean_mae_255": 32.09744877285428,
+      "generation_seconds_approx": 38,
+      "render_seconds_to_last_saved_frame": 407.985
+    }
+  },
+  "preview_metrics": [
+    {
+      "route": "voxel",
+      "frame_index": 0,
+      "timestamp_seconds": 0.0,
+      "evaluated_pixels": 1582392,
+      "masked_ssim": 0.7754494795598452,
+      "rgb_mean_mae_255": 12.92811393737793
+    },
+    {
+      "route": "primitive",
+      "frame_index": 0,
+      "timestamp_seconds": 0.0,
+      "evaluated_pixels": 1582392,
+      "masked_ssim": 0.6856731889699527,
+      "rgb_mean_mae_255": 43.472877502441406
+    },
+    {
+      "route": "voxel",
+      "frame_index": 60,
+      "timestamp_seconds": 1.0,
+      "evaluated_pixels": 1706228,
+      "masked_ssim": 0.7858001787278507,
+      "rgb_mean_mae_255": 17.289308547973633
+    },
+    {
+      "route": "primitive",
+      "frame_index": 60,
+      "timestamp_seconds": 1.0,
+      "evaluated_pixels": 1706228,
+      "masked_ssim": 0.7187563106821248,
+      "rgb_mean_mae_255": 44.052757263183594
+    },
+    {
+      "route": "voxel",
+      "frame_index": 180,
+      "timestamp_seconds": 3.0,
+      "evaluated_pixels": 1716791,
+      "masked_ssim": 0.7812566802962249,
+      "rgb_mean_mae_255": 20.80255126953125
+    },
+    {
+      "route": "primitive",
+      "frame_index": 180,
+      "timestamp_seconds": 3.0,
+      "evaluated_pixels": 1716791,
+      "masked_ssim": 0.7786185703666494,
+      "rgb_mean_mae_255": 26.237239837646484
+    },
+    {
+      "route": "voxel",
+      "frame_index": 300,
+      "timestamp_seconds": 5.0,
+      "evaluated_pixels": 1857763,
+      "masked_ssim": 0.8165140268804685,
+      "rgb_mean_mae_255": 18.579912185668945
+    },
+    {
+      "route": "primitive",
+      "frame_index": 300,
+      "timestamp_seconds": 5.0,
+      "evaluated_pixels": 1857763,
+      "masked_ssim": 0.8084024141844478,
+      "rgb_mean_mae_255": 23.813560485839844
+    },
+    {
+      "route": "voxel",
+      "frame_index": 360,
+      "timestamp_seconds": 6.0,
+      "evaluated_pixels": 1815527,
+      "masked_ssim": 0.8027272941111366,
+      "rgb_mean_mae_255": 17.792381286621094
+    },
+    {
+      "route": "primitive",
+      "frame_index": 360,
+      "timestamp_seconds": 6.0,
+      "evaluated_pixels": 1815527,
+      "masked_ssim": 0.7637811264221842,
+      "rgb_mean_mae_255": 31.46961784362793
+    },
+    {
+      "route": "voxel",
+      "frame_index": 420,
+      "timestamp_seconds": 7.0,
+      "evaluated_pixels": 1817100,
+      "masked_ssim": 0.8200398714638413,
+      "rgb_mean_mae_255": 22.442665100097656
+    },
+    {
+      "route": "primitive",
+      "frame_index": 420,
+      "timestamp_seconds": 7.0,
+      "evaluated_pixels": 1817100,
+      "masked_ssim": 0.7898561469807635,
+      "rgb_mean_mae_255": 31.78863525390625
+    },
+    {
+      "route": "voxel",
+      "frame_index": 540,
+      "timestamp_seconds": 9.0,
+      "evaluated_pixels": 1754569,
+      "masked_ssim": 0.7868466685399129,
+      "rgb_mean_mae_255": 29.50299072265625
+    },
+    {
+      "route": "primitive",
+      "frame_index": 540,
+      "timestamp_seconds": 9.0,
+      "evaluated_pixels": 1754569,
+      "masked_ssim": 0.7706672872315886,
+      "rgb_mean_mae_255": 29.960948944091797
+    },
+    {
+      "route": "voxel",
+      "frame_index": 660,
+      "timestamp_seconds": 11.0,
+      "evaluated_pixels": 1663301,
+      "masked_ssim": 0.8379192119142412,
+      "rgb_mean_mae_255": 19.608116149902344
+    },
+    {
+      "route": "primitive",
+      "frame_index": 660,
+      "timestamp_seconds": 11.0,
+      "evaluated_pixels": 1663301,
+      "masked_ssim": 0.8021401490810471,
+      "rgb_mean_mae_255": 30.81667137145996
+    },
+    {
+      "route": "voxel",
+      "frame_index": 719,
+      "timestamp_seconds": 11.983333333333333,
+      "evaluated_pixels": 1652897,
+      "masked_ssim": 0.8327836021035121,
+      "rgb_mean_mae_255": 18.577184677124023
+    },
+    {
+      "route": "primitive",
+      "frame_index": 719,
+      "timestamp_seconds": 11.983333333333333,
+      "evaluated_pixels": 1652897,
+      "masked_ssim": 0.8053569770838854,
+      "rgb_mean_mae_255": 27.26473045349121
+    }
+  ],
+  "input_sha256": {
+    "cached_frame_000000": "9df033f6e26a0b0cf0c8656eed9d710f9400e678ada12e95c915aba17dc36ceb",
+    "voxel_preview_000000": "f8c6b78d8a33ae3c5e3472a1a42e253013bcd740088b568a61d37b92d144fbd7",
+    "primitive_preview_000000": "b36af29c69902274f2f589e495902988c55015f32217001e8f89f3da02e7698e",
+    "cached_frame_000060": "42e0508c05929ef5741e58410deb187cc02fc50481b445eabb88e298f98e686e",
+    "voxel_preview_000060": "01c5aad15818bcff723aca72f0e435b767da229c1c77407fd07e7ccccf53d477",
+    "primitive_preview_000060": "6902c6f32de4565acf15585172a7d380a6c9b50e401fdfcd33afda547221e8fd",
+    "cached_frame_000180": "4018cf5548b55cf15451e448684f870936b1d293c7b3e4fbb9fc1f708d477188",
+    "voxel_preview_000180": "1c443b6fadba6c370b382cb544b21820747a71f24b593f25d423c21b9599efc7",
+    "primitive_preview_000180": "e7397e70461e89d6ee642b439a04720452c328474e115f42d36f2ca8526ead4e",
+    "cached_frame_000300": "b41d7ad5592dc313770c8dd4ae45b5fc9f85bf85f54d10bb9021aa1d659adb47",
+    "voxel_preview_000300": "0b872b1c109f1621db037cf345acd9e2634eb794748dc1ce36619537551d84dd",
+    "primitive_preview_000300": "b86964385e97a1a3765b9f51169eb3f6bfad51b631ce8ed01c84f314e7bd5418",
+    "cached_frame_000360": "baf54b33de187f1cf25caad1b91badae257528a659364cd97a00857cb6312265",
+    "voxel_preview_000360": "dbcc7eec01418e62d0ffcf06460170e91e4e4893da6897a31ff489a060c8b71b",
+    "primitive_preview_000360": "1e5d0bf0d3c2e4c8df08461cf28e9cbf8506e2554b41c97fa5c304f5dac2949c",
+    "cached_frame_000420": "344a881a48f4ffb3a9682a5f61aa94118851bda6c16c82ff3ffa04b6ed60ad81",
+    "voxel_preview_000420": "b8e8b9058ca4f579bdbc22547fba6b6fe6ff1de7b783c832a0e5f232def1ce44",
+    "primitive_preview_000420": "727fbf05d964294b2750ac5f723c30060765630633b310e38f9c65aee4a13f48",
+    "cached_frame_000540": "717922eb7f4aa049c23c7aa1a0154004a50420c2622622b65bf5ff7052754aab",
+    "voxel_preview_000540": "ba02a950577ea0f108ed58c4137a08519907a769f08bf111d6bfc45b3af1e1a4",
+    "primitive_preview_000540": "208fcc813dd748557f9aa7521ec1db01d3bd7499b6f9061e423f1f01e54f3372",
+    "cached_frame_000660": "80edcc74e53d69f4ce703b93c34a446d768c13ab4e85dd9531bfe7cc85658662",
+    "voxel_preview_000660": "381b6a0999bd21102a1da778757b0872cf72b8e927a52aa303286dc3e31a4c22",
+    "primitive_preview_000660": "4ac0c86d2c75a7932287a8a518969f61af2c9666d35bc02b1e343b8175b83d55",
+    "cached_frame_000719": "843f375b1488fb36da63d988af5dbe855c9301d67364bd6a61200c5fb694e09f",
+    "voxel_preview_000719": "31145fa02717588b7379e6dfc0eb5420127cb8d0825ff98a71a067fdff90bd03",
+    "primitive_preview_000719": "af00a12ac71c412cf02c307eef5a36b14189da16cb42d225fce4d9e5a12ec808"
+  },
+  "data_policy": "Local internal evaluation only; derived data shares source retention policy"
+}
