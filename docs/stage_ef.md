@@ -148,4 +148,6 @@ blender --background --factory-startup --threads 4 <run-dir>/scene.blend
 
 测试包含真实 Blender 背景生成/重开/渲染/重复执行、变换与父组织、偏心 K / 非等焦距、240×140→96×56 内参缩放、媒体 60000/1001 FPS、非零源索引、末帧 off-by-one、VFR 拒绝、未知合同与缺失点云拒绝、输出篡改及空 receipt 哈希后的缓存失效、批量成功/失败隔离及用户文件保护。另有道路/墙壁/建筑的 JSON→材质→重开→渲染检查、源 JSON 输出目录转换、严格类型与 FFmpeg 超时日志测试；保存重开同时检查分辨率、像素宽高比、米制单位、嵌入的完整帧/tick 映射和分类材质。没有 Blender 时集成测试显式 skipped；纯合同/媒体测试不依赖 UI。
 
-这是 Stage E/F 的工程可运行验收，不是 Stage G 的真实游戏几何/语义精度验收。真实数据需要先解决 Stage A/B 的合同缺口并重新生成有依据的 Scene JSON。
+静态网格先检查无动画/驱动、约束、变形或变换父级，证明其矩阵与帧无关，再检查其恒定矩阵；若有意外动画/变形则拒绝，不静默跳过。所有相机和有源动画的物体仍逐帧验证。这避免大场景反复验证同一静态矩阵，新增 Blender 后台驱动注入测试覆盖拒绝行为。
+
+这是 Stage E/F 的工程可运行验收，不是 Stage G 的真实游戏几何/语义精度验收。真实几何还原仍需要解决 Stage A/B 合同缺口。用户另外明确允许的 RGB 布局补齐代理走独立 `--allow-inferred --allow-heuristic` 分支，绑定不同的代理安全/覆盖回执，绝不将其标为真实几何验收；详见 [heuristic_proxy.md](heuristic_proxy.md)。

@@ -3,13 +3,15 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import subprocess
 
 import numpy as np
 
-from blender.pipeline import json_write, sha256
+from blender.pipeline import ROOT, blender_path, json_write, run_pipeline, sha256
 from blender.planner import prepare_plan, source_scene_snapshot
 from reconstruction.heuristic_proxy import AUTHORIZATION, exclude_camera_corridor, proxy_lut, solid_columns
 from scene_schema import validate_scene
+from scene_schema import SceneValidationError
 from tests.test_refined import mesh_fixture
 
 
@@ -56,6 +58,37 @@ class ProxyTests(unittest.TestCase):
             json_write(folder/"scene.json",scene)
             with self.assertRaisesRegex(ValueError,"camera changed"):
                 prepare_plan(folder/"scene.json",video,engine="CYCLES",allow_inferred=True,allow_heuristic=True)
+
+    def test_only_explicit_proxy_completion_can_have_no_source_observation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            scene=mesh_fixture(Path(directory)); obj=scene["objects"][0]
+            obj.update(source_frames=[],observations=[],visibility=[])
+            with self.assertRaises(SceneValidationError): validate_scene(scene)
+            obj["geometry_source"].update(kind="heuristic_voxel",bounds_type="inferred_proxy_aabb")
+            scene["reconstruction_metadata"]["heuristic_proxy"]=dict(path="proxy.json",sha256="0"*64)
+            validate_scene(scene)
+
+    def test_background_static_driver_is_rejected_by_optimized_verification(self):
+        from blender.media import command
+        from stage_a.media import ffmpeg_path
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory); mesh_fixture(folder)
+            original=folder/"original.mp4"
+            command([ffmpeg_path(),"-y","-nostdin","-f","lavfi","-i","testsrc=size=64x64:rate=60",
+                "-frames:v","3","-c:v","libx264","-pix_fmt","yuv420p",str(original)])
+            output=folder/"output"; executable=blender_path()
+            run_pipeline(folder/"scene.json",original,output,blender=executable,engine="CYCLES",samples=1,
+                allow_inferred=True,generate_only=True)
+            expr="\n".join(["import bpy,json,sys",f"sys.path.insert(0,{str(ROOT)!r})",
+                "from blender.verification import verify_scene",f"plan=json.load(open({str(output/'build_plan.json')!r}))",
+                "obj=next(o for o in bpy.context.scene.objects if o.get('source_object_id'))",
+                "obj.driver_add('location',0).driver.expression='0'", "try:", "    verify_scene(plan)",
+                "except ValueError as error:", "    assert 'unexpected animation/deformation' in str(error)",
+                "    print('STATIC_DRIVER_REJECTED')", "else:", "    raise RuntimeError('Static driver was not rejected')"])
+            result=subprocess.run([executable,"--background","--factory-startup",str(output/"scene.blend"),
+                "--python-exit-code","1","--python-expr",expr],capture_output=True,text=True,timeout=60)
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            self.assertIn("STATIC_DRIVER_REJECTED",result.stdout)
 
 
 if __name__=="__main__": unittest.main()

@@ -36,6 +36,17 @@ def verify_scene(plan):
         raise ValueError("Saved source frame/tick mapping mismatch")
     for item in plan["objects"]:
         obj = objects[item["object_id"]]
+        if obj.parent is not None:
+            raise ValueError("Unexpected transform parent")
+        target_collection = "Static" if item["is_static"] is True else "Dynamic" if item["is_static"] is False else "UnknownMotion"
+        if target_collection not in {c.name for c in obj.users_collection}:
+            raise ValueError("Incorrect static/dynamic collection")
+        # A constant source object is provably frame-independent only without
+        # any animation, drivers, constraints, modifiers or animated shape data.
+        # Otherwise never silently skip its per-frame verification.
+        if not item["samples"] and (obj.animation_data or obj.constraints or obj.modifiers
+                or obj.data.animation_data or getattr(obj.data,"shape_keys",None)):
+            raise ValueError("Constant source mesh has unexpected animation/deformation")
         if not len(obj.data.vertices) or not len(obj.data.polygons):
             raise ValueError("Empty saved mesh")
         extents = [max(v.co[i] for v in obj.data.vertices)-min(v.co[i] for v in obj.data.vertices) for i in range(3)]
@@ -79,18 +90,14 @@ def verify_scene(plan):
                 max_projection = max(max_projection, abs(view.x-expected_u), abs(view.y-expected_v))
                 projection_cases += 1
         for item in plan["objects"]:
+            if ordinal and not item["samples"]:
+                continue  # Invariants above prove this matrix cannot vary.
             obj = objects[item["object_id"]]
             transform = item["samples"][ordinal]["transform"] if item["samples"] else item["transform"]
             x, y, z, w = transform["rotation"]
             expected = Matrix.LocRotScale(Vector(transform["position"]), Quaternion((w, x, y, z)),
                 Vector(transform["scale"] if item["primitive_type"] == "mesh" else [d*s for d, s in zip(item["dimensions"], transform["scale"])]))
             max_object = max(max_object, max(abs(obj.matrix_world[i][j]-expected[i][j]) for i in range(4) for j in range(4)))
-            # Organizational parent links must never inherit another world pose.
-            if obj.parent is not None:
-                raise ValueError("Unexpected transform parent")
-            target_collection = "Static" if item["is_static"] is True else "Dynamic" if item["is_static"] is False else "UnknownMotion"
-            if target_collection not in {c.name for c in obj.users_collection}:
-                raise ValueError("Incorrect static/dynamic collection")
     tolerance = 5e-5
     if any(not math.isfinite(v) or v > tolerance for v in [max_pose, max_object, max_projection]):
         raise ValueError(f"Saved scene numerical QA failed: camera={max_pose}, object={max_object}, projection={max_projection}")

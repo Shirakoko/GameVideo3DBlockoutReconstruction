@@ -178,6 +178,13 @@ def proxy_coverage(meshes, raw, frames, poses, k):
 def export_scene(bundle, meshes, base_scene, raw, training, poses, k, size, proxy_receipt):
     assets=bundle/"assets"; assets.mkdir()
     conf=confidence(.35,"inferred","heuristic_rgb_layout","User-approved coarse completion; not measured geometry")
+    # Native label/validity planes fit comfortably in memory. Decode each NPZ
+    # once, not once per mesh/view; retain no full RGB image in this cache.
+    view_labels={}
+    for i in training:
+        _,codes,labels=raw(i)
+        view_labels[i]=(labels,(codes>0)&(codes<1020))
+    h,w=view_labels[training[0]][0].shape
     objects=[]
     for category,mesh in meshes.items():
         for key,chunk in split_chunks(mesh,preserve_voxels=True,voxel_size=size):
@@ -192,16 +199,16 @@ def export_scene(bundle, meshes, base_scene, raw, training, poses, k, size, prox
             observations=[]; source_frames=[]; visibility=[]
             sample=points[::max(1,len(points)//200)]
             for i in sorted(training,key=lambda i:np.linalg.norm(poses[i][:3,3]-center)):
-                rgb,codes,labels=raw(i); h,w=codes.shape
                 pix,z=project(sample,poses[i],k)
                 finite=np.isfinite(pix).all(1)&(z>.1)
                 xy=np.rint(np.where(finite[:,None],pix,-1)).astype(int)
                 inside=finite&(xy[:,0]>=0)&(xy[:,0]<w)&(xy[:,1]>=0)&(xy[:,1]<h)
                 if inside.sum()<3: continue
                 x,y=xy[inside,0],xy[inside,1]
+                labels,valid=view_labels[i]
                 mask=np.zeros((h,w),bool)
                 rectangle=np.s_[y.min():y.max()+1,x.min():x.max()+1]
-                mask[rectangle]=(labels[rectangle]==CATEGORIES.index(category))&(codes[rectangle]>0)&(codes[rectangle]<1020)
+                mask[rectangle]=(labels[rectangle]==CATEGORIES.index(category))&valid[rectangle]
                 if mask.sum()<4: continue
                 yy,xx=np.where(mask); mask_path=assets/f"{name}_frame_{i:06d}_mask.png"
                 Image.fromarray(mask.astype(np.uint8)*255).save(mask_path)
@@ -236,6 +243,7 @@ def export_scene(bundle, meshes, base_scene, raw, training, poses, k, size, prox
             "Static editable voxels; source palette only, no per-frame projection, PBR recovery or characters.",
             "Camera snapshot/focal binding remains inferred; original timeline, ticks and FPS retained.",
             "Local internal only; delete with restricted source by 2026-12-24 Asia/Shanghai."])
+    json_write(bundle/"scene_draft.json",scene)
     validate_scene(scene); json_write(bundle/"scene_schema.json",scene)
     return scene
 
@@ -246,6 +254,10 @@ def render_accepted(output, *, blender=None, reuse=False):
         raise ValueError("Proxy preview/safety checks must pass before rendering")
     for name,digest in report["source_hashes"].items():
         if sha256(Path(name))!=digest: raise ValueError("Proxy original source changed")
+    if not report.get("preview_hashes"):
+        raise ValueError("Proxy preview hashes are missing")
+    for name,digest in report["preview_hashes"].items():
+        if sha256(Path(name))!=digest: raise ValueError("Proxy preview changed since acceptance")
     build=json.loads((output/"pipeline_report.json").read_text())
     for name,digest in build["input_hashes"].items():
         if sha256(Path(name))!=digest: raise ValueError("Proxy scene/assets/render code changed; regenerate previews")
@@ -259,11 +271,50 @@ def render_accepted(output, *, blender=None, reuse=False):
     return result
 
 
+def refresh_previews(output, *, blender=None):
+    """Rebuild unchanged Scene JSON after renderer/verification code changes."""
+    report=json.loads((output/"proxy_run.json").read_text())
+    source=Path(report["source_bundle"]).resolve()/"scene_schema.json"
+    if output not in source.parents: raise ValueError("Proxy source bundle outside managed output")
+    for name,digest in report["source_hashes"].items():
+        if sha256(Path(name))!=digest: raise ValueError("Original source changed before preview refresh")
+    receipt=json.loads((source.parent/"proxy_validation.json").read_text())
+    if sha256(output/"proxy_voxels.npz")!=receipt["voxel_sha256"]:
+        raise ValueError("Proxy voxels changed before preview refresh")
+    scene=json.loads(source.read_text()); validate_scene(scene)
+    seed=json.loads((ROOT/"outputs/stage_ef/real_refined/refinement_report.json").read_text())
+    cache=Path(seed["frame_cache"]); frames=sorted(set(HOLDOUT)|{0,360,719})
+    training=json.loads((source.parent/"camera_calibration.json").read_text())["training_frames"]
+    if not verified_frame_cache(cache,sorted(set(training)|set(HOLDOUT))): raise ValueError("Original RGB cache changed")
+    executable=blender_path(blender)
+    run_pipeline(source,ROOT/"outputs/stage_a/sample_66ad/original_video.mp4",output,blender=executable,
+        engine="BLENDER_EEVEE",samples=16,allow_inferred=True,allow_heuristic=True,generate_only=True)
+    render_previews(output,frames,executable=executable)
+    rows=[]; bg=np.asarray(scene["appearance"]["background_color"])*255
+    for i in frames:
+        with np.load(cache/f"frame_{i:06d}.npz",allow_pickle=False) as data:
+            rgb,codes,labels=data["rgb"],data["codes"],data["labels"]
+            rendered=np.asarray(Image.open(output/f"frames/frame_{i+1:06d}.png").convert("RGB"))
+            mask=(codes>0)&(codes<1020)&(labels!=8)
+            visible=np.max(np.abs(rendered.astype(float)-bg),axis=2)>4
+            rows.append(dict(frame_index=i,rendered_environment_coverage=float(visible[mask].mean()),
+                masked_ssim_informational=masked_ssim(rgb,rendered,mask)))
+    passed=min(r["rendered_environment_coverage"] for r in rows)>=.45 and np.mean([r["rendered_environment_coverage"] for r in rows])>=.65
+    report.update(status="preview_passed" if passed else "quality_rejected",preview_status="passed" if passed else "failed",
+        full_video_rendered=False,mesh_objects=len(scene["objects"]),preview_frames=rows,
+        preview_hashes={str(output/f"frames/frame_{i+1:06d}.png"):sha256(output/f"frames/frame_{i+1:06d}.png") for i in frames})
+    json_write(output/"proxy_run.json",report)
+    if not passed: raise ValueError("Refreshed proxy preview coverage failed")
+    return report
+
+
 def run(args):
     if not args.allow_heuristic: raise ValueError("Explicit --allow-heuristic required for the user-approved completion")
     output=args.output.resolve()
     if output==ROOT or ROOT/"data" in output.parents or ROOT/"outputs/stage_a" in output.parents:
         raise ValueError("Independent proxy output required")
+    if args.refresh_previews:
+        with refinement_lock(output): return refresh_previews(output,blender=args.blender)
     if args.render_only:
         with refinement_lock(output): return render_accepted(output,blender=args.blender,reuse=args.reuse)
     if output.exists() and any(output.iterdir()) and not (output/"proxy_run.json").is_file():
@@ -288,9 +339,27 @@ def run(args):
         report=dict(schema="heuristic.run/1",status="running",authorization=AUTHORIZATION,
             source_hashes=source["source_hashes"],geometry_accuracy_validated=False,full_video_rendered=False,
             block_size_metres=args.voxel_size,data_policy="Local internal only; delete by 2026-12-24 Asia/Shanghai")
+        previous=json.loads((output/"proxy_run.json").read_text()) if (output/"proxy_run.json").is_file() else {}
+        if args.resume and (previous.get("source_hashes")!=source["source_hashes"]
+                or previous.get("block_size_metres")!=args.voxel_size):
+            raise ValueError("Resume source/voxel parameters differ from the interrupted run")
         json_write(output/"proxy_run.json",report)
-        cells,colors,categories,layout=build_voxels(raw,training,poses,k,args.voxel_size)
-        np.savez_compressed(output/"proxy_voxels.npz",cells=cells,colors=colors,categories=categories)
+        prior_path=output/"proxy_validation.json"
+        if args.resume and prior_path.is_file():
+            prior=json.loads(prior_path.read_text())
+            if sha256(output/"proxy_voxels.npz")!=prior.get("voxel_sha256"):
+                raise ValueError("Interrupted proxy voxel cache changed")
+            if prior.get("authorization")!=AUTHORIZATION:
+                raise ValueError("Unapproved proxy cache")
+            with np.load(output/"proxy_voxels.npz",allow_pickle=False) as data:
+                cells,colors,categories=data["cells"].copy(),data["colors"].copy(),data["categories"].copy()
+            layout=prior["layout"]
+            if "block_size_metres" in prior and args.voxel_size!=prior["block_size_metres"]:
+                raise ValueError("Resume must retain the original proxy block size")
+            print("Resumed SHA-verified inferred voxels; rerunning clearance and coverage",flush=True)
+        else:
+            cells,colors,categories,layout=build_voxels(raw,training,poses,k,args.voxel_size)
+            np.savez_compressed(output/"proxy_voxels.npz",cells=cells,colors=colors,categories=categories)
         occupied={tuple(c) for c in cells}
         meshes={CATEGORIES[int(cat)]:voxel_shell(cells[categories==cat],colors[categories==cat],args.voxel_size,occupied)
             for cat in np.unique(categories)}
@@ -303,11 +372,13 @@ def run(args):
             geometry_accuracy_validated=False,camera_inside_frame_count=safety["inside_frame_count"],coverage_status=coverage["status"],
             camera_sha256=hashlib.sha256(json.dumps(scene["cameras"],sort_keys=True).encode()).hexdigest(),
             volume=safety,coverage=coverage,layout=layout,voxel_sha256=sha256(output/"proxy_voxels.npz"))
+        receipt["block_size_metres"]=args.voxel_size
         json_write(output/"proxy_validation.json",receipt)
         report.update(status="geometry_generated" if passed else "quality_rejected",validation=receipt)
         json_write(output/"proxy_run.json",report)
         if not passed: raise ValueError("Proxy camera clearance/coverage failed")
         bundle=Path(tempfile.mkdtemp(prefix="source_bundle_",dir=output))
+        report["source_bundle"]=str(bundle); json_write(output/"proxy_run.json",report)
         export_scene(bundle,meshes,scene,raw,training,poses,k,args.voxel_size,receipt)
         executable=blender_path(args.blender)
         run_pipeline(bundle/"scene_schema.json",ROOT/"outputs/stage_a/sample_66ad/original_video.mp4",output,
@@ -325,6 +396,7 @@ def run(args):
         passed=min(r["rendered_environment_coverage"] for r in rows)>=.45 and np.mean([r["rendered_environment_coverage"] for r in rows])>=.65
         report.update(status="preview_passed" if passed else "quality_rejected",preview_status="passed" if passed else "failed",
             source_bundle=str(bundle),mesh_objects=len(json.loads((bundle/"scene_schema.json").read_text())["objects"]),preview_frames=rows)
+        report["preview_hashes"]={str(output/f"frames/frame_{i+1:06d}.png"):sha256(output/f"frames/frame_{i+1:06d}.png") for i in frames}
         json_write(output/"proxy_run.json",report)
         if not passed: raise ValueError("Background rendered proxy coverage failed")
         if not args.preview_only: render_accepted(output,blender=executable)
@@ -338,12 +410,19 @@ def main(argv=None):
     p.add_argument("--voxel-size",type=float,default=.5)
     p.add_argument("--preview-only",action="store_true")
     p.add_argument("--render-only",action="store_true")
+    p.add_argument("--refresh-previews",action="store_true",help="Rebuild the unchanged Scene JSON and previews with current Blender code")
     p.add_argument("--reuse",action="store_true")
+    p.add_argument("--resume",action="store_true",help="Resume a hash-verified interrupted voxel export, with the same block size")
     p.add_argument("--blender",type=Path)
     args=p.parse_args(argv)
     if not .25<=args.voxel_size<=1: p.error("Proxy block size must be [0.25,1.0]")
     try: run(args); return 0
     except (ValueError,RuntimeError,OSError,KeyError) as error:
+        report_path=args.output.resolve()/"proxy_run.json"
+        if report_path.is_file():
+            report=json.loads(report_path.read_text())
+            report.update(status="failed" if report.get("status")!="quality_rejected" else "quality_rejected",full_video_rendered=False,error_type=type(error).__name__)
+            json_write(report_path,report)
         print(f"Heuristic proxy stopped: {error}",file=__import__('sys').stderr); return 1
 
 
