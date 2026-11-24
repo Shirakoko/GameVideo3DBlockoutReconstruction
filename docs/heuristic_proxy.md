@@ -68,16 +68,16 @@
 
 ## 灰模基本体（并行输出）
 
-体素壳保留轮廓，基本体才是可单独移动的导演粗模。`reconstruction.primitive_blockout` 只读取上面已经通过穿模和覆盖检查的 `proxy_voxels.npz`，不重跑深度，也不改写 `heuristic_voxel_proxy/`。
+早期灰模 `heuristic_primitive_proxy/` 是从已补齐体素拟合的，目录保留对照。新入口 `reconstruction.primitive_blockout` 改为从原始视频观测生成：读取本地 RGB / 深度码 / 语义缓存和冻结相机，反投影多视图观测点，再拟合可编辑基本体。不读 `proxy_voxels.npz`，不做柱体填充或未观测地面补齐，也不改写 `heuristic_voxel_proxy/`。
 
-地面用一块薄板，树用圆柱树干加球体树冠，草/灌木用圆柱，岩石、建筑和其余实体用实心方块。材质是统一灰模。相机、源 tick 和 60 FPS 从体素场景原样复制。几何来源是 `heuristic_primitive`，和体素不能写进同一个 Scene。
+地面按约 4 米分块，树干/树冠贴合观测点范围，建筑与岩石只合并实心占用格。材质用分类颜色。相机、源 tick 和 60 FPS 原样复制。九帧遮罩亮度差必须优于旧灰模预览，才渲染完整视频。
 
 ```powershell
 .\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic --preview-only
 .\.venv\Scripts\python.exe -m reconstruction.primitive_blockout --allow-heuristic
 ```
 
-默认输出 `outputs/stage_ef/heuristic_primitive_proxy/`。通过后才有 `scene.blend`、`blockout_video.mp4`、`original_vs_blockout.mp4`。这仍是启发式代理，不是测量几何。
+默认输出 `outputs/stage_ef/heuristic_primitive_from_video/`。通过后才有 `scene.blend`、`blockout_video.mp4`、`original_vs_blockout.mp4`。这仍是启发式代理，不是测量几何。
 
 ## 测试与死代码清理（2026-11-24）
 

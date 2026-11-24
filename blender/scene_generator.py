@@ -57,14 +57,15 @@ def generate(plan, workspace):
         color = plan["appearance"]["background_color"]
         linear = [v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4 for v in color]
         scene.world.node_tree.nodes["Background"].inputs["Color"].default_value = (*linear, 1)
-        clay_world = plan["appearance"].get("texture_mode") == "clay_primitive"
-        scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.55 if clay_world else 1
+        look = plan["appearance"].get("texture_mode")
+        scene.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.55 if look in {"clay_primitive", "category_primitive"} else 1
     collections = {}
     for name in ["Static", "Dynamic", "UnknownMotion", "Cameras", "Reference", "Lighting", "Hierarchy"]:
         c = bpy.data.collections.new(name)
         scene.collection.children.link(c)
         collections[name] = c
-    clay = (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive"
+    look = (plan.get("appearance") or {}).get("texture_mode")
+    clay = look == "clay_primitive"
     mats = {category: material(category, clay=clay) for category in sorted({o["category"] for o in plan["objects"]})}
     objects = {}
     for item in plan["objects"]:
@@ -87,9 +88,10 @@ def generate(plan, workspace):
     collections["Reference"].objects.link(reference)
     reference.hide_render, reference.display_type = True, "WIRE"
     reference["evidence"] = plan.get("reference_evidence", "Measured point reference; NOT complete geometry; may include temporal object samples")
-    clay = (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive"
-    if clay:
+    if look == "clay_primitive":
         lights = [("Sun", "SUN", 4.5, (0.85, 0.2, 0.45)), ("Fill", "SUN", 2.6, (-0.55, -0.8, 0.2))]
+    elif look == "category_primitive":
+        lights = [("Sun", "SUN", 2.4, (0.85, 0.2, 0.45)), ("Fill", "SUN", 1.2, (-0.55, -0.8, 0.2))]
     else:
         lights = [("Sun", "SUN", 2., (0.4, -0.5, -0.3)), ("Fill", "AREA", 700., (0.4, -0.5, -0.3))]
     for name, kind, energy, rotation in lights:

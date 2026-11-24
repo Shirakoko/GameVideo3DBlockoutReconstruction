@@ -65,7 +65,8 @@ def verify_scene(plan):
         if len(obj.data.materials) != 1:
             raise ValueError("Missing/extra primitive category material")
         mat = obj.data.materials[0]
-        expected = CLAY if (plan.get("appearance") or {}).get("texture_mode") == "clay_primitive" else COLORS[item["category"]]
+        look = (plan.get("appearance") or {}).get("texture_mode")
+        expected = CLAY if look == "clay_primitive" else COLORS[item["category"]]
         if mat.name != "Blockout_"+item["category"] or any(
                 abs(v-e) > 1e-6 for v, e in zip(mat.diffuse_color, expected)):
             raise ValueError("Saved category material mismatch")

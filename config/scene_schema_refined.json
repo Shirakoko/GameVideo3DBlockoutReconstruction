@@ -147,7 +147,8 @@
         "texture_mode": {
           "enum": [
             "baked_rgb",
-            "clay_primitive"
+            "clay_primitive",
+            "category_primitive"
           ]
         },
         "background_color": {

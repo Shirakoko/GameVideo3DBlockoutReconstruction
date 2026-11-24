@@ -2,7 +2,7 @@
 
 用户已明确允许按原视频布局进行启发式体素补齐，独立入口 `python -m reconstruction.heuristic_proxy --allow-heuristic`。50 cm 体素代理已生成连续地面及环境实体、1401 个可编辑区块，720 帧相机穿模检查为 0，九帧实际预览与保存重开通过。最终 `scene.blend`、`blockout_video.mp4` 和 `original_vs_blockout.mp4` 已生成于 `outputs/stage_ef/heuristic_voxel_proxy/`；两个视频均为 60 FPS / 720 帧 / 12 秒，输入/代码/输出哈希匹配的重复运行复用通过，精简后全项目 145/145 测试通过。它不是精确几何恢复，不改变以下旧重建路线的失败结论。运行与限制见 [docs/heuristic_proxy.md](docs/heuristic_proxy.md)。
 
-同一份已验收体素上可以另出一条灰模基本体，不覆盖体素目录：`python -m reconstruction.primitive_blockout --allow-heuristic`。地面是板，树是圆柱加球，岩石/建筑是方块，输出在 `outputs/stage_ef/heuristic_primitive_proxy/`。体素路径保持原样。
+基本体现在从原视频观测生成，不再读体素占用：`python -m reconstruction.primitive_blockout --allow-heuristic`。输出在 `outputs/stage_ef/heuristic_primitive_from_video/`；旧的体素目录和从体素拟合的灰模目录保持不动。
 
 新增可选真实视频彩色体素粗模路径，保留环境轮廓/粗颜色，不追求精细贴图。模型识别已在本地 GPU 跑完 61 帧；原深度路径仍失败，独立 RGB 三视图留出重投影通过（627 点，中位数 1.99 px、P90 7.05 px），但不能据此证明全部稠密几何有效。已后台生成表面/实体体素试验 `.blend` 和九帧预览；最新实体候选有 261/720 帧相机落入体素，质量拒绝，未生成新版真实 MP4。原严格路径不变。流程、命令和实际证据见 [docs/refined_blockout.md](docs/refined_blockout.md)。
 

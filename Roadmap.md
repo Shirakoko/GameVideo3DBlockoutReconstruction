@@ -2,7 +2,7 @@
 
 用户授权的启发式代理（2026-11-24）：已允许超出验证几何范围按原视频布局补齐。独立 `reconstruction.heuristic_proxy --allow-heuristic` 使用50 cm体素，完成连续地面、环境体积及全段相机自由走廊；1401个可编辑区块、九个预览、720帧相机/场景保存重开检查通过。最终场景与两个MP4已生成于 `outputs/stage_ef/heuristic_voxel_proxy/`，均保持60 FPS/720帧/12秒时间轴；Stage E/F和哈希验证后的重复运行复用通过，精简后全项目145/145测试通过。所有补齐几何明确为heuristic/inferred，原物理深度与真实Stage A/B未验收状态不变。详见 `docs/heuristic_proxy.md`。
 
-基本体粗模是第二条输出，不替换体素：`reconstruction.primitive_blockout --allow-heuristic` 读取已验收的体素占用，生成灰模方块/圆柱/球体，相机和时间轴原样复制，结果写到 `outputs/stage_ef/heuristic_primitive_proxy/`。体素目录保持不动。
+基本体粗模改为从原视频观测生成，不读体素占用：`reconstruction.primitive_blockout --allow-heuristic` 反投影 RGB/深度码/语义点，拟合方块/圆柱/球体，结果写到 `outputs/stage_ef/heuristic_primitive_from_video/`。体素目录和旧灰模目录保持不动。
 
 当前进展（2026-11-24）：Stage B 反投影、Open3D 世界对齐/体素融合/SOR、重复观测计权、PLY 与来源记录已实现并通过合成验证；独立 Blender 数学检查通过。真实 Session 的 v3 深度物理规格、SDK 旋转字段绑定及 depth render-pose 时刻仍未确认，Stage A / 真实 Stage B 不标记验收。详见 `docs/stage_b.md` 和 `outputs/stage_b/sample_66ad/validation_report.md`。
 
