@@ -1,0 +1,20 @@
+{
+  "schema": "stage_ef.batch/1",
+  "jobs": [
+    {
+      "scene_json": "../outputs/stage_ef/demo_input/scene_schema.json",
+      "original_video": "../outputs/stage_ef/demo_input/original_video.mp4",
+      "camera_poses": "../outputs/stage_ef/demo_input/camera_poses.json",
+      "output": "../outputs/stage_ef/batch/full_resolution",
+      "engine": "BLENDER_WORKBENCH"
+    },
+    {
+      "scene_json": "../outputs/stage_ef/demo_input/scene_schema.json",
+      "original_video": "../outputs/stage_ef/demo_input/original_video.mp4",
+      "camera_poses": "../outputs/stage_ef/demo_input/camera_poses.json",
+      "output": "../outputs/stage_ef/batch/half_resolution",
+      "engine": "BLENDER_WORKBENCH",
+      "resolution": [120, 70]
+    }
+  ]
+}

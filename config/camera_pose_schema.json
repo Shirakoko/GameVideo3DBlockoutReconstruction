@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:game-video-reconstruction:camera-poses:1",
+  "title": "Reviewed dense original Camera Poses",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "verified", "evidence", "pose_format", "coordinate_system", "samples"],
+  "properties": {
+    "schema": {"const": "stage_e.camera_poses/1"},
+    "verified": {"const": true},
+    "evidence": {"type": "string", "minLength": 1},
+    "pose_format": {"enum": ["world_from_optical_camera", "ue_frotator_degrees"]},
+    "coordinate_system": {"enum": ["blender_rh_z_up", "ue_lh_z_up"]},
+    "translation_unit": {"const": "m"},
+    "world_units_per_meter": {"type": "number", "exclusiveMinimum": 0},
+    "samples": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sample"}}
+  },
+  "allOf": [
+    {"if": {"properties": {"pose_format": {"const": "world_from_optical_camera"}}},
+     "then": {"required": ["translation_unit"], "properties": {"coordinate_system": {"const": "blender_rh_z_up"},
+       "samples": {"items": {"required": ["world_from_camera"]}}}}},
+    {"if": {"properties": {"pose_format": {"const": "ue_frotator_degrees"}}},
+     "then": {"required": ["world_units_per_meter"], "properties": {"coordinate_system": {"const": "ue_lh_z_up"},
+       "samples": {"items": {"required": ["pose"]}}}}}
+  ],
+  "$defs": {
+    "vec3": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+    "sample": {
+      "type": "object", "additionalProperties": false,
+      "required": ["camera_id", "frame_index", "timestamp_seconds", "intrinsics"],
+      "properties": {
+        "camera_id": {"type": "string", "minLength": 1},
+        "frame_index": {"type": "integer", "minimum": 0},
+        "timestamp_seconds": {"type": "number", "minimum": 0},
+        "original_tick": {"type": "integer", "minimum": 0},
+        "intrinsics": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}}},
+        "world_from_camera": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}}},
+        "pose": {"type": "object", "additionalProperties": false, "required": ["position", "pitch", "yaw", "roll"],
+          "properties": {"position": {"$ref": "#/$defs/vec3"}, "pitch": {"type": "number"}, "yaw": {"type": "number"}, "roll": {"type": "number"}}}
+      }
+    }
+  }
+}

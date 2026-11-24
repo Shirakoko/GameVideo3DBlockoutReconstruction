@@ -1,0 +1,28 @@
+{
+  "schema": "stage_c.rgb_annotations/1",
+  "evidence": "Codex assisted visual review of six local RGB keyframes. Approximate silhouette/surface polygons are INFERRED, NOT human-certified masks or ground truth. Only selected major instances; not exhaustive recall. Same player identity follows outfit and screen continuity. Static objects annotated only in frame 0; no unsupported cross-view ID claims. Local internal evaluation, delete with sample by 2026-12-24 Asia/Shanghai.",
+  "frames": [
+    {"frame_index": 0, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.92, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "polygon", "score": 0.72, "vertices": [[949,517],[983,519],[1002,545],[1007,575],[1022,608],[1034,717],[1028,753],[1017,788],[1002,799],[1006,860],[1002,927],[1006,979],[990,991],[971,980],[967,942],[951,968],[919,973],[919,953],[941,922],[938,876],[929,834],[927,773],[915,781],[906,767],[910,722],[915,666],[923,612],[931,580],[934,541]]}},
+      {"key": "foreground-rock", "category": "rock", "score": 0.88, "static_hint": true, "mask": {"kind": "polygon", "score": 0.66, "vertices": [[745,358],[957,343],[1026,357],[1042,410],[991,448],[963,476],[881,467],[854,490],[798,454],[742,423]]}},
+      {"key": "right-tree", "category": "tree", "score": 0.9, "static_hint": true, "mask": {"kind": "polygon", "score": 0.6, "vertices": [[1341,156],[1409,171],[1446,223],[1450,251],[1485,299],[1446,348],[1462,384],[1420,407],[1419,451],[1371,478],[1382,500],[1373,514],[1360,480],[1320,488],[1300,452],[1246,407],[1225,345],[1191,314],[1204,272],[1224,257],[1220,214],[1262,181],[1308,171]]}},
+      {"key": "right-barrier", "category": "barrier", "score": 0.9, "static_hint": true, "mask": {"kind": "polygon", "score": 0.7, "vertices": [[1409,882],[1918,726],[1918,776],[1422,934]]}},
+      {"key": "visible-ground", "category": "ground", "score": 0.94, "static_hint": true, "mask": {"kind": "polygon", "score": 0.68, "vertices": [[517,778],[814,722],[896,773],[900,921],[875,1000],[1042,1011],[1081,873],[1289,873],[1411,977],[1410,1078],[515,1078]]}}
+    ]},
+    {"frame_index": 120, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.92, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "polygon", "score": 0.72, "vertices": [[946,545],[974,547],[987,568],[993,597],[1005,628],[1027,670],[1035,758],[1039,798],[1024,814],[1015,774],[1002,774],[1007,825],[991,866],[993,929],[974,953],[958,944],[952,908],[943,844],[927,783],[925,747],[901,721],[891,702],[896,676],[913,636],[923,607],[929,568]]}}
+    ]},
+    {"frame_index": 240, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.9, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "bbox_proxy", "score": 0.45}, "bbox_xyxy": [893, 541, 1053, 972]}
+    ]},
+    {"frame_index": 360, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.92, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "polygon", "score": 0.7, "vertices": [[971,534],[1004,536],[1018,557],[1018,585],[1028,617],[1038,680],[1052,758],[1053,784],[1036,790],[1027,775],[1018,730],[1024,773],[1007,814],[1020,852],[1061,860],[1072,886],[1055,901],[1031,889],[993,846],[959,858],[912,891],[867,916],[835,942],[810,952],[801,940],[806,917],[834,888],[886,861],[934,818],[944,782],[942,730],[919,724],[908,710],[911,690],[936,640],[949,611],[952,570]]}}
+    ]},
+    {"frame_index": 600, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.94, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "polygon", "score": 0.72, "vertices": [[991,518],[1021,524],[1034,546],[1034,571],[1023,599],[1022,625],[1007,646],[1004,663],[1036,667],[1058,676],[1064,693],[1054,715],[1046,752],[1048,786],[1054,805],[1047,814],[1027,811],[1004,802],[1002,786],[1012,750],[1014,716],[984,741],[955,764],[936,789],[921,802],[902,805],[897,789],[905,768],[920,747],[945,723],[930,704],[927,681],[934,654],[938,621],[940,583],[951,571],[976,568],[977,539]]}}
+    ]},
+    {"frame_index": 719, "raster_size": [1920, 1080], "objects": [
+      {"key": "player", "category": "person", "score": 0.93, "identity_hint": "sample-player", "static_hint": false, "mask": {"kind": "polygon", "score": 0.72, "vertices": [[947,545],[976,546],[990,567],[988,596],[1005,621],[1021,654],[1037,747],[1034,787],[1024,814],[1016,802],[1016,769],[1004,767],[1006,801],[988,845],[999,871],[996,907],[978,929],[961,921],[955,896],[943,860],[938,815],[927,776],[925,729],[906,716],[900,703],[906,676],[923,638],[934,611],[933,571]]}}
+    ]}
+  ]
+}
