@@ -1,4 +1,4 @@
-"""Generate README comparisons from existing local receipts and preview frames.
+"""Generate README comparisons from local receipts, previews, and the H3 video.
 
 No model inference, reconstruction, Blender execution, or network access.
 The shared image mask is predicted, not independent semantic ground truth.
@@ -7,10 +7,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+from fractions import Fraction
 import hashlib
+import imageio_ffmpeg
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 
 import matplotlib
@@ -32,6 +35,8 @@ ROUTES = {
 }
 COLORS = {"voxel": "#2563a6", "primitive": "#c16b24"}
 NAMES = {"voxel": "Voxel", "primitive": "Primitive"}
+H3_ROUTE = ROOT / "outputs/h3_controlled_graybox/full_v3"
+VISUAL_FRAME_INDICES = (0, 360, 719)
 
 
 def read_json(path):
@@ -188,21 +193,60 @@ def save_metrics(output, rows, summary):
     plt.close(fig)
 
 
+def load_h3_frames(indices):
+    """Decode by final video frame index, not a rounded timestamp or part index."""
+    report = read_json(H3_ROUTE / "report.json")
+    if (report.get("status") != "complete_source_indexed_approximation"
+            or not report.get("temporal_pass") or not report.get("source_mapping_pass")):
+        raise ValueError("H3 requires a verified complete delivery receipt")
+    mapping = report["mapping"]
+    if len(mapping) != 720 or any(
+            item["source_index"] != index or item["padding"]
+            or Fraction(item["source_pts_seconds"]) != Fraction(index, 60)
+            for index, item in enumerate(mapping)):
+        raise ValueError("H3 source mapping is not the reviewed 720-frame clip")
+    source_hashes = read_json(ROUTES["voxel"] / "proxy_run.json")["source_hashes"]
+    if source_hashes.get(report["source"]) != report["source_sha256"]:
+        raise ValueError("H3 does not share the RGB source used by the geometry routes")
+    video = H3_ROUTE / "graybox.mp4"
+    if digest(video) != report["output_sha256"]:
+        raise ValueError("H3 video differs from the verified delivery")
+    indices = tuple(indices)
+    if not indices or indices != tuple(sorted(set(indices))) or any(i < 0 or i >= 720 for i in indices):
+        raise ValueError("H3 frame indices must be unique, increasing, and in 0..719")
+    width, height = report["probe"]["width"], report["probe"]["height"]
+    selector = "+".join(f"eq(n,{index})" for index in indices)
+    result = subprocess.run(
+        [imageio_ffmpeg.get_ffmpeg_exe(), "-hide_banner", "-loglevel", "error",
+         "-i", str(video), "-map", "0:v:0", "-vf", f"select='{selector}'",
+         "-vsync", "0", "-f", "rawvideo", "-pix_fmt", "rgb24", "pipe:1"],
+        check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    frame_bytes = width * height * 3
+    if len(result.stdout) != len(indices) * frame_bytes:
+        raise ValueError("H3 decoder did not return all requested native frames")
+    return {index: Image.frombytes("RGB", (width, height), result.stdout[row * frame_bytes:(row + 1) * frame_bytes])
+            for row, index in enumerate(indices)}
+
+
 def save_contact_sheet(output, cache):
+    h3_frames = load_h3_frames(VISUAL_FRAME_INDICES)
+    names = ("原始 RGB", "Voxel", "Primitive", "H3（生成式灰模）")
     width, height, left, gap, top, row_label = 600, 338, 150, 8, 54, 12
-    sheet = Image.new("RGB", (left + 3 * width + 2 * gap, top + 3 * (height + row_label)), "#f4f6f8")
+    sheet = Image.new("RGB", (left + len(names) * width + (len(names) - 1) * gap,
+                              top + len(VISUAL_FRAME_INDICES) * (height + row_label)), "#f4f6f8")
     draw = ImageDraw.Draw(sheet)
     font_path = Path("C:/Windows/Fonts/msyh.ttc")
     font = ImageFont.truetype(str(font_path), 30) if font_path.is_file() else ImageFont.load_default()
-    for column, name in enumerate(("原始 RGB", "Voxel", "Primitive")):
+    for column, name in enumerate(names):
         draw.text((left + column * (width + gap) + 12, 8), name, fill="#20262e", font=font)
-    for row, index in enumerate((0, 360, 719)):
+    for row, index in enumerate(VISUAL_FRAME_INDICES):
         y = top + row * (height + row_label)
         with np.load(cache / f"frame_{index:06d}.npz", allow_pickle=False) as data:
             images = [Image.fromarray(data["rgb"])]
         for folder in ROUTES.values():
             with Image.open(folder / f"frames/frame_{index+1:06d}.png") as image:
                 images.append(image.convert("RGB"))
+        images.append(h3_frames[index])
         draw.text((5, y + 135), f"{index/60:.2f}s", fill="#20262e", font=font)
         for column, image in enumerate(images):
             sheet.paste(image.resize((width, height), Image.Resampling.LANCZOS), (left + column * (width + gap), y))
@@ -212,10 +256,17 @@ def save_contact_sheet(output, cache):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "docs/figures/comparison")
+    parser.add_argument("--visual-only", action="store_true", help="Only rebuild the four-column contact sheet; leave two-route metrics unchanged")
     args = parser.parse_args()
     output = args.output.resolve()
     if not output.is_relative_to(ROOT / "docs/figures"):
         raise ValueError("Use a documentation figure directory; source artifacts must remain unchanged")
+    if args.visual_only:
+        cache = Path(read_json(ROOT / "outputs/stage_ef/real_refined/refinement_report.json")["frame_cache"])
+        output.mkdir(parents=True, exist_ok=True)
+        save_contact_sheet(output, cache)
+        print(output / "route_visual_comparison.jpg")
+        return
     rows, summary, hashes, cache = collect()
     output.mkdir(parents=True, exist_ok=True)
     document = dict(schema="readme.route_comparison/1", source="existing local delivery receipts and nine preview PNGs",

@@ -12,8 +12,8 @@
 
 | 交付物 | Voxel：彩色体素 | Primitive：分类基本体 | H3：生成式灰模视频 |
 | --- | --- | --- | --- |
-| 原片 / 粗模对比 | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4) | [original_vs_blockout.mp4](outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4) | [comparison.mp4](outputs/h3_controlled_graybox/full_v3/comparison.mp4) |
-| 纯粗模视频 | [blockout_video.mp4](outputs/stage_ef/heuristic_voxel_proxy/blockout_video.mp4) | [blockout_video.mp4](outputs/stage_ef/heuristic_primitive_from_video/blockout_video.mp4) | [graybox.mp4](outputs/h3_controlled_graybox/full_v3/graybox.mp4) |
+| 原片 / 粗模对比 | [original_vs_blockout.mp4](docs/videos/voxel/original_vs_blockout.mp4) | [original_vs_blockout.mp4](docs/videos/primitive/original_vs_blockout.mp4) | [comparison.mp4](docs/videos/h3/comparison.mp4) |
+| 纯粗模视频 | [blockout_video.mp4](docs/videos/voxel/blockout_video.mp4) | [blockout_video.mp4](docs/videos/primitive/blockout_video.mp4) | [graybox.mp4](docs/videos/h3/graybox.mp4) |
 | 可编辑场景 | [scene.blend](outputs/stage_ef/heuristic_voxel_proxy/scene.blend) | [scene.blend](outputs/stage_ef/heuristic_primitive_from_video/scene.blend) | 无；交付可编辑节点图，不是三维场景 |
 | 原始验证记录 | [proxy_run.json](outputs/stage_ef/heuristic_voxel_proxy/proxy_run.json) | [primitive_run.json](outputs/stage_ef/heuristic_primitive_from_video/primitive_run.json) | [report.json](outputs/h3_controlled_graybox/full_v3/report.json) |
 
@@ -22,7 +22,7 @@
 左侧为原始录屏，右侧为彩色体素粗模。
 
 <video controls muted playsinline preload="metadata" width="100%" poster="docs/figures/voxel_compare_6s.jpg">
-  <source src="outputs/stage_ef/heuristic_voxel_proxy/original_vs_blockout.mp4" type="video/mp4">
+  <source src="docs/videos/voxel/original_vs_blockout.mp4" type="video/mp4">
 </video>
 
 ### Primitive 对比视频
@@ -30,7 +30,7 @@
 左侧为原始录屏，右侧为分类基本体粗模。
 
 <video controls muted playsinline preload="metadata" width="100%" poster="docs/figures/primitive_compare_6s.jpg">
-  <source src="outputs/stage_ef/heuristic_primitive_from_video/original_vs_blockout.mp4" type="video/mp4">
+  <source src="docs/videos/primitive/original_vs_blockout.mp4" type="video/mp4">
 </video>
 
 ### ComfyUI + H3 对比视频
@@ -38,14 +38,14 @@
 左侧为原始录屏，右侧为生成式灰白粗模。纯灰模片为 1920×1080，对比片为 1536×432；两者均为 60 FPS、720 帧、12 秒。模型原生生成尺寸为 768×432，1080p 交付是空间放大，不是原生 1080p 推理。
 
 <video controls muted playsinline preload="metadata" width="100%">
-  <source src="outputs/h3_controlled_graybox/full_v3/comparison.mp4" type="video/mp4">
+  <source src="docs/videos/h3/comparison.mp4" type="video/mp4">
 </video>
 
-不支持内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。
+GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。六份展示视频副本位于未被 Git 忽略的 `docs/videos/`，原始输出仍保留在 `outputs/`，供脚本复现和验证使用。
 
-以下为相同源帧的原始 RGB、Voxel、Primitive；行时间分别为 0、6、11.983 秒。
+以下按相同源帧索引展示原始 RGB、Voxel、Primitive 与 H3（生成式灰模）；行时间分别为 0、6、11.983 秒。H3 从完整成片 `full_v3/graybox.mp4` 按源索引映射抽帧，同一索引不代表生成内容与原片严格一致。
 
-![相同源帧的 RGB、Voxel 与 Primitive 对比](docs/figures/comparison/route_visual_comparison.jpg)
+![相同源帧索引的 RGB、Voxel、Primitive 与 H3 生成式灰模对比](docs/figures/comparison/route_visual_comparison.jpg)
 
 当前前两路均有物体合并、位置偏差和细节缺失；Primitive 近景仍有大体积遮挡，人物、斧头、木牌及雾效未重建。H3 可能改写人物、植被与场景布局，4.3333 秒和 8.3 秒接段处有可见跳变。媒体使用权限见文末。
 
@@ -365,4 +365,4 @@ $h3Python = '..\ComfyUI\venv\Scripts\python.exe'
 
 ## 数据使用边界
 
-受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。H3 也只做本地推理，生成视频、控制/参考片及含预览的节点截图沿用相同限制。正式提交或公开展示需另行确认对应许可；`docs/figures/` 和 `workflows/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。
+受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。H3 也只做本地推理，生成视频、控制/参考片及含预览的节点截图沿用相同限制，`docs/videos/` 中的展示副本也需在期限前清理。正式提交或公开展示需另行确认对应许可；`docs/videos/`、`docs/figures/` 和 `workflows/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。
