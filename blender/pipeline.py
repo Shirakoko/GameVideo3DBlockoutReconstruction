@@ -82,7 +82,7 @@ def output_lock(output):
         lock.unlink()
 
 
-def background(executable, script, workspace, *, blend=None, verify_only=False, timeout=3600):
+def background(executable, script, workspace, *, blend=None, verify_only=False, evaluation_poses=False, timeout=3600):
     name = "render" if blend else "build"
     args = [executable, "--background", "--factory-startup", "--threads", "4"]
     if blend:
@@ -90,6 +90,8 @@ def background(executable, script, workspace, *, blend=None, verify_only=False, 
     args += ["--python-exit-code", "1", "--python", str(script), "--", str(workspace/"build_plan.json"), str(workspace)]
     if verify_only:
         args.append("--verify-only")
+    if evaluation_poses:
+        args.append("--evaluation-poses")
     try:
         with (workspace/(name+".log")).open("w", encoding="utf-8") as log:
             result = subprocess.run(args, stdout=log, stderr=subprocess.STDOUT, timeout=timeout)

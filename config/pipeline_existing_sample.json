@@ -1,0 +1,11 @@
+{
+  "schema": "pipeline.config/1",
+  "mode": "existing_sample",
+  "output": "../outputs/stage_g/dataset_pipeline",
+  "prepared_sample": "../outputs/stage_a/sample_66ad",
+  "sample_source": "../data/input/samples/66ad9535-583f-4a25-b655-6b1697c83a40",
+  "cache": true,
+  "resume": true,
+  "retries": 1,
+  "timeout_seconds": 300
+}

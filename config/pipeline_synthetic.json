@@ -1,0 +1,17 @@
+{
+  "schema": "pipeline.config/1",
+  "mode": "synthetic",
+  "output": "../outputs/stage_g/synthetic_pipeline",
+  "scene_id": "synthetic-stage-g-12s",
+  "cache": true,
+  "resume": true,
+  "retries": 1,
+  "timeout_seconds": 3600,
+  "synthetic": {"fps": 60, "frame_count": 720, "keyframe_stride": 120},
+  "reconstruction": {"min_depth_m": 0.1, "max_depth_m": 35.0, "voxel_size_m": 0.08, "stride": 2},
+  "render": {"enabled": true, "engine": "BLENDER_WORKBENCH", "resolution": [240, 140], "samples": 16},
+  "evaluation": {
+    "geometry": {"min_depth_m": 0.1, "max_depth_m": 35.0, "stride": 2, "thresholds_m": [0.05, 0.1], "max_points": 200000, "seed": 0},
+    "camera": {"alignment": "none", "rpe_delta_frames": 120}
+  }
+}

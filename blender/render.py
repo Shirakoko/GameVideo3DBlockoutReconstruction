@@ -17,6 +17,9 @@ def main():
     report = verify_scene(plan)
     report["reopened_saved_blend"] = True
     (workspace/"saved_scene_verification.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    if "--evaluation-poses" in args:
+        from evaluation.blender_export import export_camera_poses
+        export_camera_poses(plan, workspace/"camera_pose_evaluation.json")
     if "--verify-only" not in args:
         (workspace/"frames").mkdir(exist_ok=True)
         scene = bpy.context.scene

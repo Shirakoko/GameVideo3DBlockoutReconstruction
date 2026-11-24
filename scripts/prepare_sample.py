@@ -55,7 +55,12 @@ def hash_frames(path, depth=False):
     return records, duplicates
 
 
-def main():
+def main(*, source=None, output=None):
+    # Keep the existing standalone defaults, but permit isolated Pipeline
+    # attempts to prepare the already-downloaded local prefix without touching
+    # the historical Stage A output or downloading any new dataset bytes.
+    SOURCE = Path(source).resolve() if source is not None else ROOT / "data/input/samples" / SESSION
+    OUT = Path(output).resolve() if output is not None else ROOT / "outputs/stage_a/sample_66ad"
     OUT.mkdir(parents=True, exist_ok=True)
     for folder in ("rgb", "depth", "camera", "metadata"):
         (OUT / folder).mkdir(exist_ok=True)

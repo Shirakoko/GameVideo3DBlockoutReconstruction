@@ -67,8 +67,12 @@ def encode_outputs(workspace, video, resolution, *, timeout=3600):
     workspace = Path(workspace)
     ffmpeg = ffmpeg_path()
     fps, count = video["fps"], video["frame_count"]
-    common = ["-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
-              "-fps_mode", "passthrough", "-movflags", "+faststart", "-an"]
+    # The input has already passed an exact rational CFR PTS check. Declare
+    # that same encoder rate so sparse/low-FPS streams retain the final sample
+    # duration. CFR here only encodes already-verified CFR inputs; VFR has been
+    # rejected, and every output PTS, count and rate is independently checked.
+    common = ["-c:v", "libx264", "-r", fps, "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
+              "-fps_mode", "cfr", "-movflags", "+faststart", "-an"]
     command([ffmpeg, "-y", "-nostdin", "-hide_banner", "-framerate", fps, "-start_number", "1",
              "-i", str(workspace/"frames/frame_%06d.png"), "-frames:v", str(count),
              *common, str(workspace/"blockout_video.mp4")], workspace/"encode_blockout.log", timeout=timeout)

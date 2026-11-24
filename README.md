@@ -1,4 +1,16 @@
-# Game Video Reconstruction — Stage A / B / C / D / E / F
+# Game Video Reconstruction — Stage A / B / C / D / E / F / G
+
+Stage G 已实现几何（Chamfer Distance、F-score、观测表面覆盖）、Pose / ATE / RPE / 时间同步、语义 P/R / 类别 / 静动态 / ID Switch、SSIM 和可选本地 LPIPS 评价，输出离线 HTML、CSV、JSON。A–G 现可配置一键运行，独立阶段/attempt 记录耗时、CPU/RSS、NVIDIA device-wide GPU 资源和错误，支持哈希缓存、断点续跑、超时和有界重试；完整渲染的 Pose 对比来自重开 `.blend` 的实际逐帧相机。真实样本的 Depth / render-pose 合同仍未验证，真实报告保持 partial，不伪造几何真值或 Camera 估计精度。配置、公式、GT 输入合同与资源限制见 [docs/stage_g.md](docs/stage_g.md)。
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_synthetic.json
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --config config/pipeline_existing_sample.json
+.\.venv\Scripts\python.exe scripts/evaluate_scene.py
+```
+
+完整合成报告：`outputs/stage_g/synthetic_pipeline/evaluation_report.html`、`metrics.csv`、`evaluation_report.json`；真实限制/同步报告：`outputs/stage_g/dataset_pipeline/`。运行相同 Pipeline 命令可验证缓存或恢复失败 checkpoint。第二条真实命令预期 exit 2，没有新增数据下载，也不修改旧启发式粗模。
+
+最新验证：Stage G 40/40、全项目 192/192 测试通过，无跳过；完整合成 720 帧与二次 A–G 缓存复用通过。已有本地媒体前缀也通过独立 Stage A 重解码并输出真实 partial 评价；数值、来源边界与回归记录见 Stage G 文档，以下旧阶段记录保留。
 
 用户已明确允许按原视频布局进行启发式体素补齐，独立入口 `python -m reconstruction.heuristic_proxy --allow-heuristic`。50 cm 体素代理已生成连续地面及环境实体、1401 个可编辑区块，720 帧相机穿模检查为 0，九帧实际预览与保存重开通过。最终 `scene.blend`、`blockout_video.mp4` 和 `original_vs_blockout.mp4` 已生成于 `outputs/stage_ef/heuristic_voxel_proxy/`；两个视频均为 60 FPS / 720 帧 / 12 秒，输入/代码/输出哈希匹配的重复运行复用通过，精简后全项目 145/145 测试通过。它不是精确几何恢复，不改变以下旧重建路线的失败结论。运行与限制见 [docs/heuristic_proxy.md](docs/heuristic_proxy.md)。
 

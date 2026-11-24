@@ -1,5 +1,7 @@
 # Project: Game Video to 3D Blockout Reconstruction Agent
 
+Stage G / Pipeline 进展（2026-11-24）：已实现米制 Chamfer Distance / F-score / 观测表面覆盖、Camera Pose / ATE / RPE / 帧同步、语义 P/R / 类别 / 静动态 / ID Switch 和 SSIM；LPIPS 提供仅使用显式本地权重的可选接口，缺依赖/权重明确 N/A。报告包括 JSON / 离线 HTML / CSV 和阶段耗时、process-tree CPU/RSS、device-wide NVIDIA GPU、失败/重试信息。A–G 分阶段可配置 Pipeline、哈希缓存、断点恢复、输出保护、进程树 timeout 和有界重试已实现；合成 12 秒 / 60 FPS / 720 帧完成端到端执行，真实 Session 仍因 metric Depth / render-pose 合同未验证而停止 B–F，并生成 partial 报告，不标记真实 A–G 验收。完整渲染 Pose 使用重开 `.blend` 中实际相机逐帧导出，不把输入 Track 比对伪装为独立估计精度。详情见 `docs/stage_g.md`。
+
 用户授权的启发式代理（2026-11-24）：已允许超出验证几何范围按原视频布局补齐。独立 `reconstruction.heuristic_proxy --allow-heuristic` 使用50 cm体素，完成连续地面、环境体积及全段相机自由走廊；1401个可编辑区块、九个预览、720帧相机/场景保存重开检查通过。最终场景与两个MP4已生成于 `outputs/stage_ef/heuristic_voxel_proxy/`，均保持60 FPS/720帧/12秒时间轴；Stage E/F和哈希验证后的重复运行复用通过，精简后全项目145/145测试通过。所有补齐几何明确为heuristic/inferred，原物理深度与真实Stage A/B未验收状态不变。详见 `docs/heuristic_proxy.md`。
 
 基本体粗模改为从原视频观测生成，不读体素占用：`reconstruction.primitive_blockout --allow-heuristic` 反投影 RGB/深度码/语义点，拟合方块/圆柱/球体，结果写到 `outputs/stage_ef/heuristic_primitive_from_video/`。体素目录和旧灰模目录保持不动。
