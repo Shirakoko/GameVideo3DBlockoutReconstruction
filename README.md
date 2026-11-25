@@ -41,7 +41,7 @@
   <source src="docs/videos/h3/comparison.mp4" type="video/mp4">
 </video>
 
-GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。六份展示视频副本位于未被 Git 忽略的 `docs/videos/`，原始输出仍保留在 `outputs/`，供脚本复现和验证使用。
+GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。同一份内容发布在 [GitHub Pages](https://shirakoko.github.io/GameVideo3DBlockoutReconstruction/)，页面中的对比视频可以直接播放。六份展示视频副本位于未被 Git 忽略的 `docs/videos/`，原始输出仍保留在 `outputs/`，供脚本复现和验证使用。
 
 以下按相同源帧索引展示原始 RGB、Voxel、Primitive 与 H3（生成式灰模）；行时间分别为 0、6、11.983 秒。H3 从完整成片 `full_v3/graybox.mp4` 按源索引映射抽帧，同一索引不代表生成内容与原片严格一致。
 
