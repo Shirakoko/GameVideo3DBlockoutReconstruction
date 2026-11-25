@@ -26,6 +26,7 @@ pre.mermaid { background: #fff; border: 1px solid #d0d7de; text-align: center; }
 </head>
 <body>
 <article class="markdown-body">
+<p>论文阅读：<a href="gamewm/">GameWM：以交互为中心的世界模型阅读笔记</a></p>
 <h1>游戏影像驱动的三维粗模重建</h1>
 <p>面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流。本项目提供三条路线：<strong>Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性；ComfyUI + H3 侧重原视频的生成式灰模风格化。</strong></p>
 <p>当前三路均交付 12 秒视频。前两路输出可编辑 Blender 工程，采用启发式几何与推断相机，不包含角色动作代理；第三路直接生成灰模风格视频，包含人物的生成式近似，但<strong>不重建三维场景，也不输出 <code>.blend</code>、角色轨迹或可验证的几何</strong>。</p>

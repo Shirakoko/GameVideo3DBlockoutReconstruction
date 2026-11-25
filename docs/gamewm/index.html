@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1'>
+
+<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc {
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0));
+}
+
+
+
+</style><title>GameWM Toward Next-Generation Video Games with Interaction-Centric World Models 阅读笔记</title>
+<meta name="description" content="GameWM: Toward Next-Generation Video Games with Interaction-Centric World Models 论文阅读笔记。">
+<style>
+.site-nav { max-width: 1200px; margin: 0 auto; padding: 20px 0 0; font-size: 14px; }
+.site-nav a { color: #0969da; text-decoration: none; }
+.site-nav a:hover { text-decoration: underline; }
+.site-nav span { margin: 0 10px; color: #8c959f; }
+@media screen and (max-width: 500px) { .site-nav { padding: 20px 20px 0; } }
+@media print { .site-nav { display: none; } }
+</style>
+</head>
+<body class='typora-export os-windows'>
+<nav class="site-nav" aria-label="站点导航"><a href="../">项目首页</a><span aria-hidden="true">·</span><a href="https://github.com/Shirakoko/GameVideo3DBlockoutReconstruction">GitHub 仓库</a></nav><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='gamewm-toward-next-generation-video-games-with-interaction-centric-world-models-阅读笔记'><span>GameWM: Toward Next-Generation Video Games with Interaction-Centric World Models 阅读笔记</span></h1><blockquote><p><span>原文：</span><a href='https://arxiv.org/abs/2611.19247' target='_blank' class='url'>https://arxiv.org/abs/2611.19247</a></p></blockquote><p><span>讨论的核心问题：</span><strong><span>如何把普通游戏视频转化为能够训练世界模型理解空间、角色和精细交互的数据？</span></strong></p><h2 id='gamewm-游戏架构'><span>GameWM 游戏架构</span></h2><p><span>论文提出了 GameWM 的游戏架构，未来的游戏不必依赖传统游戏引擎渲染，也不是交给视频生成模型，而是</span><strong><span>集两者之所长</span></strong><span>。</span></p><ul><li><p><span>GameWM Engine：负责确定性、可计算、可复现的内容</span></p><ul><li><p><span>World State：世界状态</span></p></li><li><p><span>Game Rules：游戏规则</span></p></li><li><p><span>Camera：相机位姿与运动</span></p></li><li><p><span>Layout：场景布局</span></p></li><li><p><span>Collision：碰撞与物理</span></p></li><li><p><span>Event Log：事件</span></p></li></ul></li><li><p><span>GameWM VM：负责昂贵、复杂、生成的内容</span></p><ul><li><p><span>Appearance：外观</span></p></li><li><p><span>Animation：角色动作</span></p></li><li><p><span>Interaction Detail：交互细节</span></p></li><li><p><span>VFX：特效</span></p></li></ul></li></ul><h2 id='interaction-centric'><strong><span>Interaction-Centric</span></strong></h2><p><span>过去很多世界模型数据集以 Exploration 为中心，模型从中学习：角色和镜头在哪里、场景如何演化；但这些数据不足以教会模型理解精细交互——移动是时空问题，而交互还涉及物体之间的</span><strong><span>关系、动作过程和事件结果</span></strong><span>。</span></p><p><span>以角色开门上车为例，同时记录了：</span><strong><span>World State</span></strong><span>：角色、汽车、环境的初始状态、</span><strong><span>Action</span></strong><span>：玩家输入及其触发的交互、</span><strong><span>Event</span></strong><span>：上车、关门、汽车驶离等关键事件及发生时间、</span><strong><span>Outcome</span></strong><span>：交互完成后的世界状态。</span></p><p><img src="assets/figure-01.png" referrerpolicy="no-referrer" alt="image-20261124125613348"></p><p><span>GameWM 的数据采集</span><strong><span>以交互事件为中心进行切片和标注</span></strong><span>。</span></p><h2 id='interaction-centric-data-engine'><span>Interaction-Centric Data Engine</span></h2><p><span>论文提到的Interaction-Centric Data Engine，是将不同来源的视频统一转换为</span><strong><span>结构化 Proxy</span></strong><span>，再生成</span><strong><span>多样化 Target</span></strong><span>。</span></p><h3 id='路线-a从游戏引擎获取ground-truth）'><span>路线 A：从游戏引擎获取（Ground Truth）</span></h3><p><img src="assets/figure-02.jpeg" referrerpolicy="no-referrer" alt="Grand Theft Data Five | Patrick Langer"></p><p><span>从游戏引擎 Buffer 获取 RGB 视频、Depth Buffer、Semantic Segmentation、Player State、Event Tags、Object Transform...准确性高，因而是优先级最高的数据获取方式。</span></p><h3 id='路线-b从已有游戏录屏中提取数据rgb-only）'><strong><span>路线 B：从已有游戏录屏中提取数据</span></strong><span>（RGB Only）</span></h3><p><img src="assets/figure-03.jpeg" referrerpolicy="no-referrer" alt="Tom Clancys: The Division 2 Pros and Cons | TechSpot"></p><p><span>对游戏录屏使用视觉模型提取：Monocular Depth Estimation（单目深度估计）、Semantic Segmentation（语义分割）、VLM（交互事件识别）、Object Tracking（物体跟踪）</span></p><p><span>论文用了 GTA V、CARLA、Magpie 和 ABot-World 等游戏作为数据来源</span></p><h3 id='统一数据表示4-种类-proxy'><span>统一数据表示：4 种类 Proxy</span></h3><p><span>将输入模型的 Proxy 分为四种：Depth、Semantics和DUV为基础 Proxy，可通过基础 Proxy 进一步生成 Lowpoly Proxy</span></p><p><img src="assets/figure-04.png" referrerpolicy="no-referrer" alt="image-20261124160357216"></p><h2 id='从一个-proxy-生成多个-target'><strong><span>从一个 Proxy 生成多个 Target</span></strong></h2><p><span>利用</span><strong><span>视频生成模型 H3</span></strong><span> 的 Ref2VA 模式重新生成视频，使同一个 Proxy 生成多个视觉风格的 Target</span></p><p><span>给出了一个具体例子：</span></p><ul><li><p><span>3 种基础 Proxy：DUV、Depth、Semantics</span></p></li><li><p><span>4 种 Low-poly Proxy</span></p></li><li><p><span>4 个高质量 Target</span></p></li></ul><p><span>可以生成  (3 + 4) * 4 = 28 组 Proxy - Target 配对，还有 7 组原始录屏作为监督目标</span></p><h1 id='回答问题'><span>回答问题</span></h1><h2 id='如何高效高质量地获取这些数据'><span>如何高效、高质量地获取这些数据？</span></h2><p><span>参考论文，我认为提高数据质量、采集效率的重点可以放三个方面：</span></p><ol start='' ><li><p><strong><span>高效生产：</span></strong><span> 如何批量获得大量具有明确语义的交互事件。</span></p></li><li><p><strong><span>结构化标注：</span></strong><span> 如何让每段视频同时具备动作、空间、物体和时间信息。</span></p></li><li><p><strong><span>质量控制：</span></strong><span> 如何确保视频、Proxy、动作标签和真实交互结果之间严格对齐。</span></p></li></ol><h3 id='phase-1-场景与交互任务设计'><strong><span>Phase 1 场景与交互任务设计</span></strong></h3><p><span>建立参数化场景库和标准化交互任务库。</span></p><p><img src="assets/figure-05.jpeg" referrerpolicy="no-referrer" alt="Electric Dreams Environment | PCG Sample Project - Unreal Engine"></p><p><span>场景：用 PCG 生成参数化的场景，通过参数随机、分层采样、组合覆盖等方法提高场景丰富度。</span></p><p><span>交互：将交互定义为具有明确前置条件和结果状态的</span><strong><span>模板</span></strong><span>，比如 OpenDoor 这个交互模板，不关心具体是哪扇门，只规定角色接近门的目标、播放开门动画、门旋转、角色通过门口，可以在不同门、不同角色、不同场景中复用。</span></p><h3 id='phase-2-ue-自动化采集'><strong><span>Phase 2 UE 自动化采集</span></strong></h3><p><span>利用 UE 的 SceneCaptureComponent、Render Target 和 Actor 状态接口，同步导出：RGB（场景视觉信息）、Depth（逐像素深度）、Semantic （语义类别）、Camera（相机内外参及运动轨迹）、Pose（物体位姿）、Action（玩家输入）、Event（交互事件）</span></p><p><img src="assets/figure-06.jpeg" referrerpolicy="no-referrer" alt="imagineio/PhysicalAI-SimReady-Kitchens-v1 · Datasets at Hugging Face"></p><p><span>直接获得逐帧对齐的多模态 Ground Truth。</span></p><h3 id='phase-3-proxy自动生成'><strong><span>Phase 3 Proxy自动生成</span></strong></h3><p><span>分为</span><strong><span>基础 Proxy</span></strong><span>：Depth Proxy、Semantic Proxy、DUV Proxy（深度与语义的联合编码）和</span><strong><span>Geometry Proxy</span></strong><span>（几何表达，Lowpoly、Capsule、Primitive、Voxel 四种低模）</span></p><p><span>基础 Proxy 可由引擎生成，Geometry Proxy </span><strong><span>除了 3D Reconstruction，还可用视频生成模型（论文中的方法）</span></strong><span>。</span></p><p><img src="assets/figure-07.png" referrerpolicy="no-referrer" alt="2"></p><h3 id='phase-4--视频模型生成多样化-target'><strong><span>Phase 4  视频模型生成多样化 Target</span></strong></h3><p><span>引入视频生成模型，扩展视觉表现，扩展维度有：外观（材质、纹理）、光照、风格（写实、卡通）、天气氛围等。视觉多样性扩充只是换皮，不能破坏 Proxy 和 Target 的对应关系。</span></p><p><img src="assets/figure-08.png" referrerpolicy="no-referrer" alt="image-20261124183503632"></p><h3 id='phase-5自动质检与数据入库'><strong><span>Phase 5：自动质检与数据入库</span></strong></h3><p><span>建议建立自动化数据质量评估体系，质量维度可以有完整性、空间准确性、时许一致性、语义准确性、视觉一致性、数据重复率等。</span></p><h3 id='使用-ue-引擎的好处'><span>使用 UE 引擎的好处</span></h3><ul><li><p><strong><span>成熟的 AI 行为与交互系统</span></strong><span>：</span><strong><span>Behavior Tree / StateTree / EQS / NavMesh / Smart Objects</span></strong><span>，可以直接构建角色寻路、目标选择、环境感知和复杂交互</span></p></li><li><p><strong><span>完整的动画生产与骨骼系统</span></strong><span>：</span><strong><span>Skeleton / IK Rig / IK Retargeter / Control Rig / Motion Warping</span></strong><span>，支持不同角色复用动画资产、骨骼重定向、程序化调整动作和运动轨迹</span></p></li><li><p><strong><span>成熟的场景管理与资产组织体系</span></strong><span>：</span><strong><span>World Partition / Data Layers / Level Instances / Asset Manager</span></strong><span>，可以管理复杂场景、模块化关卡、资产依赖和不同场景配置</span></p></li><li><p><strong><span>成熟的相机与多通道渲染系统</span></strong><span>：</span><strong><span>SceneCapture2D / Sequencer / Movie Render Queue / Custom Depth</span></strong><span>，可以控制相机轨迹、视角、焦距、曝光，并通过不同 Render Pass 获取多模态数据</span></p></li></ul></div></div>
+</body>
+</html>
