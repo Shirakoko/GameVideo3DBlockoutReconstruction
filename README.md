@@ -1,6 +1,6 @@
 # 游戏影像驱动的三维粗模重建
 
-论文阅读：[GameWM 阅读笔记](https://shirakoko.github.io/GameVideo3DBlockoutReconstruction/gamewm/)（[网页源文件](docs/gamewm/index.html)）。
+论文阅读：[GameWM 阅读笔记](https://shirakoko.github.io/GameVideo3DBlockoutReconstruction/gamewm/)。
 
 面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流。本项目提供三条路线：**Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性；ComfyUI + H3 侧重原视频的生成式灰模风格化。**
 
