@@ -1,0 +1,261 @@
+{
+  "schema": "heuristic.run/1",
+  "status": "passed",
+  "authorization": "user-approved RGB-layout completion",
+  "source_hashes": {
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\camera\\poses.json": "e6e17c6bbc22ca7dac5941c4621e9850549819c3cc7ccd85f81a83467cbfdd48",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\depth\\depth_prefix.partial.hevc": "ea79d5b4ead09b0a97d16a78e8b2bf57b0a0f90681aca4543d2e105cb19757a4",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\depth\\decode_contract.json": "82c2fa688244d090ce13caf0e1b434f5bc9187a2f2ef762d112c877bb1c2fde9",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\telemetry\\world.json": "52d5ac08100ccb318b6ab38f3d4873f29e6d0ac317019018008c511c258b4eca",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\models\\refined\\models.lock.json": "9405ad944741f391e255ee8e1437171f758eda76b06ea2256ff97e58eee5f83e"
+  },
+  "geometry_accuracy_validated": false,
+  "full_video_rendered": true,
+  "block_size_metres": 0.5,
+  "data_policy": "Local internal only; delete by 2026-12-24 Asia/Shanghai",
+  "validation": {
+    "schema": "heuristic.proxy/1",
+    "status": "passed",
+    "authorization": "user-approved RGB-layout completion",
+    "geometry_accuracy_validated": false,
+    "camera_inside_frame_count": 0,
+    "coverage_status": "passed",
+    "camera_sha256": "8d8b77e8626ad82a0b447822ae990021a11b87d4577ef501ebdbcba3b36ed5a1",
+    "volume": {
+      "status": "passed",
+      "camera_inside_frames": [],
+      "checked_frames": 720,
+      "inside_frame_count": 0,
+      "evidence_boundary": "Camera centres inside inferred occupied cells; not physical geometry certification"
+    },
+    "coverage": {
+      "status": "passed",
+      "frames": [
+        {
+          "frame_index": 0,
+          "environment_coverage": 0.959260315649363,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 60,
+          "environment_coverage": 0.9944964630602601,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 180,
+          "environment_coverage": 0.996907592444023,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 300,
+          "environment_coverage": 0.9989233419465977,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 360,
+          "environment_coverage": 0.9997794958724384,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 420,
+          "environment_coverage": 0.9981998076130274,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 540,
+          "environment_coverage": 1.0,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 660,
+          "environment_coverage": 0.997547433833376,
+          "near_wall_fraction": 0.0
+        },
+        {
+          "frame_index": 719,
+          "environment_coverage": 0.9773288678072953,
+          "near_wall_fraction": 0.0
+        }
+      ],
+      "thresholds": {
+        "minimum_frame_coverage": 0.45,
+        "minimum_mean_coverage": 0.65,
+        "maximum_near_wall_fraction": 0.01
+      },
+      "evidence_boundary": "Proxy coverage/free camera view, not recovered geometry accuracy"
+    },
+    "layout": {
+      "curve": {
+        "method": "ordinal codes anchored to an inferred ground plane",
+        "anchor_count": 70817,
+        "code_knots": [
+          72.0,
+          80.0,
+          83.0,
+          85.0,
+          86.0,
+          88.0,
+          90.0,
+          92.0,
+          94.0,
+          96.0,
+          98.0,
+          100.0,
+          102.0,
+          104.0,
+          107.0,
+          110.0,
+          113.0,
+          116.0,
+          119.0,
+          123.0,
+          126.0,
+          130.0,
+          135.0,
+          140.0,
+          146.0,
+          152.0,
+          159.0,
+          167.0,
+          177.0,
+          191.0,
+          208.0,
+          241.0
+        ],
+        "log_proxy_distance": [
+          1.211554664449098,
+          1.2221391630441893,
+          1.2296311410665801,
+          1.2296311410665801,
+          1.2296311410665801,
+          1.253140418194614,
+          1.3176461464931888,
+          1.3520542230702397,
+          1.3599346769099003,
+          1.3969340933305134,
+          1.4434517708397152,
+          1.4491219637042587,
+          1.5057706019004267,
+          1.5264344849778686,
+          1.5765103285063145,
+          1.5851752303890576,
+          1.6447375660016628,
+          1.6590814900416162,
+          1.7296233994681511,
+          1.7910771973509585,
+          1.7968052334654818,
+          1.8648280618163113,
+          1.9040139053856877,
+          1.9820084221419558,
+          2.0411201227380653,
+          2.1004909017353475,
+          2.1886958793771427,
+          2.291983513235739,
+          2.3879844401762966,
+          2.547674951348648,
+          2.785177873080053,
+          3.130366978074389
+        ],
+        "range": [
+          2.5,
+          70
+        ],
+        "inferred": true,
+        "physical_inverse_used": false,
+        "geometry_accuracy_validated": false
+      },
+      "ground_plane_height": 7.344028930664063,
+      "ground_surface_height": 7.5,
+      "floor_completion_cells": 44946,
+      "occupied_cells": 180289,
+      "camera_corridor_radius": 2.5,
+      "physical_geometry_verified": false,
+      "inferred": true,
+      "hidden_completion": "user-approved proxy, not recovered geometry"
+    },
+    "voxel_sha256": "b2295a3a9d1b559e2e6e7014f991bdcdd9677428ef131beaf0414cf63fbd0617",
+    "block_size_metres": 0.5
+  },
+  "source_bundle": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\source_bundle_vaoyw3l7",
+  "preview_status": "passed",
+  "mesh_objects": 1401,
+  "preview_frames": [
+    {
+      "frame_index": 0,
+      "rendered_environment_coverage": 0.9621427560301113,
+      "masked_ssim_informational": 0.7754494795598452
+    },
+    {
+      "frame_index": 60,
+      "rendered_environment_coverage": 0.9954683664785714,
+      "masked_ssim_informational": 0.7858001787278507
+    },
+    {
+      "frame_index": 180,
+      "rendered_environment_coverage": 0.9973135926271748,
+      "masked_ssim_informational": 0.7812566802962249
+    },
+    {
+      "frame_index": 300,
+      "rendered_environment_coverage": 0.9991737374465958,
+      "masked_ssim_informational": 0.8165140268804685
+    },
+    {
+      "frame_index": 360,
+      "rendered_environment_coverage": 0.9998083201186212,
+      "masked_ssim_informational": 0.8027272941111366
+    },
+    {
+      "frame_index": 420,
+      "rendered_environment_coverage": 0.9983589235595179,
+      "masked_ssim_informational": 0.8200398714638413
+    },
+    {
+      "frame_index": 540,
+      "rendered_environment_coverage": 1.0,
+      "masked_ssim_informational": 0.7868466685399129
+    },
+    {
+      "frame_index": 660,
+      "rendered_environment_coverage": 0.9976594735408685,
+      "masked_ssim_informational": 0.8379192119142412
+    },
+    {
+      "frame_index": 719,
+      "rendered_environment_coverage": 0.9780258540005821,
+      "masked_ssim_informational": 0.8327836021035121
+    }
+  ],
+  "preview_hashes": {
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000001.png": "f8c6b78d8a33ae3c5e3472a1a42e253013bcd740088b568a61d37b92d144fbd7",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000061.png": "01c5aad15818bcff723aca72f0e435b767da229c1c77407fd07e7ccccf53d477",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000181.png": "1c443b6fadba6c370b382cb544b21820747a71f24b593f25d423c21b9599efc7",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000301.png": "0b872b1c109f1621db037cf345acd9e2634eb794748dc1ce36619537551d84dd",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000361.png": "dbcc7eec01418e62d0ffcf06460170e91e4e4893da6897a31ff489a060c8b71b",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000421.png": "b8e8b9058ca4f579bdbc22547fba6b6fe6ff1de7b783c832a0e5f232def1ce44",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000541.png": "ba02a950577ea0f108ed58c4137a08519907a769f08bf111d6bfc45b3af1e1a4",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000661.png": "381b6a0999bd21102a1da778757b0872cf72b8e927a52aa303286dc3e31a4c22",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_voxel_proxy\\frames\\frame_000720.png": "31145fa02717588b7379e6dfc0eb5420127cb8d0825ff98a71a067fdff90bd03"
+  },
+  "artifact_hashes": {
+    "scene.blend": "779ea8f2fe77e605382a7ac649913286a8e31f5d4339366928a1ab2ce8b818b9",
+    "scene_schema.json": "7fbd4f8fce286c8a51be5c4d2058124fffe63f8552613e986b76477961d30c15",
+    "blockout_video.mp4": "9ca6da12018431b3b178001e79fdc3ceb60a3a7afc788fb0b74286ddd60aaab8",
+    "original_video.mp4": "8d6480e2f11cb26dc9f643d8e196e19b0d7705f065e20fd43de45d75d3ce98eb",
+    "original_vs_blockout.mp4": "817e4975f12be61728f94601865bc99d9dd6640ad0df563064efac6982ee92b0",
+    "build_plan.json": "79d28f4a481e269c067fe98013b1bb67483c6bfb1827201a3661e94e0663bd61",
+    "frame_mapping.json": "02e44880011d37703d345d10af00fe86f6d4364fc591512de5f64b0eb44ee41e",
+    "build_report.json": "5beebd67c6b4d6caffb97fb7bdc74051a74d93328861abbae24cc04c9f533a7f",
+    "saved_scene_verification.json": "96da71007e2dbd02582942f8875ee1388bf267b7049008078c3a3a19cf28f8f5",
+    "build.log": "47d6d567c48a82c9762df211edaa3c82b724845f24aa9959b441450069c85a9d",
+    "render.log": "2db4c063d7b505ce6422d11bf4cbb138e0293acaf717cd3f67b68f6161fbadd5",
+    "source_video.probe.log": "91524a38526ade89b248340fb59d4f4638657ba1b0b8b212ae98a53b02ac019c",
+    "encode_blockout.log": "5a4307250b29be0b6b8b0c94e0ebf434168bab1424fccd5088b78d5fa54da53d",
+    "encode_original.log": "16b540bf73954d751cc65982f99efbcd99c97d10c08d00c3f20ec3f69173b59e",
+    "encode_comparison.log": "1486bd2502f9f2b979f179727e555ba234bc40f8f85c54563fe18bbe20967224",
+    "original_video.mp4.probe.log": "f5a13411bdf2d7a80670b47182c2da3175ced7f47a3acf32a6d9c79edaa52371",
+    "blockout_video.mp4.probe.log": "2f7077b57bd3be6fac1211f44654e61ec652fb3d29750607fb88c4c305423575",
+    "original_vs_blockout.mp4.probe.log": "bc4f167f3dc11970eddd1ea9db5d7fb5377107359d1bd7f7cf39186bc4ff1ee0"
+  }
+}

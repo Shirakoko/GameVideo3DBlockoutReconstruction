@@ -1,0 +1,105 @@
+{
+  "schema": "primitive.run/1",
+  "status": "passed",
+  "authorization": "user-approved RGB-layout completion",
+  "source_hashes": {
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\camera\\poses.json": "e6e17c6bbc22ca7dac5941c4621e9850549819c3cc7ccd85f81a83467cbfdd48",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\depth\\depth_prefix.partial.hevc": "ea79d5b4ead09b0a97d16a78e8b2bf57b0a0f90681aca4543d2e105cb19757a4",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\depth\\decode_contract.json": "82c2fa688244d090ce13caf0e1b434f5bc9187a2f2ef762d112c877bb1c2fde9",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\input\\samples\\66ad9535-583f-4a25-b655-6b1697c83a40\\telemetry\\world.json": "52d5ac08100ccb318b6ab38f3d4873f29e6d0ac317019018008c511c258b4eca",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\data\\models\\refined\\models.lock.json": "9405ad944741f391e255ee8e1437171f758eda76b06ea2256ff97e58eee5f83e"
+  },
+  "primitive_count": 7446,
+  "counts_by_type": {
+    "box": 7310,
+    "cylinder": 90,
+    "sphere": 46
+  },
+  "geometry_accuracy_validated": false,
+  "full_video_rendered": true,
+  "preview_status": "passed",
+  "quality_gate": "passed",
+  "data_policy": "Local internal only; delete by 2026-12-24 Asia/Shanghai",
+  "source_bundle": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\source_bundle_1lmc3k6w",
+  "preview_frames": [
+    {
+      "frame_index": 0,
+      "masked_luminance_mae": 43.472877502441406,
+      "clay_baseline_mae": 121.32759857177734
+    },
+    {
+      "frame_index": 60,
+      "masked_luminance_mae": 44.052757263183594,
+      "clay_baseline_mae": 109.17257690429688
+    },
+    {
+      "frame_index": 180,
+      "masked_luminance_mae": 26.237239837646484,
+      "clay_baseline_mae": 85.27373504638672
+    },
+    {
+      "frame_index": 300,
+      "masked_luminance_mae": 23.813560485839844,
+      "clay_baseline_mae": 84.44325256347656
+    },
+    {
+      "frame_index": 360,
+      "masked_luminance_mae": 31.46961784362793,
+      "clay_baseline_mae": 64.61283111572266
+    },
+    {
+      "frame_index": 420,
+      "masked_luminance_mae": 31.78863525390625,
+      "clay_baseline_mae": 53.48949432373047
+    },
+    {
+      "frame_index": 540,
+      "masked_luminance_mae": 29.960948944091797,
+      "clay_baseline_mae": 34.797637939453125
+    },
+    {
+      "frame_index": 660,
+      "masked_luminance_mae": 30.81667137145996,
+      "clay_baseline_mae": 24.294315338134766
+    },
+    {
+      "frame_index": 719,
+      "masked_luminance_mae": 27.26473045349121,
+      "clay_baseline_mae": 29.902334213256836
+    }
+  ],
+  "mean_masked_luminance_mae": 32.09744877285428,
+  "clay_baseline_mean_mae": 67.47930844624837,
+  "preview_hashes": {
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000001.png": "b36af29c69902274f2f589e495902988c55015f32217001e8f89f3da02e7698e",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000061.png": "6902c6f32de4565acf15585172a7d380a6c9b50e401fdfcd33afda547221e8fd",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000181.png": "e7397e70461e89d6ee642b439a04720452c328474e115f42d36f2ca8526ead4e",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000301.png": "b86964385e97a1a3765b9f51169eb3f6bfad51b631ce8ed01c84f314e7bd5418",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000361.png": "1e5d0bf0d3c2e4c8df08461cf28e9cbf8506e2554b41c97fa5c304f5dac2949c",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000421.png": "727fbf05d964294b2750ac5f723c30060765630633b310e38f9c65aee4a13f48",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000541.png": "208fcc813dd748557f9aa7521ec1db01d3bd7499b6f9061e423f1f01e54f3372",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000661.png": "4ac0c86d2c75a7932287a8a518969f61af2c9666d35bc02b1e343b8175b83d55",
+    "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_ef\\heuristic_primitive_from_video\\frames\\frame_000720.png": "af00a12ac71c412cf02c307eef5a36b14189da16cb42d225fce4d9e5a12ec808"
+  },
+  "artifact_hashes": {
+    "scene.blend": "62e279e9659ab47d40a5a37af55ed07382a998bbadc9194919aa855e86f83e37",
+    "scene_schema.json": "d8768192c1a3fd3c94b5b83fdddf3b0486e905be27c9d70e7268f6839df74519",
+    "blockout_video.mp4": "9c9ac9c953d8841a631ff48aa3242c66edbd79b274fc3cd4923a1a814acfd492",
+    "original_video.mp4": "8d6480e2f11cb26dc9f643d8e196e19b0d7705f065e20fd43de45d75d3ce98eb",
+    "original_vs_blockout.mp4": "a841ad5b7ae696e9d89d2933d31f5e9648436b3572f383e9074818b83a06ae41",
+    "build_plan.json": "00b5c137abcdafc14f6e32d2b2424bd9c95d86a3d9c6d90cf048ea3a2d4a0980",
+    "frame_mapping.json": "02e44880011d37703d345d10af00fe86f6d4364fc591512de5f64b0eb44ee41e",
+    "build_report.json": "e979a8dc993659f196125a240c4e9db6e5a83726e15861aa6e7a3e65a52489b8",
+    "saved_scene_verification.json": "670c4fdaa44fec48425cecf9887291ba10964a42d2c471d43cbe4c0339e181b1",
+    "build.log": "100ae86744855f2b114f369e072abb504dc2db7070d21e0385c0b2d91142a132",
+    "render.log": "3e81dd14a802fa623208281c6cd1984575cedc9ea0fcfc25eefc34ccf27705ad",
+    "source_video.probe.log": "3637f721b1958eb4d1faa196307a3c37bb15d11cb77852dd178c9d9445fa5113",
+    "encode_blockout.log": "54b6bdc47f2be7093c52ad50330000e98a6ce9bd31b0631bbfb1a01af6fd8d9f",
+    "encode_original.log": "0ace2ffed48beb9a4a1548ac0dc2bcb4b82ead1c19bd085e6a3200ac867492e1",
+    "encode_comparison.log": "62981e63213d63ca950b8af24706456320dc6236a6e099d70281dade9ff28527",
+    "original_video.mp4.probe.log": "6b9ce4e7db5451e48ba1f806635d2b9ea5edc2dc2adb8cfb955d988abb62cada",
+    "blockout_video.mp4.probe.log": "aa74ea3048aff2da2f5a59b82fa598780fbc97d683c881c761f4252632f7f835",
+    "original_vs_blockout.mp4.probe.log": "b0a9ce1634da4ed624bbcf22bd8cc8426d79396143f285740a63c2a9bce34d58"
+  }
+}

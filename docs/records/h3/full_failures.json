@@ -1,0 +1,12 @@
+{
+  "failures": [
+    {
+      "run": "full_1_v3",
+      "prompt_id": "46a3c336-90d6-4ad0-b659-1ff16faf29ec",
+      "node": "SamplerCustomAdvanced",
+      "error": "Native keyframe patchification received a 27-row latent; the target was padded internally to 28 rows.",
+      "repair": "Use native ImagePadForOutpaint to pad 16 pixels at guide bottom and native EmptyMiniMaxH3LatentAV 768x448 for guide sizing only. Main latent and control remain 768x432. No ComfyUI core changes.",
+      "retry": "full_1_v3_retry"
+    }
+  ]
+}

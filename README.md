@@ -14,8 +14,8 @@
 | --- | --- | --- | --- |
 | 原片 / 粗模对比 | [original_vs_blockout.mp4](docs/videos/voxel/original_vs_blockout.mp4) | [original_vs_blockout.mp4](docs/videos/primitive/original_vs_blockout.mp4) | [comparison.mp4](docs/videos/h3/comparison.mp4) |
 | 纯粗模视频 | [blockout_video.mp4](docs/videos/voxel/blockout_video.mp4) | [blockout_video.mp4](docs/videos/primitive/blockout_video.mp4) | [graybox.mp4](docs/videos/h3/graybox.mp4) |
-| 可编辑场景 | [scene.blend](outputs/stage_ef/heuristic_voxel_proxy/scene.blend) | [scene.blend](outputs/stage_ef/heuristic_primitive_from_video/scene.blend) | 无；交付可编辑节点图，不是三维场景 |
-| 原始验证记录 | [proxy_run.json](outputs/stage_ef/heuristic_voxel_proxy/proxy_run.json) | [primitive_run.json](outputs/stage_ef/heuristic_primitive_from_video/primitive_run.json) | [report.json](outputs/h3_controlled_graybox/full_v3/report.json) |
+| 可编辑场景 | 本地 `outputs/stage_ef/heuristic_voxel_proxy/scene.blend`，151.8 MiB | 本地 `outputs/stage_ef/heuristic_primitive_from_video/scene.blend`，120.6 MiB | 无；交付可编辑节点图，不是三维场景 |
+| 原始验证记录 | [proxy_run.json](docs/records/voxel/proxy_run.json) | [primitive_run.json](docs/records/primitive/primitive_run.json) | [report.json](docs/records/h3/report.json) |
 
 ### Voxel 对比视频
 
@@ -41,7 +41,7 @@
   <source src="docs/videos/h3/comparison.mp4" type="video/mp4">
 </video>
 
-GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的 MP4 链接。六份展示视频副本位于未被 Git 忽略的 `docs/videos/`，原始输出仍保留在 `outputs/`，供脚本复现和验证使用。
+GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的链接。同一份内容发布在 [GitHub Pages](https://shirakoko.github.io/GameVideo3DBlockoutReconstruction/)，页面中的对比视频可以直接播放。六份展示视频副本位于 `docs/videos/`，验证记录副本位于 `docs/records/`。两份 `scene.blend` 分别是 151.8 MiB 和 120.6 MiB，超过 GitHub 100 MB 单文件上限，因此保留在本地 `outputs/`，供脚本复现和验证使用。
 
 以下按相同源帧索引展示原始 RGB、Voxel、Primitive 与 H3（生成式灰模）；行时间分别为 0、6、11.983 秒。H3 从完整成片 `full_v3/graybox.mp4` 按源索引映射抽帧，同一索引不代表生成内容与原片严格一致。
 
@@ -126,7 +126,7 @@ flowchart TB
 
 ![H3 三段 ComfyUI 节点概览：第一段、第二段成功重试、第三段](workflows/figures/h3_three_segments_overview.jpg)
 
-原生主 latent 会内部补齐网格，参考 latent 不会；第二段首次执行因此报尺寸错误。修复只用 `ImagePadForOutpaint` 在参考底部补 16 像素，以及 `EmptyMiniMaxH3LatentAV` 的 768×448 参考尺寸，主画布和 Canny 控制仍为 768×432，没有改 ComfyUI 核心。失败原因与修复见 [full_failures.json](outputs/h3_controlled_graybox/full_failures.json)。
+原生主 latent 会内部补齐网格，参考 latent 不会；第二段首次执行因此报尺寸错误。修复只用 `ImagePadForOutpaint` 在参考底部补 16 像素，以及 `EmptyMiniMaxH3LatentAV` 的 768×448 参考尺寸，主画布和 Canny 控制仍为 768×432，没有改 ComfyUI 核心。失败原因与修复见 [full_failures.json](docs/records/h3/full_failures.json)。
 
 拼接保留前段重叠区域，丢弃后段重复帧和尾部填充帧，不混合、不插帧。
 
@@ -258,7 +258,7 @@ Primitive 的场景生成与工程体积较低，但渲染未随元素数或生�
 | 加上第二段首次失败的 31.666 秒 | 1,033.461 秒 / 17.22 分钟 |
 | 再计三次 pilot 与一次 `chunk_0_v2` 探索，全部 8 次有历史记录的执行 | 1,694.674 秒 / 28.24 分钟 |
 
-最终 `graybox.mp4` 为 30.04 MiB，`comparison.mp4` 为 14.12 MiB。五份模型文件合计约 38.16 GiB，清单与 SHA256 见 [models.json](outputs/h3_controlled_graybox/models.json)；磁盘体积不等于峰值显存需求。
+最终 `graybox.mp4` 为 30.04 MiB，`comparison.mp4` 为 14.12 MiB。五份模型文件合计约 38.16 GiB，清单与 SHA256 见 [models.json](docs/records/h3/models.json)；磁盘体积不等于峰值显存需求。
 
 以上仍未包含模型下载/冷启动准备、Canny 控制预处理、重编码与放大、拼接、存储/传输、截图整理及人工审核/修正，亦未记录全流程峰值内存。17.22 分钟只是本次全片执行及已知失败的局部耗时；严格动作/几何合格交付数尚不能据此认定为 1，量产的资源与时间投入必须按目标质量下的成功率与所有失败重试统计。
 
@@ -365,4 +365,4 @@ $h3Python = '..\ComfyUI\venv\Scripts\python.exe'
 
 ## 数据使用边界
 
-受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。H3 也只做本地推理，生成视频、控制/参考片及含预览的节点截图沿用相同限制，`docs/videos/` 中的展示副本也需在期限前清理。正式提交或公开展示需另行确认对应许可；`docs/videos/`、`docs/figures/` 和 `workflows/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。
+受限样本及其视频、截图、场景模型、比较图表和派生指标仅限已记录的内部评估用途，不上传第三方、不再分发，须在 **2026-12-24（Asia/Shanghai）删除期限前**清理。H3 也只做本地推理，生成视频、控制/参考片及含预览的节点截图沿用相同限制，`docs/videos/` 与 `docs/records/` 中的展示副本也需在期限前清理。正式提交或公开展示需另行确认对应许可；`docs/videos/`、`docs/records/`、`docs/figures/` 和 `workflows/figures/` 未被 Git 忽略，不能随代码默认公开。量产与成本估算不代表数据集已授权生产或商业使用。

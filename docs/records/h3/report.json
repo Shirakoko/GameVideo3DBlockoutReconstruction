@@ -1,0 +1,7456 @@
+{
+  "schema": "h3.graybox-delivery/1",
+  "source": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4",
+  "source_sha256": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+  "parts": [
+    "full_0_v3",
+    "full_1_v3_retry",
+    "full_2_v3"
+  ],
+  "mapping": [
+    {
+      "generated_index": 0,
+      "source_index": 0,
+      "source_pts_seconds": "0",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 1,
+      "source_index": 1,
+      "source_pts_seconds": "1/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 2,
+      "source_index": 2,
+      "source_pts_seconds": "1/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 3,
+      "source_index": 3,
+      "source_pts_seconds": "1/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 4,
+      "source_index": 4,
+      "source_pts_seconds": "1/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 5,
+      "source_index": 5,
+      "source_pts_seconds": "1/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 6,
+      "source_index": 6,
+      "source_pts_seconds": "1/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 7,
+      "source_index": 7,
+      "source_pts_seconds": "7/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 8,
+      "source_index": 8,
+      "source_pts_seconds": "2/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 9,
+      "source_index": 9,
+      "source_pts_seconds": "3/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 10,
+      "source_index": 10,
+      "source_pts_seconds": "1/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 11,
+      "source_index": 11,
+      "source_pts_seconds": "11/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 12,
+      "source_index": 12,
+      "source_pts_seconds": "1/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 13,
+      "source_index": 13,
+      "source_pts_seconds": "13/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 14,
+      "source_index": 14,
+      "source_pts_seconds": "7/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 15,
+      "source_index": 15,
+      "source_pts_seconds": "1/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 16,
+      "source_index": 16,
+      "source_pts_seconds": "4/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 17,
+      "source_index": 17,
+      "source_pts_seconds": "17/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 18,
+      "source_index": 18,
+      "source_pts_seconds": "3/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 19,
+      "source_index": 19,
+      "source_pts_seconds": "19/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 20,
+      "source_index": 20,
+      "source_pts_seconds": "1/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 21,
+      "source_index": 21,
+      "source_pts_seconds": "7/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 22,
+      "source_index": 22,
+      "source_pts_seconds": "11/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 23,
+      "source_index": 23,
+      "source_pts_seconds": "23/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 24,
+      "source_index": 24,
+      "source_pts_seconds": "2/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 25,
+      "source_index": 25,
+      "source_pts_seconds": "5/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 26,
+      "source_index": 26,
+      "source_pts_seconds": "13/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 27,
+      "source_index": 27,
+      "source_pts_seconds": "9/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 28,
+      "source_index": 28,
+      "source_pts_seconds": "7/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 29,
+      "source_index": 29,
+      "source_pts_seconds": "29/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 30,
+      "source_index": 30,
+      "source_pts_seconds": "1/2",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 31,
+      "source_index": 31,
+      "source_pts_seconds": "31/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 32,
+      "source_index": 32,
+      "source_pts_seconds": "8/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 33,
+      "source_index": 33,
+      "source_pts_seconds": "11/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 34,
+      "source_index": 34,
+      "source_pts_seconds": "17/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 35,
+      "source_index": 35,
+      "source_pts_seconds": "7/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 36,
+      "source_index": 36,
+      "source_pts_seconds": "3/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 37,
+      "source_index": 37,
+      "source_pts_seconds": "37/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 38,
+      "source_index": 38,
+      "source_pts_seconds": "19/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 39,
+      "source_index": 39,
+      "source_pts_seconds": "13/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 40,
+      "source_index": 40,
+      "source_pts_seconds": "2/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 41,
+      "source_index": 41,
+      "source_pts_seconds": "41/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 42,
+      "source_index": 42,
+      "source_pts_seconds": "7/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 43,
+      "source_index": 43,
+      "source_pts_seconds": "43/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 44,
+      "source_index": 44,
+      "source_pts_seconds": "11/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 45,
+      "source_index": 45,
+      "source_pts_seconds": "3/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 46,
+      "source_index": 46,
+      "source_pts_seconds": "23/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 47,
+      "source_index": 47,
+      "source_pts_seconds": "47/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 48,
+      "source_index": 48,
+      "source_pts_seconds": "4/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 49,
+      "source_index": 49,
+      "source_pts_seconds": "49/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 50,
+      "source_index": 50,
+      "source_pts_seconds": "5/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 51,
+      "source_index": 51,
+      "source_pts_seconds": "17/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 52,
+      "source_index": 52,
+      "source_pts_seconds": "13/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 53,
+      "source_index": 53,
+      "source_pts_seconds": "53/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 54,
+      "source_index": 54,
+      "source_pts_seconds": "9/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 55,
+      "source_index": 55,
+      "source_pts_seconds": "11/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 56,
+      "source_index": 56,
+      "source_pts_seconds": "14/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 57,
+      "source_index": 57,
+      "source_pts_seconds": "19/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 58,
+      "source_index": 58,
+      "source_pts_seconds": "29/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 59,
+      "source_index": 59,
+      "source_pts_seconds": "59/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 60,
+      "source_index": 60,
+      "source_pts_seconds": "1",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 61,
+      "source_index": 61,
+      "source_pts_seconds": "61/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 62,
+      "source_index": 62,
+      "source_pts_seconds": "31/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 63,
+      "source_index": 63,
+      "source_pts_seconds": "21/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 64,
+      "source_index": 64,
+      "source_pts_seconds": "16/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 65,
+      "source_index": 65,
+      "source_pts_seconds": "13/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 66,
+      "source_index": 66,
+      "source_pts_seconds": "11/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 67,
+      "source_index": 67,
+      "source_pts_seconds": "67/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 68,
+      "source_index": 68,
+      "source_pts_seconds": "17/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 69,
+      "source_index": 69,
+      "source_pts_seconds": "23/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 70,
+      "source_index": 70,
+      "source_pts_seconds": "7/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 71,
+      "source_index": 71,
+      "source_pts_seconds": "71/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 72,
+      "source_index": 72,
+      "source_pts_seconds": "6/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 73,
+      "source_index": 73,
+      "source_pts_seconds": "73/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 74,
+      "source_index": 74,
+      "source_pts_seconds": "37/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 75,
+      "source_index": 75,
+      "source_pts_seconds": "5/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 76,
+      "source_index": 76,
+      "source_pts_seconds": "19/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 77,
+      "source_index": 77,
+      "source_pts_seconds": "77/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 78,
+      "source_index": 78,
+      "source_pts_seconds": "13/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 79,
+      "source_index": 79,
+      "source_pts_seconds": "79/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 80,
+      "source_index": 80,
+      "source_pts_seconds": "4/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 81,
+      "source_index": 81,
+      "source_pts_seconds": "27/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 82,
+      "source_index": 82,
+      "source_pts_seconds": "41/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 83,
+      "source_index": 83,
+      "source_pts_seconds": "83/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 84,
+      "source_index": 84,
+      "source_pts_seconds": "7/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 85,
+      "source_index": 85,
+      "source_pts_seconds": "17/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 86,
+      "source_index": 86,
+      "source_pts_seconds": "43/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 87,
+      "source_index": 87,
+      "source_pts_seconds": "29/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 88,
+      "source_index": 88,
+      "source_pts_seconds": "22/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 89,
+      "source_index": 89,
+      "source_pts_seconds": "89/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 90,
+      "source_index": 90,
+      "source_pts_seconds": "3/2",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 91,
+      "source_index": 91,
+      "source_pts_seconds": "91/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 92,
+      "source_index": 92,
+      "source_pts_seconds": "23/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 93,
+      "source_index": 93,
+      "source_pts_seconds": "31/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 94,
+      "source_index": 94,
+      "source_pts_seconds": "47/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 95,
+      "source_index": 95,
+      "source_pts_seconds": "19/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 96,
+      "source_index": 96,
+      "source_pts_seconds": "8/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 97,
+      "source_index": 97,
+      "source_pts_seconds": "97/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 98,
+      "source_index": 98,
+      "source_pts_seconds": "49/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 99,
+      "source_index": 99,
+      "source_pts_seconds": "33/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 100,
+      "source_index": 100,
+      "source_pts_seconds": "5/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 101,
+      "source_index": 101,
+      "source_pts_seconds": "101/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 102,
+      "source_index": 102,
+      "source_pts_seconds": "17/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 103,
+      "source_index": 103,
+      "source_pts_seconds": "103/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 104,
+      "source_index": 104,
+      "source_pts_seconds": "26/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 105,
+      "source_index": 105,
+      "source_pts_seconds": "7/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 106,
+      "source_index": 106,
+      "source_pts_seconds": "53/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 107,
+      "source_index": 107,
+      "source_pts_seconds": "107/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 108,
+      "source_index": 108,
+      "source_pts_seconds": "9/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 109,
+      "source_index": 109,
+      "source_pts_seconds": "109/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 110,
+      "source_index": 110,
+      "source_pts_seconds": "11/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 111,
+      "source_index": 111,
+      "source_pts_seconds": "37/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 112,
+      "source_index": 112,
+      "source_pts_seconds": "28/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 113,
+      "source_index": 113,
+      "source_pts_seconds": "113/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 114,
+      "source_index": 114,
+      "source_pts_seconds": "19/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 115,
+      "source_index": 115,
+      "source_pts_seconds": "23/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 116,
+      "source_index": 116,
+      "source_pts_seconds": "29/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 117,
+      "source_index": 117,
+      "source_pts_seconds": "39/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 118,
+      "source_index": 118,
+      "source_pts_seconds": "59/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 119,
+      "source_index": 119,
+      "source_pts_seconds": "119/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 120,
+      "source_index": 120,
+      "source_pts_seconds": "2",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 121,
+      "source_index": 121,
+      "source_pts_seconds": "121/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 122,
+      "source_index": 122,
+      "source_pts_seconds": "61/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 123,
+      "source_index": 123,
+      "source_pts_seconds": "41/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 124,
+      "source_index": 124,
+      "source_pts_seconds": "31/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 125,
+      "source_index": 125,
+      "source_pts_seconds": "25/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 126,
+      "source_index": 126,
+      "source_pts_seconds": "21/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 127,
+      "source_index": 127,
+      "source_pts_seconds": "127/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 128,
+      "source_index": 128,
+      "source_pts_seconds": "32/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 129,
+      "source_index": 129,
+      "source_pts_seconds": "43/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 130,
+      "source_index": 130,
+      "source_pts_seconds": "13/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 131,
+      "source_index": 131,
+      "source_pts_seconds": "131/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 132,
+      "source_index": 132,
+      "source_pts_seconds": "11/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 133,
+      "source_index": 133,
+      "source_pts_seconds": "133/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 134,
+      "source_index": 134,
+      "source_pts_seconds": "67/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 135,
+      "source_index": 135,
+      "source_pts_seconds": "9/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 136,
+      "source_index": 136,
+      "source_pts_seconds": "34/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 137,
+      "source_index": 137,
+      "source_pts_seconds": "137/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 138,
+      "source_index": 138,
+      "source_pts_seconds": "23/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 139,
+      "source_index": 139,
+      "source_pts_seconds": "139/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 140,
+      "source_index": 140,
+      "source_pts_seconds": "7/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 141,
+      "source_index": 141,
+      "source_pts_seconds": "47/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 142,
+      "source_index": 142,
+      "source_pts_seconds": "71/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 143,
+      "source_index": 143,
+      "source_pts_seconds": "143/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 144,
+      "source_index": 144,
+      "source_pts_seconds": "12/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 145,
+      "source_index": 145,
+      "source_pts_seconds": "29/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 146,
+      "source_index": 146,
+      "source_pts_seconds": "73/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 147,
+      "source_index": 147,
+      "source_pts_seconds": "49/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 148,
+      "source_index": 148,
+      "source_pts_seconds": "37/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 149,
+      "source_index": 149,
+      "source_pts_seconds": "149/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 150,
+      "source_index": 150,
+      "source_pts_seconds": "5/2",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 151,
+      "source_index": 151,
+      "source_pts_seconds": "151/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 152,
+      "source_index": 152,
+      "source_pts_seconds": "38/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 153,
+      "source_index": 153,
+      "source_pts_seconds": "51/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 154,
+      "source_index": 154,
+      "source_pts_seconds": "77/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 155,
+      "source_index": 155,
+      "source_pts_seconds": "31/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 156,
+      "source_index": 156,
+      "source_pts_seconds": "13/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 157,
+      "source_index": 157,
+      "source_pts_seconds": "157/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 158,
+      "source_index": 158,
+      "source_pts_seconds": "79/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 159,
+      "source_index": 159,
+      "source_pts_seconds": "53/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 160,
+      "source_index": 160,
+      "source_pts_seconds": "8/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 161,
+      "source_index": 161,
+      "source_pts_seconds": "161/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 162,
+      "source_index": 162,
+      "source_pts_seconds": "27/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 163,
+      "source_index": 163,
+      "source_pts_seconds": "163/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 164,
+      "source_index": 164,
+      "source_pts_seconds": "41/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 165,
+      "source_index": 165,
+      "source_pts_seconds": "11/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 166,
+      "source_index": 166,
+      "source_pts_seconds": "83/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 167,
+      "source_index": 167,
+      "source_pts_seconds": "167/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 168,
+      "source_index": 168,
+      "source_pts_seconds": "14/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 169,
+      "source_index": 169,
+      "source_pts_seconds": "169/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 170,
+      "source_index": 170,
+      "source_pts_seconds": "17/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 171,
+      "source_index": 171,
+      "source_pts_seconds": "57/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 172,
+      "source_index": 172,
+      "source_pts_seconds": "43/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 173,
+      "source_index": 173,
+      "source_pts_seconds": "173/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 174,
+      "source_index": 174,
+      "source_pts_seconds": "29/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 175,
+      "source_index": 175,
+      "source_pts_seconds": "35/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 176,
+      "source_index": 176,
+      "source_pts_seconds": "44/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 177,
+      "source_index": 177,
+      "source_pts_seconds": "59/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 178,
+      "source_index": 178,
+      "source_pts_seconds": "89/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 179,
+      "source_index": 179,
+      "source_pts_seconds": "179/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 180,
+      "source_index": 180,
+      "source_pts_seconds": "3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 181,
+      "source_index": 181,
+      "source_pts_seconds": "181/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 182,
+      "source_index": 182,
+      "source_pts_seconds": "91/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 183,
+      "source_index": 183,
+      "source_pts_seconds": "61/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 184,
+      "source_index": 184,
+      "source_pts_seconds": "46/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 185,
+      "source_index": 185,
+      "source_pts_seconds": "37/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 186,
+      "source_index": 186,
+      "source_pts_seconds": "31/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 187,
+      "source_index": 187,
+      "source_pts_seconds": "187/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 188,
+      "source_index": 188,
+      "source_pts_seconds": "47/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 189,
+      "source_index": 189,
+      "source_pts_seconds": "63/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 190,
+      "source_index": 190,
+      "source_pts_seconds": "19/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 191,
+      "source_index": 191,
+      "source_pts_seconds": "191/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 192,
+      "source_index": 192,
+      "source_pts_seconds": "16/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 193,
+      "source_index": 193,
+      "source_pts_seconds": "193/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 194,
+      "source_index": 194,
+      "source_pts_seconds": "97/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 195,
+      "source_index": 195,
+      "source_pts_seconds": "13/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 196,
+      "source_index": 196,
+      "source_pts_seconds": "49/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 197,
+      "source_index": 197,
+      "source_pts_seconds": "197/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 198,
+      "source_index": 198,
+      "source_pts_seconds": "33/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 199,
+      "source_index": 199,
+      "source_pts_seconds": "199/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 200,
+      "source_index": 200,
+      "source_pts_seconds": "10/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 201,
+      "source_index": 201,
+      "source_pts_seconds": "67/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 202,
+      "source_index": 202,
+      "source_pts_seconds": "101/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 203,
+      "source_index": 203,
+      "source_pts_seconds": "203/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 204,
+      "source_index": 204,
+      "source_pts_seconds": "17/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 205,
+      "source_index": 205,
+      "source_pts_seconds": "41/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 206,
+      "source_index": 206,
+      "source_pts_seconds": "103/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 207,
+      "source_index": 207,
+      "source_pts_seconds": "69/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 208,
+      "source_index": 208,
+      "source_pts_seconds": "52/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 209,
+      "source_index": 209,
+      "source_pts_seconds": "209/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 210,
+      "source_index": 210,
+      "source_pts_seconds": "7/2",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 211,
+      "source_index": 211,
+      "source_pts_seconds": "211/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 212,
+      "source_index": 212,
+      "source_pts_seconds": "53/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 213,
+      "source_index": 213,
+      "source_pts_seconds": "71/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 214,
+      "source_index": 214,
+      "source_pts_seconds": "107/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 215,
+      "source_index": 215,
+      "source_pts_seconds": "43/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 216,
+      "source_index": 216,
+      "source_pts_seconds": "18/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 217,
+      "source_index": 217,
+      "source_pts_seconds": "217/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 218,
+      "source_index": 218,
+      "source_pts_seconds": "109/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 219,
+      "source_index": 219,
+      "source_pts_seconds": "73/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 220,
+      "source_index": 220,
+      "source_pts_seconds": "11/3",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 221,
+      "source_index": 221,
+      "source_pts_seconds": "221/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 222,
+      "source_index": 222,
+      "source_pts_seconds": "37/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 223,
+      "source_index": 223,
+      "source_pts_seconds": "223/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 224,
+      "source_index": 224,
+      "source_pts_seconds": "56/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 225,
+      "source_index": 225,
+      "source_pts_seconds": "15/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 226,
+      "source_index": 226,
+      "source_pts_seconds": "113/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 227,
+      "source_index": 227,
+      "source_pts_seconds": "227/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 228,
+      "source_index": 228,
+      "source_pts_seconds": "19/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 229,
+      "source_index": 229,
+      "source_pts_seconds": "229/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 230,
+      "source_index": 230,
+      "source_pts_seconds": "23/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 231,
+      "source_index": 231,
+      "source_pts_seconds": "77/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 232,
+      "source_index": 232,
+      "source_pts_seconds": "58/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 233,
+      "source_index": 233,
+      "source_pts_seconds": "233/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 234,
+      "source_index": 234,
+      "source_pts_seconds": "39/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 235,
+      "source_index": 235,
+      "source_pts_seconds": "47/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 236,
+      "source_index": 236,
+      "source_pts_seconds": "59/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 237,
+      "source_index": 237,
+      "source_pts_seconds": "79/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 238,
+      "source_index": 238,
+      "source_pts_seconds": "119/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 239,
+      "source_index": 239,
+      "source_pts_seconds": "239/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 240,
+      "source_index": 240,
+      "source_pts_seconds": "4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 241,
+      "source_index": 241,
+      "source_pts_seconds": "241/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 242,
+      "source_index": 242,
+      "source_pts_seconds": "121/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 243,
+      "source_index": 243,
+      "source_pts_seconds": "81/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 244,
+      "source_index": 244,
+      "source_pts_seconds": "61/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 245,
+      "source_index": 245,
+      "source_pts_seconds": "49/12",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 246,
+      "source_index": 246,
+      "source_pts_seconds": "41/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 247,
+      "source_index": 247,
+      "source_pts_seconds": "247/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 248,
+      "source_index": 248,
+      "source_pts_seconds": "62/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 249,
+      "source_index": 249,
+      "source_pts_seconds": "83/20",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 250,
+      "source_index": 250,
+      "source_pts_seconds": "25/6",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 251,
+      "source_index": 251,
+      "source_pts_seconds": "251/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 252,
+      "source_index": 252,
+      "source_pts_seconds": "21/5",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 253,
+      "source_index": 253,
+      "source_pts_seconds": "253/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 254,
+      "source_index": 254,
+      "source_pts_seconds": "127/30",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 255,
+      "source_index": 255,
+      "source_pts_seconds": "17/4",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 256,
+      "source_index": 256,
+      "source_pts_seconds": "64/15",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 257,
+      "source_index": 257,
+      "source_pts_seconds": "257/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 258,
+      "source_index": 258,
+      "source_pts_seconds": "43/10",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 259,
+      "source_index": 259,
+      "source_pts_seconds": "259/60",
+      "padding": false,
+      "part": 0,
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785"
+    },
+    {
+      "generated_index": 22,
+      "source_index": 260,
+      "source_pts_seconds": "13/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 23,
+      "source_index": 261,
+      "source_pts_seconds": "87/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 24,
+      "source_index": 262,
+      "source_pts_seconds": "131/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 25,
+      "source_index": 263,
+      "source_pts_seconds": "263/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 26,
+      "source_index": 264,
+      "source_pts_seconds": "22/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 27,
+      "source_index": 265,
+      "source_pts_seconds": "53/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 28,
+      "source_index": 266,
+      "source_pts_seconds": "133/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 29,
+      "source_index": 267,
+      "source_pts_seconds": "89/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 30,
+      "source_index": 268,
+      "source_pts_seconds": "67/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 31,
+      "source_index": 269,
+      "source_pts_seconds": "269/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 32,
+      "source_index": 270,
+      "source_pts_seconds": "9/2",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 33,
+      "source_index": 271,
+      "source_pts_seconds": "271/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 34,
+      "source_index": 272,
+      "source_pts_seconds": "68/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 35,
+      "source_index": 273,
+      "source_pts_seconds": "91/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 36,
+      "source_index": 274,
+      "source_pts_seconds": "137/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 37,
+      "source_index": 275,
+      "source_pts_seconds": "55/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 38,
+      "source_index": 276,
+      "source_pts_seconds": "23/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 39,
+      "source_index": 277,
+      "source_pts_seconds": "277/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 40,
+      "source_index": 278,
+      "source_pts_seconds": "139/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 41,
+      "source_index": 279,
+      "source_pts_seconds": "93/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 42,
+      "source_index": 280,
+      "source_pts_seconds": "14/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 43,
+      "source_index": 281,
+      "source_pts_seconds": "281/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 44,
+      "source_index": 282,
+      "source_pts_seconds": "47/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 45,
+      "source_index": 283,
+      "source_pts_seconds": "283/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 46,
+      "source_index": 284,
+      "source_pts_seconds": "71/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 47,
+      "source_index": 285,
+      "source_pts_seconds": "19/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 48,
+      "source_index": 286,
+      "source_pts_seconds": "143/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 49,
+      "source_index": 287,
+      "source_pts_seconds": "287/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 50,
+      "source_index": 288,
+      "source_pts_seconds": "24/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 51,
+      "source_index": 289,
+      "source_pts_seconds": "289/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 52,
+      "source_index": 290,
+      "source_pts_seconds": "29/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 53,
+      "source_index": 291,
+      "source_pts_seconds": "97/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 54,
+      "source_index": 292,
+      "source_pts_seconds": "73/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 55,
+      "source_index": 293,
+      "source_pts_seconds": "293/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 56,
+      "source_index": 294,
+      "source_pts_seconds": "49/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 57,
+      "source_index": 295,
+      "source_pts_seconds": "59/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 58,
+      "source_index": 296,
+      "source_pts_seconds": "74/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 59,
+      "source_index": 297,
+      "source_pts_seconds": "99/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 60,
+      "source_index": 298,
+      "source_pts_seconds": "149/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 61,
+      "source_index": 299,
+      "source_pts_seconds": "299/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 62,
+      "source_index": 300,
+      "source_pts_seconds": "5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 63,
+      "source_index": 301,
+      "source_pts_seconds": "301/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 64,
+      "source_index": 302,
+      "source_pts_seconds": "151/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 65,
+      "source_index": 303,
+      "source_pts_seconds": "101/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 66,
+      "source_index": 304,
+      "source_pts_seconds": "76/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 67,
+      "source_index": 305,
+      "source_pts_seconds": "61/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 68,
+      "source_index": 306,
+      "source_pts_seconds": "51/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 69,
+      "source_index": 307,
+      "source_pts_seconds": "307/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 70,
+      "source_index": 308,
+      "source_pts_seconds": "77/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 71,
+      "source_index": 309,
+      "source_pts_seconds": "103/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 72,
+      "source_index": 310,
+      "source_pts_seconds": "31/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 73,
+      "source_index": 311,
+      "source_pts_seconds": "311/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 74,
+      "source_index": 312,
+      "source_pts_seconds": "26/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 75,
+      "source_index": 313,
+      "source_pts_seconds": "313/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 76,
+      "source_index": 314,
+      "source_pts_seconds": "157/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 77,
+      "source_index": 315,
+      "source_pts_seconds": "21/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 78,
+      "source_index": 316,
+      "source_pts_seconds": "79/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 79,
+      "source_index": 317,
+      "source_pts_seconds": "317/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 80,
+      "source_index": 318,
+      "source_pts_seconds": "53/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 81,
+      "source_index": 319,
+      "source_pts_seconds": "319/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 82,
+      "source_index": 320,
+      "source_pts_seconds": "16/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 83,
+      "source_index": 321,
+      "source_pts_seconds": "107/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 84,
+      "source_index": 322,
+      "source_pts_seconds": "161/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 85,
+      "source_index": 323,
+      "source_pts_seconds": "323/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 86,
+      "source_index": 324,
+      "source_pts_seconds": "27/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 87,
+      "source_index": 325,
+      "source_pts_seconds": "65/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 88,
+      "source_index": 326,
+      "source_pts_seconds": "163/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 89,
+      "source_index": 327,
+      "source_pts_seconds": "109/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 90,
+      "source_index": 328,
+      "source_pts_seconds": "82/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 91,
+      "source_index": 329,
+      "source_pts_seconds": "329/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 92,
+      "source_index": 330,
+      "source_pts_seconds": "11/2",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 93,
+      "source_index": 331,
+      "source_pts_seconds": "331/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 94,
+      "source_index": 332,
+      "source_pts_seconds": "83/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 95,
+      "source_index": 333,
+      "source_pts_seconds": "111/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 96,
+      "source_index": 334,
+      "source_pts_seconds": "167/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 97,
+      "source_index": 335,
+      "source_pts_seconds": "67/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 98,
+      "source_index": 336,
+      "source_pts_seconds": "28/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 99,
+      "source_index": 337,
+      "source_pts_seconds": "337/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 100,
+      "source_index": 338,
+      "source_pts_seconds": "169/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 101,
+      "source_index": 339,
+      "source_pts_seconds": "113/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 102,
+      "source_index": 340,
+      "source_pts_seconds": "17/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 103,
+      "source_index": 341,
+      "source_pts_seconds": "341/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 104,
+      "source_index": 342,
+      "source_pts_seconds": "57/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 105,
+      "source_index": 343,
+      "source_pts_seconds": "343/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 106,
+      "source_index": 344,
+      "source_pts_seconds": "86/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 107,
+      "source_index": 345,
+      "source_pts_seconds": "23/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 108,
+      "source_index": 346,
+      "source_pts_seconds": "173/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 109,
+      "source_index": 347,
+      "source_pts_seconds": "347/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 110,
+      "source_index": 348,
+      "source_pts_seconds": "29/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 111,
+      "source_index": 349,
+      "source_pts_seconds": "349/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 112,
+      "source_index": 350,
+      "source_pts_seconds": "35/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 113,
+      "source_index": 351,
+      "source_pts_seconds": "117/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 114,
+      "source_index": 352,
+      "source_pts_seconds": "88/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 115,
+      "source_index": 353,
+      "source_pts_seconds": "353/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 116,
+      "source_index": 354,
+      "source_pts_seconds": "59/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 117,
+      "source_index": 355,
+      "source_pts_seconds": "71/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 118,
+      "source_index": 356,
+      "source_pts_seconds": "89/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 119,
+      "source_index": 357,
+      "source_pts_seconds": "119/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 120,
+      "source_index": 358,
+      "source_pts_seconds": "179/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 121,
+      "source_index": 359,
+      "source_pts_seconds": "359/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 122,
+      "source_index": 360,
+      "source_pts_seconds": "6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 123,
+      "source_index": 361,
+      "source_pts_seconds": "361/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 124,
+      "source_index": 362,
+      "source_pts_seconds": "181/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 125,
+      "source_index": 363,
+      "source_pts_seconds": "121/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 126,
+      "source_index": 364,
+      "source_pts_seconds": "91/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 127,
+      "source_index": 365,
+      "source_pts_seconds": "73/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 128,
+      "source_index": 366,
+      "source_pts_seconds": "61/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 129,
+      "source_index": 367,
+      "source_pts_seconds": "367/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 130,
+      "source_index": 368,
+      "source_pts_seconds": "92/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 131,
+      "source_index": 369,
+      "source_pts_seconds": "123/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 132,
+      "source_index": 370,
+      "source_pts_seconds": "37/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 133,
+      "source_index": 371,
+      "source_pts_seconds": "371/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 134,
+      "source_index": 372,
+      "source_pts_seconds": "31/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 135,
+      "source_index": 373,
+      "source_pts_seconds": "373/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 136,
+      "source_index": 374,
+      "source_pts_seconds": "187/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 137,
+      "source_index": 375,
+      "source_pts_seconds": "25/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 138,
+      "source_index": 376,
+      "source_pts_seconds": "94/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 139,
+      "source_index": 377,
+      "source_pts_seconds": "377/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 140,
+      "source_index": 378,
+      "source_pts_seconds": "63/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 141,
+      "source_index": 379,
+      "source_pts_seconds": "379/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 142,
+      "source_index": 380,
+      "source_pts_seconds": "19/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 143,
+      "source_index": 381,
+      "source_pts_seconds": "127/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 144,
+      "source_index": 382,
+      "source_pts_seconds": "191/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 145,
+      "source_index": 383,
+      "source_pts_seconds": "383/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 146,
+      "source_index": 384,
+      "source_pts_seconds": "32/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 147,
+      "source_index": 385,
+      "source_pts_seconds": "77/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 148,
+      "source_index": 386,
+      "source_pts_seconds": "193/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 149,
+      "source_index": 387,
+      "source_pts_seconds": "129/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 150,
+      "source_index": 388,
+      "source_pts_seconds": "97/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 151,
+      "source_index": 389,
+      "source_pts_seconds": "389/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 152,
+      "source_index": 390,
+      "source_pts_seconds": "13/2",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 153,
+      "source_index": 391,
+      "source_pts_seconds": "391/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 154,
+      "source_index": 392,
+      "source_pts_seconds": "98/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 155,
+      "source_index": 393,
+      "source_pts_seconds": "131/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 156,
+      "source_index": 394,
+      "source_pts_seconds": "197/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 157,
+      "source_index": 395,
+      "source_pts_seconds": "79/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 158,
+      "source_index": 396,
+      "source_pts_seconds": "33/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 159,
+      "source_index": 397,
+      "source_pts_seconds": "397/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 160,
+      "source_index": 398,
+      "source_pts_seconds": "199/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 161,
+      "source_index": 399,
+      "source_pts_seconds": "133/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 162,
+      "source_index": 400,
+      "source_pts_seconds": "20/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 163,
+      "source_index": 401,
+      "source_pts_seconds": "401/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 164,
+      "source_index": 402,
+      "source_pts_seconds": "67/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 165,
+      "source_index": 403,
+      "source_pts_seconds": "403/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 166,
+      "source_index": 404,
+      "source_pts_seconds": "101/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 167,
+      "source_index": 405,
+      "source_pts_seconds": "27/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 168,
+      "source_index": 406,
+      "source_pts_seconds": "203/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 169,
+      "source_index": 407,
+      "source_pts_seconds": "407/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 170,
+      "source_index": 408,
+      "source_pts_seconds": "34/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 171,
+      "source_index": 409,
+      "source_pts_seconds": "409/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 172,
+      "source_index": 410,
+      "source_pts_seconds": "41/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 173,
+      "source_index": 411,
+      "source_pts_seconds": "137/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 174,
+      "source_index": 412,
+      "source_pts_seconds": "103/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 175,
+      "source_index": 413,
+      "source_pts_seconds": "413/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 176,
+      "source_index": 414,
+      "source_pts_seconds": "69/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 177,
+      "source_index": 415,
+      "source_pts_seconds": "83/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 178,
+      "source_index": 416,
+      "source_pts_seconds": "104/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 179,
+      "source_index": 417,
+      "source_pts_seconds": "139/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 180,
+      "source_index": 418,
+      "source_pts_seconds": "209/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 181,
+      "source_index": 419,
+      "source_pts_seconds": "419/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 182,
+      "source_index": 420,
+      "source_pts_seconds": "7",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 183,
+      "source_index": 421,
+      "source_pts_seconds": "421/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 184,
+      "source_index": 422,
+      "source_pts_seconds": "211/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 185,
+      "source_index": 423,
+      "source_pts_seconds": "141/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 186,
+      "source_index": 424,
+      "source_pts_seconds": "106/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 187,
+      "source_index": 425,
+      "source_pts_seconds": "85/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 188,
+      "source_index": 426,
+      "source_pts_seconds": "71/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 189,
+      "source_index": 427,
+      "source_pts_seconds": "427/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 190,
+      "source_index": 428,
+      "source_pts_seconds": "107/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 191,
+      "source_index": 429,
+      "source_pts_seconds": "143/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 192,
+      "source_index": 430,
+      "source_pts_seconds": "43/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 193,
+      "source_index": 431,
+      "source_pts_seconds": "431/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 194,
+      "source_index": 432,
+      "source_pts_seconds": "36/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 195,
+      "source_index": 433,
+      "source_pts_seconds": "433/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 196,
+      "source_index": 434,
+      "source_pts_seconds": "217/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 197,
+      "source_index": 435,
+      "source_pts_seconds": "29/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 198,
+      "source_index": 436,
+      "source_pts_seconds": "109/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 199,
+      "source_index": 437,
+      "source_pts_seconds": "437/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 200,
+      "source_index": 438,
+      "source_pts_seconds": "73/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 201,
+      "source_index": 439,
+      "source_pts_seconds": "439/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 202,
+      "source_index": 440,
+      "source_pts_seconds": "22/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 203,
+      "source_index": 441,
+      "source_pts_seconds": "147/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 204,
+      "source_index": 442,
+      "source_pts_seconds": "221/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 205,
+      "source_index": 443,
+      "source_pts_seconds": "443/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 206,
+      "source_index": 444,
+      "source_pts_seconds": "37/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 207,
+      "source_index": 445,
+      "source_pts_seconds": "89/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 208,
+      "source_index": 446,
+      "source_pts_seconds": "223/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 209,
+      "source_index": 447,
+      "source_pts_seconds": "149/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 210,
+      "source_index": 448,
+      "source_pts_seconds": "112/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 211,
+      "source_index": 449,
+      "source_pts_seconds": "449/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 212,
+      "source_index": 450,
+      "source_pts_seconds": "15/2",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 213,
+      "source_index": 451,
+      "source_pts_seconds": "451/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 214,
+      "source_index": 452,
+      "source_pts_seconds": "113/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 215,
+      "source_index": 453,
+      "source_pts_seconds": "151/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 216,
+      "source_index": 454,
+      "source_pts_seconds": "227/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 217,
+      "source_index": 455,
+      "source_pts_seconds": "91/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 218,
+      "source_index": 456,
+      "source_pts_seconds": "38/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 219,
+      "source_index": 457,
+      "source_pts_seconds": "457/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 220,
+      "source_index": 458,
+      "source_pts_seconds": "229/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 221,
+      "source_index": 459,
+      "source_pts_seconds": "153/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 222,
+      "source_index": 460,
+      "source_pts_seconds": "23/3",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 223,
+      "source_index": 461,
+      "source_pts_seconds": "461/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 224,
+      "source_index": 462,
+      "source_pts_seconds": "77/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 225,
+      "source_index": 463,
+      "source_pts_seconds": "463/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 226,
+      "source_index": 464,
+      "source_pts_seconds": "116/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 227,
+      "source_index": 465,
+      "source_pts_seconds": "31/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 228,
+      "source_index": 466,
+      "source_pts_seconds": "233/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 229,
+      "source_index": 467,
+      "source_pts_seconds": "467/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 230,
+      "source_index": 468,
+      "source_pts_seconds": "39/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 231,
+      "source_index": 469,
+      "source_pts_seconds": "469/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 232,
+      "source_index": 470,
+      "source_pts_seconds": "47/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 233,
+      "source_index": 471,
+      "source_pts_seconds": "157/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 234,
+      "source_index": 472,
+      "source_pts_seconds": "118/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 235,
+      "source_index": 473,
+      "source_pts_seconds": "473/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 236,
+      "source_index": 474,
+      "source_pts_seconds": "79/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 237,
+      "source_index": 475,
+      "source_pts_seconds": "95/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 238,
+      "source_index": 476,
+      "source_pts_seconds": "119/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 239,
+      "source_index": 477,
+      "source_pts_seconds": "159/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 240,
+      "source_index": 478,
+      "source_pts_seconds": "239/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 241,
+      "source_index": 479,
+      "source_pts_seconds": "479/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 242,
+      "source_index": 480,
+      "source_pts_seconds": "8",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 243,
+      "source_index": 481,
+      "source_pts_seconds": "481/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 244,
+      "source_index": 482,
+      "source_pts_seconds": "241/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 245,
+      "source_index": 483,
+      "source_pts_seconds": "161/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 246,
+      "source_index": 484,
+      "source_pts_seconds": "121/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 247,
+      "source_index": 485,
+      "source_pts_seconds": "97/12",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 248,
+      "source_index": 486,
+      "source_pts_seconds": "81/10",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 249,
+      "source_index": 487,
+      "source_pts_seconds": "487/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 250,
+      "source_index": 488,
+      "source_pts_seconds": "122/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 251,
+      "source_index": 489,
+      "source_pts_seconds": "163/20",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 252,
+      "source_index": 490,
+      "source_pts_seconds": "49/6",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 253,
+      "source_index": 491,
+      "source_pts_seconds": "491/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 254,
+      "source_index": 492,
+      "source_pts_seconds": "41/5",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 255,
+      "source_index": 493,
+      "source_pts_seconds": "493/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 256,
+      "source_index": 494,
+      "source_pts_seconds": "247/30",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 257,
+      "source_index": 495,
+      "source_pts_seconds": "33/4",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 258,
+      "source_index": 496,
+      "source_pts_seconds": "124/15",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 259,
+      "source_index": 497,
+      "source_pts_seconds": "497/60",
+      "padding": false,
+      "part": 1,
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d"
+    },
+    {
+      "generated_index": 22,
+      "source_index": 498,
+      "source_pts_seconds": "83/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 23,
+      "source_index": 499,
+      "source_pts_seconds": "499/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 24,
+      "source_index": 500,
+      "source_pts_seconds": "25/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 25,
+      "source_index": 501,
+      "source_pts_seconds": "167/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 26,
+      "source_index": 502,
+      "source_pts_seconds": "251/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 27,
+      "source_index": 503,
+      "source_pts_seconds": "503/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 28,
+      "source_index": 504,
+      "source_pts_seconds": "42/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 29,
+      "source_index": 505,
+      "source_pts_seconds": "101/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 30,
+      "source_index": 506,
+      "source_pts_seconds": "253/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 31,
+      "source_index": 507,
+      "source_pts_seconds": "169/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 32,
+      "source_index": 508,
+      "source_pts_seconds": "127/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 33,
+      "source_index": 509,
+      "source_pts_seconds": "509/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 34,
+      "source_index": 510,
+      "source_pts_seconds": "17/2",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 35,
+      "source_index": 511,
+      "source_pts_seconds": "511/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 36,
+      "source_index": 512,
+      "source_pts_seconds": "128/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 37,
+      "source_index": 513,
+      "source_pts_seconds": "171/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 38,
+      "source_index": 514,
+      "source_pts_seconds": "257/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 39,
+      "source_index": 515,
+      "source_pts_seconds": "103/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 40,
+      "source_index": 516,
+      "source_pts_seconds": "43/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 41,
+      "source_index": 517,
+      "source_pts_seconds": "517/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 42,
+      "source_index": 518,
+      "source_pts_seconds": "259/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 43,
+      "source_index": 519,
+      "source_pts_seconds": "173/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 44,
+      "source_index": 520,
+      "source_pts_seconds": "26/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 45,
+      "source_index": 521,
+      "source_pts_seconds": "521/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 46,
+      "source_index": 522,
+      "source_pts_seconds": "87/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 47,
+      "source_index": 523,
+      "source_pts_seconds": "523/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 48,
+      "source_index": 524,
+      "source_pts_seconds": "131/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 49,
+      "source_index": 525,
+      "source_pts_seconds": "35/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 50,
+      "source_index": 526,
+      "source_pts_seconds": "263/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 51,
+      "source_index": 527,
+      "source_pts_seconds": "527/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 52,
+      "source_index": 528,
+      "source_pts_seconds": "44/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 53,
+      "source_index": 529,
+      "source_pts_seconds": "529/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 54,
+      "source_index": 530,
+      "source_pts_seconds": "53/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 55,
+      "source_index": 531,
+      "source_pts_seconds": "177/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 56,
+      "source_index": 532,
+      "source_pts_seconds": "133/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 57,
+      "source_index": 533,
+      "source_pts_seconds": "533/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 58,
+      "source_index": 534,
+      "source_pts_seconds": "89/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 59,
+      "source_index": 535,
+      "source_pts_seconds": "107/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 60,
+      "source_index": 536,
+      "source_pts_seconds": "134/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 61,
+      "source_index": 537,
+      "source_pts_seconds": "179/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 62,
+      "source_index": 538,
+      "source_pts_seconds": "269/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 63,
+      "source_index": 539,
+      "source_pts_seconds": "539/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 64,
+      "source_index": 540,
+      "source_pts_seconds": "9",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 65,
+      "source_index": 541,
+      "source_pts_seconds": "541/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 66,
+      "source_index": 542,
+      "source_pts_seconds": "271/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 67,
+      "source_index": 543,
+      "source_pts_seconds": "181/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 68,
+      "source_index": 544,
+      "source_pts_seconds": "136/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 69,
+      "source_index": 545,
+      "source_pts_seconds": "109/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 70,
+      "source_index": 546,
+      "source_pts_seconds": "91/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 71,
+      "source_index": 547,
+      "source_pts_seconds": "547/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 72,
+      "source_index": 548,
+      "source_pts_seconds": "137/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 73,
+      "source_index": 549,
+      "source_pts_seconds": "183/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 74,
+      "source_index": 550,
+      "source_pts_seconds": "55/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 75,
+      "source_index": 551,
+      "source_pts_seconds": "551/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 76,
+      "source_index": 552,
+      "source_pts_seconds": "46/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 77,
+      "source_index": 553,
+      "source_pts_seconds": "553/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 78,
+      "source_index": 554,
+      "source_pts_seconds": "277/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 79,
+      "source_index": 555,
+      "source_pts_seconds": "37/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 80,
+      "source_index": 556,
+      "source_pts_seconds": "139/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 81,
+      "source_index": 557,
+      "source_pts_seconds": "557/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 82,
+      "source_index": 558,
+      "source_pts_seconds": "93/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 83,
+      "source_index": 559,
+      "source_pts_seconds": "559/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 84,
+      "source_index": 560,
+      "source_pts_seconds": "28/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 85,
+      "source_index": 561,
+      "source_pts_seconds": "187/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 86,
+      "source_index": 562,
+      "source_pts_seconds": "281/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 87,
+      "source_index": 563,
+      "source_pts_seconds": "563/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 88,
+      "source_index": 564,
+      "source_pts_seconds": "47/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 89,
+      "source_index": 565,
+      "source_pts_seconds": "113/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 90,
+      "source_index": 566,
+      "source_pts_seconds": "283/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 91,
+      "source_index": 567,
+      "source_pts_seconds": "189/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 92,
+      "source_index": 568,
+      "source_pts_seconds": "142/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 93,
+      "source_index": 569,
+      "source_pts_seconds": "569/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 94,
+      "source_index": 570,
+      "source_pts_seconds": "19/2",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 95,
+      "source_index": 571,
+      "source_pts_seconds": "571/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 96,
+      "source_index": 572,
+      "source_pts_seconds": "143/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 97,
+      "source_index": 573,
+      "source_pts_seconds": "191/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 98,
+      "source_index": 574,
+      "source_pts_seconds": "287/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 99,
+      "source_index": 575,
+      "source_pts_seconds": "115/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 100,
+      "source_index": 576,
+      "source_pts_seconds": "48/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 101,
+      "source_index": 577,
+      "source_pts_seconds": "577/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 102,
+      "source_index": 578,
+      "source_pts_seconds": "289/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 103,
+      "source_index": 579,
+      "source_pts_seconds": "193/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 104,
+      "source_index": 580,
+      "source_pts_seconds": "29/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 105,
+      "source_index": 581,
+      "source_pts_seconds": "581/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 106,
+      "source_index": 582,
+      "source_pts_seconds": "97/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 107,
+      "source_index": 583,
+      "source_pts_seconds": "583/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 108,
+      "source_index": 584,
+      "source_pts_seconds": "146/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 109,
+      "source_index": 585,
+      "source_pts_seconds": "39/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 110,
+      "source_index": 586,
+      "source_pts_seconds": "293/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 111,
+      "source_index": 587,
+      "source_pts_seconds": "587/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 112,
+      "source_index": 588,
+      "source_pts_seconds": "49/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 113,
+      "source_index": 589,
+      "source_pts_seconds": "589/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 114,
+      "source_index": 590,
+      "source_pts_seconds": "59/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 115,
+      "source_index": 591,
+      "source_pts_seconds": "197/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 116,
+      "source_index": 592,
+      "source_pts_seconds": "148/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 117,
+      "source_index": 593,
+      "source_pts_seconds": "593/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 118,
+      "source_index": 594,
+      "source_pts_seconds": "99/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 119,
+      "source_index": 595,
+      "source_pts_seconds": "119/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 120,
+      "source_index": 596,
+      "source_pts_seconds": "149/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 121,
+      "source_index": 597,
+      "source_pts_seconds": "199/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 122,
+      "source_index": 598,
+      "source_pts_seconds": "299/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 123,
+      "source_index": 599,
+      "source_pts_seconds": "599/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 124,
+      "source_index": 600,
+      "source_pts_seconds": "10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 125,
+      "source_index": 601,
+      "source_pts_seconds": "601/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 126,
+      "source_index": 602,
+      "source_pts_seconds": "301/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 127,
+      "source_index": 603,
+      "source_pts_seconds": "201/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 128,
+      "source_index": 604,
+      "source_pts_seconds": "151/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 129,
+      "source_index": 605,
+      "source_pts_seconds": "121/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 130,
+      "source_index": 606,
+      "source_pts_seconds": "101/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 131,
+      "source_index": 607,
+      "source_pts_seconds": "607/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 132,
+      "source_index": 608,
+      "source_pts_seconds": "152/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 133,
+      "source_index": 609,
+      "source_pts_seconds": "203/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 134,
+      "source_index": 610,
+      "source_pts_seconds": "61/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 135,
+      "source_index": 611,
+      "source_pts_seconds": "611/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 136,
+      "source_index": 612,
+      "source_pts_seconds": "51/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 137,
+      "source_index": 613,
+      "source_pts_seconds": "613/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 138,
+      "source_index": 614,
+      "source_pts_seconds": "307/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 139,
+      "source_index": 615,
+      "source_pts_seconds": "41/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 140,
+      "source_index": 616,
+      "source_pts_seconds": "154/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 141,
+      "source_index": 617,
+      "source_pts_seconds": "617/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 142,
+      "source_index": 618,
+      "source_pts_seconds": "103/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 143,
+      "source_index": 619,
+      "source_pts_seconds": "619/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 144,
+      "source_index": 620,
+      "source_pts_seconds": "31/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 145,
+      "source_index": 621,
+      "source_pts_seconds": "207/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 146,
+      "source_index": 622,
+      "source_pts_seconds": "311/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 147,
+      "source_index": 623,
+      "source_pts_seconds": "623/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 148,
+      "source_index": 624,
+      "source_pts_seconds": "52/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 149,
+      "source_index": 625,
+      "source_pts_seconds": "125/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 150,
+      "source_index": 626,
+      "source_pts_seconds": "313/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 151,
+      "source_index": 627,
+      "source_pts_seconds": "209/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 152,
+      "source_index": 628,
+      "source_pts_seconds": "157/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 153,
+      "source_index": 629,
+      "source_pts_seconds": "629/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 154,
+      "source_index": 630,
+      "source_pts_seconds": "21/2",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 155,
+      "source_index": 631,
+      "source_pts_seconds": "631/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 156,
+      "source_index": 632,
+      "source_pts_seconds": "158/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 157,
+      "source_index": 633,
+      "source_pts_seconds": "211/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 158,
+      "source_index": 634,
+      "source_pts_seconds": "317/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 159,
+      "source_index": 635,
+      "source_pts_seconds": "127/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 160,
+      "source_index": 636,
+      "source_pts_seconds": "53/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 161,
+      "source_index": 637,
+      "source_pts_seconds": "637/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 162,
+      "source_index": 638,
+      "source_pts_seconds": "319/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 163,
+      "source_index": 639,
+      "source_pts_seconds": "213/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 164,
+      "source_index": 640,
+      "source_pts_seconds": "32/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 165,
+      "source_index": 641,
+      "source_pts_seconds": "641/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 166,
+      "source_index": 642,
+      "source_pts_seconds": "107/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 167,
+      "source_index": 643,
+      "source_pts_seconds": "643/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 168,
+      "source_index": 644,
+      "source_pts_seconds": "161/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 169,
+      "source_index": 645,
+      "source_pts_seconds": "43/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 170,
+      "source_index": 646,
+      "source_pts_seconds": "323/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 171,
+      "source_index": 647,
+      "source_pts_seconds": "647/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 172,
+      "source_index": 648,
+      "source_pts_seconds": "54/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 173,
+      "source_index": 649,
+      "source_pts_seconds": "649/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 174,
+      "source_index": 650,
+      "source_pts_seconds": "65/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 175,
+      "source_index": 651,
+      "source_pts_seconds": "217/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 176,
+      "source_index": 652,
+      "source_pts_seconds": "163/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 177,
+      "source_index": 653,
+      "source_pts_seconds": "653/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 178,
+      "source_index": 654,
+      "source_pts_seconds": "109/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 179,
+      "source_index": 655,
+      "source_pts_seconds": "131/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 180,
+      "source_index": 656,
+      "source_pts_seconds": "164/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 181,
+      "source_index": 657,
+      "source_pts_seconds": "219/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 182,
+      "source_index": 658,
+      "source_pts_seconds": "329/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 183,
+      "source_index": 659,
+      "source_pts_seconds": "659/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 184,
+      "source_index": 660,
+      "source_pts_seconds": "11",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 185,
+      "source_index": 661,
+      "source_pts_seconds": "661/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 186,
+      "source_index": 662,
+      "source_pts_seconds": "331/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 187,
+      "source_index": 663,
+      "source_pts_seconds": "221/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 188,
+      "source_index": 664,
+      "source_pts_seconds": "166/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 189,
+      "source_index": 665,
+      "source_pts_seconds": "133/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 190,
+      "source_index": 666,
+      "source_pts_seconds": "111/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 191,
+      "source_index": 667,
+      "source_pts_seconds": "667/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 192,
+      "source_index": 668,
+      "source_pts_seconds": "167/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 193,
+      "source_index": 669,
+      "source_pts_seconds": "223/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 194,
+      "source_index": 670,
+      "source_pts_seconds": "67/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 195,
+      "source_index": 671,
+      "source_pts_seconds": "671/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 196,
+      "source_index": 672,
+      "source_pts_seconds": "56/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 197,
+      "source_index": 673,
+      "source_pts_seconds": "673/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 198,
+      "source_index": 674,
+      "source_pts_seconds": "337/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 199,
+      "source_index": 675,
+      "source_pts_seconds": "45/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 200,
+      "source_index": 676,
+      "source_pts_seconds": "169/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 201,
+      "source_index": 677,
+      "source_pts_seconds": "677/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 202,
+      "source_index": 678,
+      "source_pts_seconds": "113/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 203,
+      "source_index": 679,
+      "source_pts_seconds": "679/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 204,
+      "source_index": 680,
+      "source_pts_seconds": "34/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 205,
+      "source_index": 681,
+      "source_pts_seconds": "227/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 206,
+      "source_index": 682,
+      "source_pts_seconds": "341/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 207,
+      "source_index": 683,
+      "source_pts_seconds": "683/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 208,
+      "source_index": 684,
+      "source_pts_seconds": "57/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 209,
+      "source_index": 685,
+      "source_pts_seconds": "137/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 210,
+      "source_index": 686,
+      "source_pts_seconds": "343/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 211,
+      "source_index": 687,
+      "source_pts_seconds": "229/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 212,
+      "source_index": 688,
+      "source_pts_seconds": "172/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 213,
+      "source_index": 689,
+      "source_pts_seconds": "689/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 214,
+      "source_index": 690,
+      "source_pts_seconds": "23/2",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 215,
+      "source_index": 691,
+      "source_pts_seconds": "691/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 216,
+      "source_index": 692,
+      "source_pts_seconds": "173/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 217,
+      "source_index": 693,
+      "source_pts_seconds": "231/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 218,
+      "source_index": 694,
+      "source_pts_seconds": "347/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 219,
+      "source_index": 695,
+      "source_pts_seconds": "139/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 220,
+      "source_index": 696,
+      "source_pts_seconds": "58/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 221,
+      "source_index": 697,
+      "source_pts_seconds": "697/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 222,
+      "source_index": 698,
+      "source_pts_seconds": "349/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 223,
+      "source_index": 699,
+      "source_pts_seconds": "233/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 224,
+      "source_index": 700,
+      "source_pts_seconds": "35/3",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 225,
+      "source_index": 701,
+      "source_pts_seconds": "701/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 226,
+      "source_index": 702,
+      "source_pts_seconds": "117/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 227,
+      "source_index": 703,
+      "source_pts_seconds": "703/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 228,
+      "source_index": 704,
+      "source_pts_seconds": "176/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 229,
+      "source_index": 705,
+      "source_pts_seconds": "47/4",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 230,
+      "source_index": 706,
+      "source_pts_seconds": "353/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 231,
+      "source_index": 707,
+      "source_pts_seconds": "707/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 232,
+      "source_index": 708,
+      "source_pts_seconds": "59/5",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 233,
+      "source_index": 709,
+      "source_pts_seconds": "709/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 234,
+      "source_index": 710,
+      "source_pts_seconds": "71/6",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 235,
+      "source_index": 711,
+      "source_pts_seconds": "237/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 236,
+      "source_index": 712,
+      "source_pts_seconds": "178/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 237,
+      "source_index": 713,
+      "source_pts_seconds": "713/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 238,
+      "source_index": 714,
+      "source_pts_seconds": "119/10",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 239,
+      "source_index": 715,
+      "source_pts_seconds": "143/12",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 240,
+      "source_index": 716,
+      "source_pts_seconds": "179/15",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 241,
+      "source_index": 717,
+      "source_pts_seconds": "239/20",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 242,
+      "source_index": 718,
+      "source_pts_seconds": "359/30",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    },
+    {
+      "generated_index": 243,
+      "source_index": 719,
+      "source_pts_seconds": "719/60",
+      "padding": false,
+      "part": 2,
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14"
+    }
+  ],
+  "parameters": [
+    {
+      "schema": "h3.controlled-graybox/1",
+      "source": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4",
+      "source_sha256": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+      "start": 0,
+      "real_count": 260,
+      "length": 260,
+      "width": 768,
+      "height": 432,
+      "mode": "canny",
+      "control": "h3_graybox_full_0_v3_control.mp4",
+      "control_sha256": "fadbc8501de77f621c332941a98c63170ea34e7ded6191726b1d0f86c07db1cf",
+      "native_fps": 24,
+      "delivery_fps": 60,
+      "steps": 8,
+      "turbo": true,
+      "strength": 1.0,
+      "seed": 66095357,
+      "control_preprocessing": {
+        "blur_sigma": 3.0,
+        "canny_low": 12,
+        "canny_high": 30,
+        "mean_edge_density": 0.016941945075083092
+      },
+      "prompt": "A monochrome architectural graybox blockout animation of a third-person outdoor game scene. Everything is built from large simple untextured matte light-gray solid primitives, like an unfinished game level made of cubes, rectangular beams, cylinders and coarse rounded masses. A single human-shaped gray mannequin is in the foreground, with a simple solid head, a blocky torso and articulated solid limbs, holding a small axe made of a box head and straight handle. The mannequin slowly turns and moves along the path, following the exact movement and position in the control sequence. The camera follows behind at the same angle as the control sequence. The path is a smooth gray surface, rocks are large gray solid masses, fences are simple rectangular posts and horizontal beams, trees are cylinder trunks with large solid coarse canopy masses. Keep the same outdoor scene layout, subject scale, camera framing and foreground occlusions. All objects have the same pale gray clay material. Soft broad studio-like daylight, soft contact shadows and ambient occlusion make the volumes readable. Strongly simplify small details into a few large volumes. No realistic skin, no hair strands, no cloth folds, no surface textures, no leaves, no grass blades, no colors, no wireframe, no triangle mosaic, no voxel grid, no added furniture or indoor room. The graybox primitive appearance remains consistent throughout every frame.",
+      "status": "generated_not_visually_approved",
+      "limitations": [
+        "Source index/PTS assignment is exact; generated geometry is soft-guided, not exact.",
+        "Native H3 sees contiguous source frames at 24 FPS; delivery uses the same indices at 60 FPS."
+      ],
+      "prompt_id": "d5cf3da9-e3e3-436d-987e-3841f122d785",
+      "model_patch": "minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors",
+      "output": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\h3_controlled_graybox\\full_0_v3\\generated.mp4"
+    },
+    {
+      "schema": "h3.controlled-graybox/1",
+      "guide_padding": {
+        "right": 0,
+        "bottom": 16,
+        "main_canvas_unchanged": true
+      },
+      "source": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4",
+      "source_sha256": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+      "start": 238,
+      "real_count": 260,
+      "length": 260,
+      "width": 768,
+      "height": 432,
+      "mode": "canny",
+      "control": "h3_graybox_full_1_v3_retry_control.mp4",
+      "control_sha256": "b9ea534495f0732e02a2492b035c1d257221aa3ac6437394be0595d51e0a0ac7",
+      "native_fps": 24,
+      "delivery_fps": 60,
+      "steps": 8,
+      "turbo": true,
+      "strength": 1.0,
+      "seed": 66095357,
+      "control_preprocessing": {
+        "blur_sigma": 3.0,
+        "canny_low": 12,
+        "canny_high": 30,
+        "mean_edge_density": 0.018260687006617995
+      },
+      "prompt": "A monochrome architectural graybox blockout animation of a third-person outdoor game scene. Everything is built from large simple untextured matte light-gray solid primitives, like an unfinished game level made of cubes, rectangular beams, cylinders and coarse rounded masses. A single human-shaped gray mannequin is in the foreground, with a simple solid head, a blocky torso and articulated solid limbs, holding a small axe made of a box head and straight handle. The mannequin slowly turns and moves along the path, following the exact movement and position in the control sequence. The camera follows behind at the same angle as the control sequence. The path is a smooth gray surface, rocks are large gray solid masses, fences are simple rectangular posts and horizontal beams, trees are cylinder trunks with large solid coarse canopy masses. Keep the same outdoor scene layout, subject scale, camera framing and foreground occlusions. All objects have the same pale gray clay material. Soft broad studio-like daylight, soft contact shadows and ambient occlusion make the volumes readable. Strongly simplify small details into a few large volumes. No realistic skin, no hair strands, no cloth folds, no surface textures, no leaves, no grass blades, no colors, no wireframe, no triangle mosaic, no voxel grid, no added furniture or indoor room. The graybox primitive appearance remains consistent throughout every frame.",
+      "status": "generated_not_visually_approved",
+      "limitations": [
+        "Source index/PTS assignment is exact; generated geometry is soft-guided, not exact.",
+        "Native H3 sees contiguous source frames at 24 FPS; delivery uses the same indices at 60 FPS."
+      ],
+      "guide": "h3_graybox_full_1_v3_retry_guide.mp4",
+      "prompt_id": "0f5717ac-e16b-4781-a8fa-ce10a7b8784d",
+      "model_patch": "minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors",
+      "output": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\h3_controlled_graybox\\full_1_v3_retry\\generated.mp4"
+    },
+    {
+      "schema": "h3.controlled-graybox/1",
+      "source": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\stage_a\\sample_66ad\\original_video.mp4",
+      "source_sha256": "12aea9884617df0c17287907ae08d4bd3cd21ee2a04c2f521dff7bca3d3e2ba2",
+      "start": 476,
+      "real_count": 244,
+      "length": 260,
+      "width": 768,
+      "height": 432,
+      "mode": "canny",
+      "control": "h3_graybox_full_2_v3_control.mp4",
+      "control_sha256": "eec6862a7825019d93ce49be90da06da63037a1ab0726f80b30b071c63de421f",
+      "native_fps": 24,
+      "delivery_fps": 60,
+      "steps": 8,
+      "turbo": true,
+      "strength": 1.0,
+      "seed": 66095357,
+      "control_preprocessing": {
+        "blur_sigma": 3.0,
+        "canny_low": 12,
+        "canny_high": 30,
+        "mean_edge_density": 0.023300173986636058
+      },
+      "prompt": "A monochrome architectural graybox blockout animation of a third-person outdoor game scene. Everything is built from large simple untextured matte light-gray solid primitives, like an unfinished game level made of cubes, rectangular beams, cylinders and coarse rounded masses. A single human-shaped gray mannequin is in the foreground, with a simple solid head, a blocky torso and articulated solid limbs, holding a small axe made of a box head and straight handle. The mannequin slowly turns and moves along the path, following the exact movement and position in the control sequence. The camera follows behind at the same angle as the control sequence. The path is a smooth gray surface, rocks are large gray solid masses, fences are simple rectangular posts and horizontal beams, trees are cylinder trunks with large solid coarse canopy masses. Keep the same outdoor scene layout, subject scale, camera framing and foreground occlusions. All objects have the same pale gray clay material. Soft broad studio-like daylight, soft contact shadows and ambient occlusion make the volumes readable. Strongly simplify small details into a few large volumes. No realistic skin, no hair strands, no cloth folds, no surface textures, no leaves, no grass blades, no colors, no wireframe, no triangle mosaic, no voxel grid, no added furniture or indoor room. The graybox primitive appearance remains consistent throughout every frame.",
+      "status": "generated_not_visually_approved",
+      "limitations": [
+        "Source index/PTS assignment is exact; generated geometry is soft-guided, not exact.",
+        "Native H3 sees contiguous source frames at 24 FPS; delivery uses the same indices at 60 FPS."
+      ],
+      "guide": "h3_graybox_full_2_v3_guide.mp4",
+      "guide_padding": {
+        "right": 0,
+        "bottom": 16,
+        "main_canvas_unchanged": true
+      },
+      "prompt_id": "6a7c2555-9a09-4b4d-a7ce-b281feb91b14",
+      "model_patch": "minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors",
+      "output": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\h3_controlled_graybox\\full_2_v3\\generated.mp4"
+    }
+  ],
+  "models": {
+    "comfyui_version": "0.46.0",
+    "models": [
+      {
+        "file": "diffusion_models/minimax_h3_fl2va_pruned_w6a8.safetensors",
+        "sha256": "ac746a2e41628ab25afd44d2b22a7fab8d7e66cd07a01bf89ed9d74b0d3f0c35"
+      },
+      {
+        "file": "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "sha256": "35a88d51044231fe332301d7a62aa81e3f2cba62febeb446e2c1e3e0ef76f2c6"
+      },
+      {
+        "file": "vae/minimax_h3_video_vae_int8_convrot.safetensors",
+        "sha256": "52a2c8c73583c86e4f41cdcce3a6ad0ea562987bc0bf3d60a0cef5f5c8e60c0e"
+      },
+      {
+        "file": "loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+        "sha256": "2339acdf19bfe123f46b971ea35d367a84adb85de43627e1eceafa5a5b2b111e"
+      },
+      {
+        "file": "model_patches/minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors",
+        "sha256": "890af58bb350f0c2f6c409b1c67ea8f4196654297d037769b72de1e6f504c612",
+        "control_blocks_places": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45
+        ]
+      }
+    ],
+    "processing": "Local ComfyUI inference only. No Blender or geometric reconstruction."
+  },
+  "execution_failures": [
+    {
+      "run": "full_1_v3",
+      "prompt_id": "46a3c336-90d6-4ad0-b659-1ff16faf29ec",
+      "node": "SamplerCustomAdvanced",
+      "error": "Native keyframe patchification received a 27-row latent; the target was padded internally to 28 rows.",
+      "repair": "Use native ImagePadForOutpaint to pad 16 pixels at guide bottom and native EmptyMiniMaxH3LatentAV 768x448 for guide sizing only. Main latent and control remain 768x432. No ComfyUI core changes.",
+      "retry": "full_1_v3_retry"
+    }
+  ],
+  "frame_checks": {
+    "blank_frame_indices": [],
+    "luma_mean_range": [
+      95.11647617669753,
+      143.5864559220679
+    ],
+    "adjacent_luma_mae_median": 8.170717592592593,
+    "adjacent_luma_mae_p95": 28.70991874035495,
+    "seams": [
+      {
+        "source_index": 260,
+        "luma_mae": 38.50694444444444
+      },
+      {
+        "source_index": 498,
+        "luma_mae": 42.67717978395062
+      }
+    ],
+    "largest_changes": [
+      {
+        "source_index": 676,
+        "luma_mae": 51.72992621527778
+      },
+      {
+        "source_index": 678,
+        "luma_mae": 45.627712673611114
+      },
+      {
+        "source_index": 680,
+        "luma_mae": 43.25847559799383
+      },
+      {
+        "source_index": 498,
+        "luma_mae": 42.67717978395062
+      },
+      {
+        "source_index": 677,
+        "luma_mae": 42.01499807098765
+      }
+    ],
+    "note": "Frame variation is a diagnostic, not a proof of motion fidelity or absence of local artifacts."
+  },
+  "probe": {
+    "path": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\h3_controlled_graybox\\full_v3\\graybox.mp4",
+    "frames": 720,
+    "fps": "60/1",
+    "width": 1920,
+    "height": 1080,
+    "pts_seconds": [
+      "0",
+      "1/60",
+      "1/30",
+      "1/20",
+      "1/15",
+      "1/12",
+      "1/10",
+      "7/60",
+      "2/15",
+      "3/20",
+      "1/6",
+      "11/60",
+      "1/5",
+      "13/60",
+      "7/30",
+      "1/4",
+      "4/15",
+      "17/60",
+      "3/10",
+      "19/60",
+      "1/3",
+      "7/20",
+      "11/30",
+      "23/60",
+      "2/5",
+      "5/12",
+      "13/30",
+      "9/20",
+      "7/15",
+      "29/60",
+      "1/2",
+      "31/60",
+      "8/15",
+      "11/20",
+      "17/30",
+      "7/12",
+      "3/5",
+      "37/60",
+      "19/30",
+      "13/20",
+      "2/3",
+      "41/60",
+      "7/10",
+      "43/60",
+      "11/15",
+      "3/4",
+      "23/30",
+      "47/60",
+      "4/5",
+      "49/60",
+      "5/6",
+      "17/20",
+      "13/15",
+      "53/60",
+      "9/10",
+      "11/12",
+      "14/15",
+      "19/20",
+      "29/30",
+      "59/60",
+      "1",
+      "61/60",
+      "31/30",
+      "21/20",
+      "16/15",
+      "13/12",
+      "11/10",
+      "67/60",
+      "17/15",
+      "23/20",
+      "7/6",
+      "71/60",
+      "6/5",
+      "73/60",
+      "37/30",
+      "5/4",
+      "19/15",
+      "77/60",
+      "13/10",
+      "79/60",
+      "4/3",
+      "27/20",
+      "41/30",
+      "83/60",
+      "7/5",
+      "17/12",
+      "43/30",
+      "29/20",
+      "22/15",
+      "89/60",
+      "3/2",
+      "91/60",
+      "23/15",
+      "31/20",
+      "47/30",
+      "19/12",
+      "8/5",
+      "97/60",
+      "49/30",
+      "33/20",
+      "5/3",
+      "101/60",
+      "17/10",
+      "103/60",
+      "26/15",
+      "7/4",
+      "53/30",
+      "107/60",
+      "9/5",
+      "109/60",
+      "11/6",
+      "37/20",
+      "28/15",
+      "113/60",
+      "19/10",
+      "23/12",
+      "29/15",
+      "39/20",
+      "59/30",
+      "119/60",
+      "2",
+      "121/60",
+      "61/30",
+      "41/20",
+      "31/15",
+      "25/12",
+      "21/10",
+      "127/60",
+      "32/15",
+      "43/20",
+      "13/6",
+      "131/60",
+      "11/5",
+      "133/60",
+      "67/30",
+      "9/4",
+      "34/15",
+      "137/60",
+      "23/10",
+      "139/60",
+      "7/3",
+      "47/20",
+      "71/30",
+      "143/60",
+      "12/5",
+      "29/12",
+      "73/30",
+      "49/20",
+      "37/15",
+      "149/60",
+      "5/2",
+      "151/60",
+      "38/15",
+      "51/20",
+      "77/30",
+      "31/12",
+      "13/5",
+      "157/60",
+      "79/30",
+      "53/20",
+      "8/3",
+      "161/60",
+      "27/10",
+      "163/60",
+      "41/15",
+      "11/4",
+      "83/30",
+      "167/60",
+      "14/5",
+      "169/60",
+      "17/6",
+      "57/20",
+      "43/15",
+      "173/60",
+      "29/10",
+      "35/12",
+      "44/15",
+      "59/20",
+      "89/30",
+      "179/60",
+      "3",
+      "181/60",
+      "91/30",
+      "61/20",
+      "46/15",
+      "37/12",
+      "31/10",
+      "187/60",
+      "47/15",
+      "63/20",
+      "19/6",
+      "191/60",
+      "16/5",
+      "193/60",
+      "97/30",
+      "13/4",
+      "49/15",
+      "197/60",
+      "33/10",
+      "199/60",
+      "10/3",
+      "67/20",
+      "101/30",
+      "203/60",
+      "17/5",
+      "41/12",
+      "103/30",
+      "69/20",
+      "52/15",
+      "209/60",
+      "7/2",
+      "211/60",
+      "53/15",
+      "71/20",
+      "107/30",
+      "43/12",
+      "18/5",
+      "217/60",
+      "109/30",
+      "73/20",
+      "11/3",
+      "221/60",
+      "37/10",
+      "223/60",
+      "56/15",
+      "15/4",
+      "113/30",
+      "227/60",
+      "19/5",
+      "229/60",
+      "23/6",
+      "77/20",
+      "58/15",
+      "233/60",
+      "39/10",
+      "47/12",
+      "59/15",
+      "79/20",
+      "119/30",
+      "239/60",
+      "4",
+      "241/60",
+      "121/30",
+      "81/20",
+      "61/15",
+      "49/12",
+      "41/10",
+      "247/60",
+      "62/15",
+      "83/20",
+      "25/6",
+      "251/60",
+      "21/5",
+      "253/60",
+      "127/30",
+      "17/4",
+      "64/15",
+      "257/60",
+      "43/10",
+      "259/60",
+      "13/3",
+      "87/20",
+      "131/30",
+      "263/60",
+      "22/5",
+      "53/12",
+      "133/30",
+      "89/20",
+      "67/15",
+      "269/60",
+      "9/2",
+      "271/60",
+      "68/15",
+      "91/20",
+      "137/30",
+      "55/12",
+      "23/5",
+      "277/60",
+      "139/30",
+      "93/20",
+      "14/3",
+      "281/60",
+      "47/10",
+      "283/60",
+      "71/15",
+      "19/4",
+      "143/30",
+      "287/60",
+      "24/5",
+      "289/60",
+      "29/6",
+      "97/20",
+      "73/15",
+      "293/60",
+      "49/10",
+      "59/12",
+      "74/15",
+      "99/20",
+      "149/30",
+      "299/60",
+      "5",
+      "301/60",
+      "151/30",
+      "101/20",
+      "76/15",
+      "61/12",
+      "51/10",
+      "307/60",
+      "77/15",
+      "103/20",
+      "31/6",
+      "311/60",
+      "26/5",
+      "313/60",
+      "157/30",
+      "21/4",
+      "79/15",
+      "317/60",
+      "53/10",
+      "319/60",
+      "16/3",
+      "107/20",
+      "161/30",
+      "323/60",
+      "27/5",
+      "65/12",
+      "163/30",
+      "109/20",
+      "82/15",
+      "329/60",
+      "11/2",
+      "331/60",
+      "83/15",
+      "111/20",
+      "167/30",
+      "67/12",
+      "28/5",
+      "337/60",
+      "169/30",
+      "113/20",
+      "17/3",
+      "341/60",
+      "57/10",
+      "343/60",
+      "86/15",
+      "23/4",
+      "173/30",
+      "347/60",
+      "29/5",
+      "349/60",
+      "35/6",
+      "117/20",
+      "88/15",
+      "353/60",
+      "59/10",
+      "71/12",
+      "89/15",
+      "119/20",
+      "179/30",
+      "359/60",
+      "6",
+      "361/60",
+      "181/30",
+      "121/20",
+      "91/15",
+      "73/12",
+      "61/10",
+      "367/60",
+      "92/15",
+      "123/20",
+      "37/6",
+      "371/60",
+      "31/5",
+      "373/60",
+      "187/30",
+      "25/4",
+      "94/15",
+      "377/60",
+      "63/10",
+      "379/60",
+      "19/3",
+      "127/20",
+      "191/30",
+      "383/60",
+      "32/5",
+      "77/12",
+      "193/30",
+      "129/20",
+      "97/15",
+      "389/60",
+      "13/2",
+      "391/60",
+      "98/15",
+      "131/20",
+      "197/30",
+      "79/12",
+      "33/5",
+      "397/60",
+      "199/30",
+      "133/20",
+      "20/3",
+      "401/60",
+      "67/10",
+      "403/60",
+      "101/15",
+      "27/4",
+      "203/30",
+      "407/60",
+      "34/5",
+      "409/60",
+      "41/6",
+      "137/20",
+      "103/15",
+      "413/60",
+      "69/10",
+      "83/12",
+      "104/15",
+      "139/20",
+      "209/30",
+      "419/60",
+      "7",
+      "421/60",
+      "211/30",
+      "141/20",
+      "106/15",
+      "85/12",
+      "71/10",
+      "427/60",
+      "107/15",
+      "143/20",
+      "43/6",
+      "431/60",
+      "36/5",
+      "433/60",
+      "217/30",
+      "29/4",
+      "109/15",
+      "437/60",
+      "73/10",
+      "439/60",
+      "22/3",
+      "147/20",
+      "221/30",
+      "443/60",
+      "37/5",
+      "89/12",
+      "223/30",
+      "149/20",
+      "112/15",
+      "449/60",
+      "15/2",
+      "451/60",
+      "113/15",
+      "151/20",
+      "227/30",
+      "91/12",
+      "38/5",
+      "457/60",
+      "229/30",
+      "153/20",
+      "23/3",
+      "461/60",
+      "77/10",
+      "463/60",
+      "116/15",
+      "31/4",
+      "233/30",
+      "467/60",
+      "39/5",
+      "469/60",
+      "47/6",
+      "157/20",
+      "118/15",
+      "473/60",
+      "79/10",
+      "95/12",
+      "119/15",
+      "159/20",
+      "239/30",
+      "479/60",
+      "8",
+      "481/60",
+      "241/30",
+      "161/20",
+      "121/15",
+      "97/12",
+      "81/10",
+      "487/60",
+      "122/15",
+      "163/20",
+      "49/6",
+      "491/60",
+      "41/5",
+      "493/60",
+      "247/30",
+      "33/4",
+      "124/15",
+      "497/60",
+      "83/10",
+      "499/60",
+      "25/3",
+      "167/20",
+      "251/30",
+      "503/60",
+      "42/5",
+      "101/12",
+      "253/30",
+      "169/20",
+      "127/15",
+      "509/60",
+      "17/2",
+      "511/60",
+      "128/15",
+      "171/20",
+      "257/30",
+      "103/12",
+      "43/5",
+      "517/60",
+      "259/30",
+      "173/20",
+      "26/3",
+      "521/60",
+      "87/10",
+      "523/60",
+      "131/15",
+      "35/4",
+      "263/30",
+      "527/60",
+      "44/5",
+      "529/60",
+      "53/6",
+      "177/20",
+      "133/15",
+      "533/60",
+      "89/10",
+      "107/12",
+      "134/15",
+      "179/20",
+      "269/30",
+      "539/60",
+      "9",
+      "541/60",
+      "271/30",
+      "181/20",
+      "136/15",
+      "109/12",
+      "91/10",
+      "547/60",
+      "137/15",
+      "183/20",
+      "55/6",
+      "551/60",
+      "46/5",
+      "553/60",
+      "277/30",
+      "37/4",
+      "139/15",
+      "557/60",
+      "93/10",
+      "559/60",
+      "28/3",
+      "187/20",
+      "281/30",
+      "563/60",
+      "47/5",
+      "113/12",
+      "283/30",
+      "189/20",
+      "142/15",
+      "569/60",
+      "19/2",
+      "571/60",
+      "143/15",
+      "191/20",
+      "287/30",
+      "115/12",
+      "48/5",
+      "577/60",
+      "289/30",
+      "193/20",
+      "29/3",
+      "581/60",
+      "97/10",
+      "583/60",
+      "146/15",
+      "39/4",
+      "293/30",
+      "587/60",
+      "49/5",
+      "589/60",
+      "59/6",
+      "197/20",
+      "148/15",
+      "593/60",
+      "99/10",
+      "119/12",
+      "149/15",
+      "199/20",
+      "299/30",
+      "599/60",
+      "10",
+      "601/60",
+      "301/30",
+      "201/20",
+      "151/15",
+      "121/12",
+      "101/10",
+      "607/60",
+      "152/15",
+      "203/20",
+      "61/6",
+      "611/60",
+      "51/5",
+      "613/60",
+      "307/30",
+      "41/4",
+      "154/15",
+      "617/60",
+      "103/10",
+      "619/60",
+      "31/3",
+      "207/20",
+      "311/30",
+      "623/60",
+      "52/5",
+      "125/12",
+      "313/30",
+      "209/20",
+      "157/15",
+      "629/60",
+      "21/2",
+      "631/60",
+      "158/15",
+      "211/20",
+      "317/30",
+      "127/12",
+      "53/5",
+      "637/60",
+      "319/30",
+      "213/20",
+      "32/3",
+      "641/60",
+      "107/10",
+      "643/60",
+      "161/15",
+      "43/4",
+      "323/30",
+      "647/60",
+      "54/5",
+      "649/60",
+      "65/6",
+      "217/20",
+      "163/15",
+      "653/60",
+      "109/10",
+      "131/12",
+      "164/15",
+      "219/20",
+      "329/30",
+      "659/60",
+      "11",
+      "661/60",
+      "331/30",
+      "221/20",
+      "166/15",
+      "133/12",
+      "111/10",
+      "667/60",
+      "167/15",
+      "223/20",
+      "67/6",
+      "671/60",
+      "56/5",
+      "673/60",
+      "337/30",
+      "45/4",
+      "169/15",
+      "677/60",
+      "113/10",
+      "679/60",
+      "34/3",
+      "227/20",
+      "341/30",
+      "683/60",
+      "57/5",
+      "137/12",
+      "343/30",
+      "229/20",
+      "172/15",
+      "689/60",
+      "23/2",
+      "691/60",
+      "173/15",
+      "231/20",
+      "347/30",
+      "139/12",
+      "58/5",
+      "697/60",
+      "349/30",
+      "233/20",
+      "35/3",
+      "701/60",
+      "117/10",
+      "703/60",
+      "176/15",
+      "47/4",
+      "353/30",
+      "707/60",
+      "59/5",
+      "709/60",
+      "71/6",
+      "237/20",
+      "178/15",
+      "713/60",
+      "119/10",
+      "143/12",
+      "179/15",
+      "239/20",
+      "359/30",
+      "719/60"
+    ],
+    "duration_seconds": "12"
+  },
+  "duration_seconds": 12,
+  "temporal_pass": true,
+  "motion_style_pass": false,
+  "status": "complete_source_indexed_approximation",
+  "spatial_resize": "Native H3 frames resized to 1920x1080; no temporal interpolation or frame synthesis during assembly.",
+  "limitations": [
+    "Source index/PTS assignment is exact; generated geometry is soft-guided, not exact.",
+    "Native H3 sees contiguous source frames at 24 FPS; delivery uses the same indices at 60 FPS."
+  ],
+  "comparison_probe": {
+    "path": "C:\\Users\\happyelements\\Desktop\\Everything\\outputs\\h3_controlled_graybox\\full_v3\\comparison.mp4",
+    "frames": 720,
+    "fps": "60/1",
+    "width": 1536,
+    "height": 432,
+    "pts_seconds": [
+      "0",
+      "1/60",
+      "1/30",
+      "1/20",
+      "1/15",
+      "1/12",
+      "1/10",
+      "7/60",
+      "2/15",
+      "3/20",
+      "1/6",
+      "11/60",
+      "1/5",
+      "13/60",
+      "7/30",
+      "1/4",
+      "4/15",
+      "17/60",
+      "3/10",
+      "19/60",
+      "1/3",
+      "7/20",
+      "11/30",
+      "23/60",
+      "2/5",
+      "5/12",
+      "13/30",
+      "9/20",
+      "7/15",
+      "29/60",
+      "1/2",
+      "31/60",
+      "8/15",
+      "11/20",
+      "17/30",
+      "7/12",
+      "3/5",
+      "37/60",
+      "19/30",
+      "13/20",
+      "2/3",
+      "41/60",
+      "7/10",
+      "43/60",
+      "11/15",
+      "3/4",
+      "23/30",
+      "47/60",
+      "4/5",
+      "49/60",
+      "5/6",
+      "17/20",
+      "13/15",
+      "53/60",
+      "9/10",
+      "11/12",
+      "14/15",
+      "19/20",
+      "29/30",
+      "59/60",
+      "1",
+      "61/60",
+      "31/30",
+      "21/20",
+      "16/15",
+      "13/12",
+      "11/10",
+      "67/60",
+      "17/15",
+      "23/20",
+      "7/6",
+      "71/60",
+      "6/5",
+      "73/60",
+      "37/30",
+      "5/4",
+      "19/15",
+      "77/60",
+      "13/10",
+      "79/60",
+      "4/3",
+      "27/20",
+      "41/30",
+      "83/60",
+      "7/5",
+      "17/12",
+      "43/30",
+      "29/20",
+      "22/15",
+      "89/60",
+      "3/2",
+      "91/60",
+      "23/15",
+      "31/20",
+      "47/30",
+      "19/12",
+      "8/5",
+      "97/60",
+      "49/30",
+      "33/20",
+      "5/3",
+      "101/60",
+      "17/10",
+      "103/60",
+      "26/15",
+      "7/4",
+      "53/30",
+      "107/60",
+      "9/5",
+      "109/60",
+      "11/6",
+      "37/20",
+      "28/15",
+      "113/60",
+      "19/10",
+      "23/12",
+      "29/15",
+      "39/20",
+      "59/30",
+      "119/60",
+      "2",
+      "121/60",
+      "61/30",
+      "41/20",
+      "31/15",
+      "25/12",
+      "21/10",
+      "127/60",
+      "32/15",
+      "43/20",
+      "13/6",
+      "131/60",
+      "11/5",
+      "133/60",
+      "67/30",
+      "9/4",
+      "34/15",
+      "137/60",
+      "23/10",
+      "139/60",
+      "7/3",
+      "47/20",
+      "71/30",
+      "143/60",
+      "12/5",
+      "29/12",
+      "73/30",
+      "49/20",
+      "37/15",
+      "149/60",
+      "5/2",
+      "151/60",
+      "38/15",
+      "51/20",
+      "77/30",
+      "31/12",
+      "13/5",
+      "157/60",
+      "79/30",
+      "53/20",
+      "8/3",
+      "161/60",
+      "27/10",
+      "163/60",
+      "41/15",
+      "11/4",
+      "83/30",
+      "167/60",
+      "14/5",
+      "169/60",
+      "17/6",
+      "57/20",
+      "43/15",
+      "173/60",
+      "29/10",
+      "35/12",
+      "44/15",
+      "59/20",
+      "89/30",
+      "179/60",
+      "3",
+      "181/60",
+      "91/30",
+      "61/20",
+      "46/15",
+      "37/12",
+      "31/10",
+      "187/60",
+      "47/15",
+      "63/20",
+      "19/6",
+      "191/60",
+      "16/5",
+      "193/60",
+      "97/30",
+      "13/4",
+      "49/15",
+      "197/60",
+      "33/10",
+      "199/60",
+      "10/3",
+      "67/20",
+      "101/30",
+      "203/60",
+      "17/5",
+      "41/12",
+      "103/30",
+      "69/20",
+      "52/15",
+      "209/60",
+      "7/2",
+      "211/60",
+      "53/15",
+      "71/20",
+      "107/30",
+      "43/12",
+      "18/5",
+      "217/60",
+      "109/30",
+      "73/20",
+      "11/3",
+      "221/60",
+      "37/10",
+      "223/60",
+      "56/15",
+      "15/4",
+      "113/30",
+      "227/60",
+      "19/5",
+      "229/60",
+      "23/6",
+      "77/20",
+      "58/15",
+      "233/60",
+      "39/10",
+      "47/12",
+      "59/15",
+      "79/20",
+      "119/30",
+      "239/60",
+      "4",
+      "241/60",
+      "121/30",
+      "81/20",
+      "61/15",
+      "49/12",
+      "41/10",
+      "247/60",
+      "62/15",
+      "83/20",
+      "25/6",
+      "251/60",
+      "21/5",
+      "253/60",
+      "127/30",
+      "17/4",
+      "64/15",
+      "257/60",
+      "43/10",
+      "259/60",
+      "13/3",
+      "87/20",
+      "131/30",
+      "263/60",
+      "22/5",
+      "53/12",
+      "133/30",
+      "89/20",
+      "67/15",
+      "269/60",
+      "9/2",
+      "271/60",
+      "68/15",
+      "91/20",
+      "137/30",
+      "55/12",
+      "23/5",
+      "277/60",
+      "139/30",
+      "93/20",
+      "14/3",
+      "281/60",
+      "47/10",
+      "283/60",
+      "71/15",
+      "19/4",
+      "143/30",
+      "287/60",
+      "24/5",
+      "289/60",
+      "29/6",
+      "97/20",
+      "73/15",
+      "293/60",
+      "49/10",
+      "59/12",
+      "74/15",
+      "99/20",
+      "149/30",
+      "299/60",
+      "5",
+      "301/60",
+      "151/30",
+      "101/20",
+      "76/15",
+      "61/12",
+      "51/10",
+      "307/60",
+      "77/15",
+      "103/20",
+      "31/6",
+      "311/60",
+      "26/5",
+      "313/60",
+      "157/30",
+      "21/4",
+      "79/15",
+      "317/60",
+      "53/10",
+      "319/60",
+      "16/3",
+      "107/20",
+      "161/30",
+      "323/60",
+      "27/5",
+      "65/12",
+      "163/30",
+      "109/20",
+      "82/15",
+      "329/60",
+      "11/2",
+      "331/60",
+      "83/15",
+      "111/20",
+      "167/30",
+      "67/12",
+      "28/5",
+      "337/60",
+      "169/30",
+      "113/20",
+      "17/3",
+      "341/60",
+      "57/10",
+      "343/60",
+      "86/15",
+      "23/4",
+      "173/30",
+      "347/60",
+      "29/5",
+      "349/60",
+      "35/6",
+      "117/20",
+      "88/15",
+      "353/60",
+      "59/10",
+      "71/12",
+      "89/15",
+      "119/20",
+      "179/30",
+      "359/60",
+      "6",
+      "361/60",
+      "181/30",
+      "121/20",
+      "91/15",
+      "73/12",
+      "61/10",
+      "367/60",
+      "92/15",
+      "123/20",
+      "37/6",
+      "371/60",
+      "31/5",
+      "373/60",
+      "187/30",
+      "25/4",
+      "94/15",
+      "377/60",
+      "63/10",
+      "379/60",
+      "19/3",
+      "127/20",
+      "191/30",
+      "383/60",
+      "32/5",
+      "77/12",
+      "193/30",
+      "129/20",
+      "97/15",
+      "389/60",
+      "13/2",
+      "391/60",
+      "98/15",
+      "131/20",
+      "197/30",
+      "79/12",
+      "33/5",
+      "397/60",
+      "199/30",
+      "133/20",
+      "20/3",
+      "401/60",
+      "67/10",
+      "403/60",
+      "101/15",
+      "27/4",
+      "203/30",
+      "407/60",
+      "34/5",
+      "409/60",
+      "41/6",
+      "137/20",
+      "103/15",
+      "413/60",
+      "69/10",
+      "83/12",
+      "104/15",
+      "139/20",
+      "209/30",
+      "419/60",
+      "7",
+      "421/60",
+      "211/30",
+      "141/20",
+      "106/15",
+      "85/12",
+      "71/10",
+      "427/60",
+      "107/15",
+      "143/20",
+      "43/6",
+      "431/60",
+      "36/5",
+      "433/60",
+      "217/30",
+      "29/4",
+      "109/15",
+      "437/60",
+      "73/10",
+      "439/60",
+      "22/3",
+      "147/20",
+      "221/30",
+      "443/60",
+      "37/5",
+      "89/12",
+      "223/30",
+      "149/20",
+      "112/15",
+      "449/60",
+      "15/2",
+      "451/60",
+      "113/15",
+      "151/20",
+      "227/30",
+      "91/12",
+      "38/5",
+      "457/60",
+      "229/30",
+      "153/20",
+      "23/3",
+      "461/60",
+      "77/10",
+      "463/60",
+      "116/15",
+      "31/4",
+      "233/30",
+      "467/60",
+      "39/5",
+      "469/60",
+      "47/6",
+      "157/20",
+      "118/15",
+      "473/60",
+      "79/10",
+      "95/12",
+      "119/15",
+      "159/20",
+      "239/30",
+      "479/60",
+      "8",
+      "481/60",
+      "241/30",
+      "161/20",
+      "121/15",
+      "97/12",
+      "81/10",
+      "487/60",
+      "122/15",
+      "163/20",
+      "49/6",
+      "491/60",
+      "41/5",
+      "493/60",
+      "247/30",
+      "33/4",
+      "124/15",
+      "497/60",
+      "83/10",
+      "499/60",
+      "25/3",
+      "167/20",
+      "251/30",
+      "503/60",
+      "42/5",
+      "101/12",
+      "253/30",
+      "169/20",
+      "127/15",
+      "509/60",
+      "17/2",
+      "511/60",
+      "128/15",
+      "171/20",
+      "257/30",
+      "103/12",
+      "43/5",
+      "517/60",
+      "259/30",
+      "173/20",
+      "26/3",
+      "521/60",
+      "87/10",
+      "523/60",
+      "131/15",
+      "35/4",
+      "263/30",
+      "527/60",
+      "44/5",
+      "529/60",
+      "53/6",
+      "177/20",
+      "133/15",
+      "533/60",
+      "89/10",
+      "107/12",
+      "134/15",
+      "179/20",
+      "269/30",
+      "539/60",
+      "9",
+      "541/60",
+      "271/30",
+      "181/20",
+      "136/15",
+      "109/12",
+      "91/10",
+      "547/60",
+      "137/15",
+      "183/20",
+      "55/6",
+      "551/60",
+      "46/5",
+      "553/60",
+      "277/30",
+      "37/4",
+      "139/15",
+      "557/60",
+      "93/10",
+      "559/60",
+      "28/3",
+      "187/20",
+      "281/30",
+      "563/60",
+      "47/5",
+      "113/12",
+      "283/30",
+      "189/20",
+      "142/15",
+      "569/60",
+      "19/2",
+      "571/60",
+      "143/15",
+      "191/20",
+      "287/30",
+      "115/12",
+      "48/5",
+      "577/60",
+      "289/30",
+      "193/20",
+      "29/3",
+      "581/60",
+      "97/10",
+      "583/60",
+      "146/15",
+      "39/4",
+      "293/30",
+      "587/60",
+      "49/5",
+      "589/60",
+      "59/6",
+      "197/20",
+      "148/15",
+      "593/60",
+      "99/10",
+      "119/12",
+      "149/15",
+      "199/20",
+      "299/30",
+      "599/60",
+      "10",
+      "601/60",
+      "301/30",
+      "201/20",
+      "151/15",
+      "121/12",
+      "101/10",
+      "607/60",
+      "152/15",
+      "203/20",
+      "61/6",
+      "611/60",
+      "51/5",
+      "613/60",
+      "307/30",
+      "41/4",
+      "154/15",
+      "617/60",
+      "103/10",
+      "619/60",
+      "31/3",
+      "207/20",
+      "311/30",
+      "623/60",
+      "52/5",
+      "125/12",
+      "313/30",
+      "209/20",
+      "157/15",
+      "629/60",
+      "21/2",
+      "631/60",
+      "158/15",
+      "211/20",
+      "317/30",
+      "127/12",
+      "53/5",
+      "637/60",
+      "319/30",
+      "213/20",
+      "32/3",
+      "641/60",
+      "107/10",
+      "643/60",
+      "161/15",
+      "43/4",
+      "323/30",
+      "647/60",
+      "54/5",
+      "649/60",
+      "65/6",
+      "217/20",
+      "163/15",
+      "653/60",
+      "109/10",
+      "131/12",
+      "164/15",
+      "219/20",
+      "329/30",
+      "659/60",
+      "11",
+      "661/60",
+      "331/30",
+      "221/20",
+      "166/15",
+      "133/12",
+      "111/10",
+      "667/60",
+      "167/15",
+      "223/20",
+      "67/6",
+      "671/60",
+      "56/5",
+      "673/60",
+      "337/30",
+      "45/4",
+      "169/15",
+      "677/60",
+      "113/10",
+      "679/60",
+      "34/3",
+      "227/20",
+      "341/30",
+      "683/60",
+      "57/5",
+      "137/12",
+      "343/30",
+      "229/20",
+      "172/15",
+      "689/60",
+      "23/2",
+      "691/60",
+      "173/15",
+      "231/20",
+      "347/30",
+      "139/12",
+      "58/5",
+      "697/60",
+      "349/30",
+      "233/20",
+      "35/3",
+      "701/60",
+      "117/10",
+      "703/60",
+      "176/15",
+      "47/4",
+      "353/30",
+      "707/60",
+      "59/5",
+      "709/60",
+      "71/6",
+      "237/20",
+      "178/15",
+      "713/60",
+      "119/10",
+      "143/12",
+      "179/15",
+      "239/20",
+      "359/30",
+      "719/60"
+    ],
+    "duration_seconds": "12"
+  },
+  "source_mapping_pass": true,
+  "user_accepted_preview": "pilot_canny_v3_fixed",
+  "strict_motion_geometry_pass": false,
+  "visible_limitations": [
+    "Generated layouts and fine foliage may differ from source, as in the accepted preview.",
+    "Visible scene changes at source frames 260 (4.3333s) and 498 (8.3s)."
+  ],
+  "output_sha256": "e1adddf541b583a2068d52a0f92e758f3cf49279449a51be199603efd2d447f3",
+  "comparison_sha256": "4178083af91ceeaa29c918b5831ebe1eae0656b855c5251e49a5fd95a6f636c7"
+}

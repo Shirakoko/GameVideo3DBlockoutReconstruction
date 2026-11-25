@@ -1,0 +1,11 @@
+{
+  "comfyui_version": "0.46.0",
+  "models": [
+    {"file": "diffusion_models/minimax_h3_fl2va_pruned_w6a8.safetensors", "sha256": "ac746a2e41628ab25afd44d2b22a7fab8d7e66cd07a01bf89ed9d74b0d3f0c35"},
+    {"file": "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors", "sha256": "35a88d51044231fe332301d7a62aa81e3f2cba62febeb446e2c1e3e0ef76f2c6"},
+    {"file": "vae/minimax_h3_video_vae_int8_convrot.safetensors", "sha256": "52a2c8c73583c86e4f41cdcce3a6ad0ea562987bc0bf3d60a0cef5f5c8e60c0e"},
+    {"file": "loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors", "sha256": "2339acdf19bfe123f46b971ea35d367a84adb85de43627e1eceafa5a5b2b111e"},
+    {"file": "model_patches/minimax_h3_fun_controlnet_union_2.0_pruned_int8_convrot.safetensors", "sha256": "890af58bb350f0c2f6c409b1c67ea8f4196654297d037769b72de1e6f504c612", "control_blocks_places": [0,5,10,15,20,25,30,35,40,45]}
+  ],
+  "processing": "Local ComfyUI inference only. No Blender or geometric reconstruction."
+}
