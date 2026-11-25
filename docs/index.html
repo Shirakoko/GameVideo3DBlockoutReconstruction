@@ -29,7 +29,7 @@ pre.mermaid { background: #fff; border: 1px solid #d0d7de; text-align: center; }
 <p>论文阅读：<a href="gamewm/">GameWM：以交互为中心的世界模型阅读笔记</a></p>
 <h1>游戏影像驱动的三维粗模重建</h1>
 <p>面向 10–15 秒游戏录屏，构建语义理解、几何代理、场景生成与质量验证工作流。本项目提供三条路线：<strong>Voxel 侧重环境覆盖与镜头可用性；Primitive 侧重类别到基本体的结构化映射与编辑性；ComfyUI + H3 侧重原视频的生成式灰模风格化。</strong></p>
-<p>当前三路均交付 12 秒视频。前两路输出可编辑 Blender 工程，采用启发式几何与推断相机，不包含角色动作代理；第三路直接生成灰模风格视频，包含人物的生成式近似，但<strong>不重建三维场景，也不输出 <code>.blend</code>、角色轨迹或可验证的几何</strong>。</p>
+<p>当前三路均交付 12 秒视频。前两路生成可编辑 <code>.blend</code>，采用启发式几何与推断相机，不包含角色动作代理；第三路直接生成灰模风格视频，包含人物的生成式近似，但不重建三维场景，也不输出角色轨迹或可验证的几何。</p>
 <h2>1. 实验设置与交付</h2>
 <p>数据来自 <a href="https://huggingface.co/datasets/originlab/game-recordings-v4">Origin Lab Game Recordings v4</a>，Session <code>66ad9535-583f-4a25-b655-6b1697c83a40</code> 的 <code>[0, 12)</code> 秒：1920×1080、60 FPS、720 帧。元数据记录 UE5、地图 <code>Island</code>，未提供明确游戏名称。数据准备采用有界前缀下载，不下载完整 Session 或整库。</p>
 <p>三路使用同一原片。Voxel / Primitive 共享 RGB/深度码、61 帧 Grounding DINO + SAM 分割缓存、相机校准与 720 帧轨迹，渲染均采用 Blender 5.2.1 LTS / EEVEE；H3 只从原片 RGB 提取轮廓控制，不读取前两路的几何、遮罩或相机结果，在本地 ComfyUI 0.46.0 中生成视频。因此属于<strong>同源方案比较，而非单变量消融实验</strong>；后文现有 SSIM / MAE 图表仍只比较前两路。</p>
