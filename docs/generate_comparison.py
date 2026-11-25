@@ -33,9 +33,12 @@ ROUTES = {
     "voxel": ROOT / "outputs/stage_ef/heuristic_voxel_proxy",
     "primitive": ROOT / "outputs/stage_ef/heuristic_primitive_from_video",
 }
-COLORS = {"voxel": "#2563a6", "primitive": "#c16b24"}
-NAMES = {"voxel": "Voxel", "primitive": "Primitive"}
+METRIC_ROUTES = (*ROUTES, "h3")
+COLORS = {"voxel": "#2563a6", "primitive": "#c16b24", "h3": "#7c4ba6"}
+NAMES = {"voxel": "Voxel", "primitive": "Primitive", "h3": "H3"}
+MARKERS = {"voxel": "o", "primitive": "s", "h3": "^"}
 H3_ROUTE = ROOT / "outputs/h3_controlled_graybox/full_v3"
+METRIC_FRAME_INDICES = (0, 60, 180, 300, 360, 420, 540, 660, 719)
 VISUAL_FRAME_INDICES = (0, 360, 719)
 
 
@@ -57,6 +60,24 @@ def last_render_seconds(path):
     if match is None:
         raise ValueError(f"Final-frame elapsed time missing: {path}")
     return int(match[1]) * 60 + float(match[2])
+
+
+def score_frame(route, index, rgb, predicted, mask):
+    """Apply identical source-space metrics; never resize or remask a route."""
+    if predicted.shape != rgb.shape:
+        raise ValueError("Delivery raster comparison requires equal image shapes")
+    score = masked_ssim(rgb, predicted, mask)
+    mae = masked_luminance_mae(rgb, predicted, mask)
+    if score is None or mae is None or not np.isfinite([score, mae]).all():
+        raise ValueError("Empty evaluation mask or non-finite image metric")
+    return dict(route=route, frame_index=index, timestamp_seconds=index / 60,
+                evaluated_pixels=int(mask.sum()), masked_ssim=score, rgb_mean_mae_255=mae)
+
+
+def metric_means(rows, route):
+    current = [row for row in rows if row["route"] == route]
+    return dict(mean_masked_ssim=float(np.mean([row["masked_ssim"] for row in current])),
+                mean_rgb_mean_mae_255=float(np.mean([row["rgb_mean_mae_255"] for row in current])))
 
 
 def collect():
@@ -83,35 +104,40 @@ def collect():
     indices = [row["frame_index"] for row in reports["voxel"]["preview_frames"]]
     if indices != [row["frame_index"] for row in reports["primitive"]["preview_frames"]]:
         raise ValueError("Preview frame sets differ")
-    rows, hashes = [], {}
+    if tuple(indices) != METRIC_FRAME_INDICES:
+        raise ValueError("Metrics require the reviewed nine source frame indices")
+    h3_frames = load_h3_frames(indices)
+    rows, hashes = [], {
+        "h3_delivery_report": digest(H3_ROUTE / "report.json"),
+        "h3_delivery_video": digest(H3_ROUTE / "graybox.mp4"),
+    }
     for index in indices:
         source = cache / f"frame_{index:06d}.npz"
         hashes[f"cached_frame_{index:06d}"] = digest(source)
         with np.load(source, allow_pickle=False) as data:
             rgb, codes, labels = data["rgb"], data["codes"], data["labels"]
             mask = (codes > 0) & (codes < 1020) & (labels != CATEGORIES.index("person"))
+            predictions = {}
             for route, folder in ROUTES.items():
                 path = folder / f"frames/frame_{index+1:06d}.png"
                 hashes[f"{route}_preview_{index:06d}"] = digest(path)
                 with Image.open(path) as image:
-                    predicted = np.asarray(image.convert("RGB"))
-                if predicted.shape != rgb.shape:
-                    raise ValueError("Native raster comparison requires equal image shapes")
-                score = masked_ssim(rgb, predicted, mask)
-                mae = masked_luminance_mae(rgb, predicted, mask)
-                if score is None or mae is None:
-                    raise ValueError("Empty evaluation mask")
-                expected = reports[route]["preview_frames"][indices.index(index)]
-                field, value = ("masked_ssim_informational", score) if route == "voxel" else ("masked_luminance_mae", mae)
-                if abs(expected[field] - value) > 1e-7:
-                    raise ValueError("Existing preview metric and source raster disagree")
-                rows.append(dict(route=route, frame_index=index, timestamp_seconds=index / 60,
-                                 evaluated_pixels=int(mask.sum()), masked_ssim=score, rgb_mean_mae_255=mae))
+                    predictions[route] = np.asarray(image.convert("RGB"))
+            predictions["h3"] = np.asarray(h3_frames[index])
+            hashes[f"h3_rgb24_frame_{index:06d}"] = hashlib.sha256(predictions["h3"].tobytes()).hexdigest()
+            for route in METRIC_ROUTES:
+                row = score_frame(route, index, rgb, predictions[route], mask)
+                if route in reports:
+                    expected = reports[route]["preview_frames"][indices.index(index)]
+                    field, metric = (("masked_ssim_informational", "masked_ssim") if route == "voxel"
+                                     else ("masked_luminance_mae", "rgb_mean_mae_255"))
+                    if abs(expected[field] - row[metric]) > 1e-7:
+                        raise ValueError("Existing preview metric and source raster disagree")
+                rows.append(row)
     summary = {}
     for route, folder in ROUTES.items():
         objects = scenes[route]["objects"]
         with_observation = sum(bool(obj["observations"]) for obj in objects)
-        current = [row for row in rows if row["route"] == route]
         summary[route] = dict(
             render_elements=len(objects), elements_with_observations=with_observation,
             observation_records=sum(len(obj["observations"]) for obj in objects),
@@ -120,11 +146,12 @@ def collect():
             categories=sorted({obj["category"] for obj in objects}),
             blend_mib=(folder / "scene.blend").stat().st_size / 1024**2,
             blockout_mib=(folder / "blockout_video.mp4").stat().st_size / 1024**2,
-            mean_masked_ssim=float(np.mean([row["masked_ssim"] for row in current])),
-            mean_rgb_mean_mae_255=float(np.mean([row["rgb_mean_mae_255"] for row in current])),
+            **metric_means(rows, route),
             generation_seconds_approx=187 if route == "voxel" else 38,
             render_seconds_to_last_saved_frame=last_render_seconds(folder / "render.log"),
         )
+    # H3 has no scene objects, camera matrices, or Blender resource measurements.
+    summary["h3"] = metric_means(rows, "h3")
     return rows, summary, hashes, cache
 
 
@@ -173,22 +200,22 @@ def save_resources(output, summary):
 
 def save_metrics(output, rows, summary):
     fig, axes = plt.subplots(2, 1, figsize=(10.5, 7.5), layout="constrained", sharex=True)
-    for route in ROUTES:
+    for route in METRIC_ROUTES:
         current = [row for row in rows if row["route"] == route]
         t = [row["timestamp_seconds"] for row in current]
-        marker = "o" if route == "voxel" else "s"
         for ax, metric in zip(axes, ("masked_ssim", "rgb_mean_mae_255")):
             mean = summary[route]["mean_" + metric]
-            ax.plot(t, [row[metric] for row in current], marker=marker, color=COLORS[route],
+            ax.plot(t, [row[metric] for row in current], marker=MARKERS[route], color=COLORS[route],
                     linewidth=1.7, markersize=6, label=f"{NAMES[route]}  均值 {mean:.3f}")
     axes[0].set(title="遮罩 SSIM ↑", ylabel="SSIM", ylim=(0, 1))
-    axes[1].set(title="RGB 通道均值灰度 MAE ↓", ylabel="灰度级（0–255）", xlabel="视频时间 / 秒", ylim=(0, 100))
+    mae_max = max(100, max(row["rgb_mean_mae_255"] for row in rows) * 1.1)
+    axes[1].set(title="RGB 通道均值灰度 MAE ↓", ylabel="灰度级（0–255）", xlabel="视频时间 / 秒", ylim=(0, mae_max))
     for ax in axes:
-        ax.legend(loc="lower left" if ax is axes[0] else "upper right", frameon=False, fontsize=12)
+        ax.legend(loc="lower left" if ax is axes[0] else "upper left", frameon=False, fontsize=12)
         ax.grid(color="#e8ecf0", linewidth=.7)
         ax.set_xlim(-.25, 12.3)
     axes[1].set_xticks([0, 1, 3, 5, 6, 7, 9, 11, 12])
-    fig.suptitle("相同九帧、原生分辨率、统一环境遮罩", fontsize=18)
+    fig.suptitle("三路同源九帧、1920×1080 交付栅格、统一环境遮罩\n图像一致性（含风格影响），非几何或动作还原率", fontsize=16)
     fig.savefig(output / "route_preview_metrics.png", dpi=160)
     plt.close(fig)
 
@@ -199,6 +226,12 @@ def load_h3_frames(indices):
     if (report.get("status") != "complete_source_indexed_approximation"
             or not report.get("temporal_pass") or not report.get("source_mapping_pass")):
         raise ValueError("H3 requires a verified complete delivery receipt")
+    probe = report["probe"]
+    if (probe["frames"] != 720 or Fraction(probe["fps"]) != 60
+            or Fraction(probe["duration_seconds"]) != 12
+            or len(probe["pts_seconds"]) != 720
+            or any(Fraction(pts) != Fraction(index, 60) for index, pts in enumerate(probe["pts_seconds"]))):
+        raise ValueError("H3 media time lattice is not the reviewed 720-frame clip")
     mapping = report["mapping"]
     if len(mapping) != 720 or any(
             item["source_index"] != index or item["padding"]
@@ -256,7 +289,7 @@ def save_contact_sheet(output, cache):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "docs/figures/comparison")
-    parser.add_argument("--visual-only", action="store_true", help="Only rebuild the four-column contact sheet; leave two-route metrics unchanged")
+    parser.add_argument("--visual-only", action="store_true", help="Only rebuild the four-column contact sheet; leave metrics unchanged")
     args = parser.parse_args()
     output = args.output.resolve()
     if not output.is_relative_to(ROOT / "docs/figures"):
@@ -269,13 +302,18 @@ def main():
         return
     rows, summary, hashes, cache = collect()
     output.mkdir(parents=True, exist_ok=True)
-    document = dict(schema="readme.route_comparison/1", source="existing local delivery receipts and nine preview PNGs",
+    document = dict(schema="readme.route_comparison/2", source="existing local delivery receipts, nine preview PNGs per geometry route, and source-indexed H3 delivery frames",
                     semantic_ground_truth_available=False, physical_geometry_validated=False,
-                    mask="0 < codes10 < 1020 AND predicted label != person; identical for both routes",
+                    metric_routes=list(METRIC_ROUTES), metric_frame_indices=list(METRIC_FRAME_INDICES),
+                    mask="0 < codes10 < 1020 AND predicted label != person; source-space mask identical for all three routes, not recomputed on H3",
                     ssim="Existing preview metric: Gaussian 11x11, sigma 1.5; 11x11-eroded mask; not Stage G uniform-window SSIM",
                     mae="Mean absolute difference of RGB-channel-mean grayscale, on mask, scale 0..255",
+                    aggregation="Arithmetic mean of the same nine per-frame scores; not pixel-weighted or a full-video score",
+                    raster="1920x1080 source/geometry previews/H3 delivery frames; no resize during metric calculation. H3 was generated at 768x432 and spatially upscaled during delivery assembly.",
+                    alignment="H3 decoded by final video frame index after validating source mapping, exact PTS and delivery SHA256; no temporal seeking, interpolation, or content registration",
+                    evidence_boundary="Source image agreement, affected by material, brightness, style, resolution and generated layout; not geometry, semantics, action accuracy or temporal continuity. Source person mask does not exclude a displaced generated person.",
                     time_scope="Generation times are historical approximations; render time is elapsed log time to last PNG, including read/verification. Not full cold start or a controlled speed benchmark.",
-                    observation_scope="Voxel associations are inferred representative projections, not verified instances; each linked mesh has one record. Primitive observations are not exported.",
+                    observation_scope="Voxel associations are inferred representative projections, not verified instances; each linked mesh has one record. Primitive observations are not exported. H3 has no 3D objects or observation links; resource plots remain geometry-only.",
                     summary=summary, preview_metrics=rows, input_sha256=hashes,
                     data_policy="Local internal evaluation only; derived data shares source retention policy")
     (output / "metrics.json").write_text(json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
