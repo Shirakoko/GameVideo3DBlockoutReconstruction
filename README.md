@@ -18,7 +18,7 @@
 | --- | --- | --- | --- |
 | 原片 / 粗模对比 | [original_vs_blockout.mp4](docs/videos/voxel/original_vs_blockout.mp4) | [original_vs_blockout.mp4](docs/videos/primitive/original_vs_blockout.mp4) | [comparison.mp4](docs/videos/h3/comparison.mp4) |
 | 纯粗模视频 | [blockout_video.mp4](docs/videos/voxel/blockout_video.mp4) | [blockout_video.mp4](docs/videos/primitive/blockout_video.mp4) | [graybox.mp4](docs/videos/h3/graybox.mp4) |
-| 可编辑场景 | 本地 `outputs/stage_ef/heuristic_voxel_proxy/scene.blend`，151.8 MiB | 本地 `outputs/stage_ef/heuristic_primitive_from_video/scene.blend`，120.6 MiB | 无；交付可编辑节点图，不是三维场景 |
+| 可编辑场景 | 本地 `scene.blend`，151.8 MiB | 本地 `scene.blend`，120.6 MiB | 无 |
 | 原始验证记录 | [proxy_run.json](docs/records/voxel/proxy_run.json) | [primitive_run.json](docs/records/primitive/primitive_run.json) | [report.json](docs/records/h3/report.json) |
 
 ### Voxel 对比视频
@@ -45,7 +45,7 @@
   <source src="docs/videos/h3/comparison.mp4" type="video/mp4">
 </video>
 
-GitHub README 及其他不支持上述内嵌播放器的 Markdown 阅读器可使用交付表中的链接。同一份内容发布在 [GitHub Pages](https://shirakoko.github.io/GameVideo3DBlockoutReconstruction/)，页面中的对比视频可以直接播放。六份展示视频副本位于 `docs/videos/`，验证记录副本位于 `docs/records/`。两份 `scene.blend` 分别是 151.8 MiB 和 120.6 MiB，超过 GitHub 100 MB 单文件上限，因此保留在本地 `outputs/`，供脚本复现和验证使用。
+播放器不可用时用上表链接。视频在 `docs/videos/`，验证记录在 `docs/records/`；`scene.blend` 超过 100 MB，留在本地 `outputs/`。
 
 以下按相同源帧索引展示原始 RGB、Voxel、Primitive 与 H3（生成式灰模）；行时间分别为 0、6、11.983 秒。H3 从完整成片 `full_v3/graybox.mp4` 按源索引映射抽帧，同一索引不代表生成内容与原片严格一致。
 
